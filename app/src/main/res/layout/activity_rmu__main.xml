@@ -20,6 +20,7 @@
         android:textColor="@android:color/white"
         android:background="@android:color/holo_green_dark"
         android:gravity="center_horizontal"
+        android:id="@+id/startButton"
         />
 
 </LinearLayout>
