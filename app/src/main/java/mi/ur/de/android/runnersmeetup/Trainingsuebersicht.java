@@ -3,8 +3,9 @@ package mi.ur.de.android.runnersmeetup;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Trainingsübersicht extends AppCompatActivity {
+public class Trainingsuebersicht extends AppCompatActivity {
 
     private TextView resultBMI, resultText, showName;
 
@@ -17,7 +18,6 @@ public class Trainingsübersicht extends AppCompatActivity {
         resultText = (TextView) findViewById(R.id.result_bmi);
         getExtras();
     }
-
     private void getExtras(){
         int cm = getIntent().getExtras().getInt(Constants.KEY_CM);
         int kg = getIntent().getExtras().getInt(Constants.KEY_KG);

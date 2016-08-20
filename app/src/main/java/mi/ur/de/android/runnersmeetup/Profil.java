@@ -73,7 +73,7 @@ public class Profil extends AppCompatActivity {
         int kg = Integer.parseInt(inputKg.getText().toString());
         int cm = Integer.parseInt(inputCm.getText().toString());
 
-        Intent i = new Intent(this, Trainingsübersicht.class);
+        Intent i = new Intent(this, Trainingsuebersicht.class);
         i.putExtra(Constants.KEY_CM, cm);
         i.putExtra(Constants.KEY_KG, kg);
         i.putExtra(Constants.KEY_NAME, name);
