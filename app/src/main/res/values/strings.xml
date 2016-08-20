@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">RunnersMeetUp</string>
+    <string name="username">Benutzername</string>
+    <string name="age">Alter</string>
+    <string name="profil">Profil</string>
+    <string name="groeße">Größe</string>
+    <string name="gewicht">Gewicht</string>
+    <string name="groeße_hint">Größe in cm</string>
+    <string name="gewicht_hint">Gewicht in kg</string>
+    <string name="bmi_label">BMI</string>
+    <string name="name_hint">Name</string>
+    <string name="select_gender">Geschlecht</string>
+    <string-array name="gender_options">
+        <item>weiblich</item>
+        <item>männlich</item>
+    </string-array>
 </resources>
