@@ -9,7 +9,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:background="@drawable/background"
-    tools:context="mi.ur.de.android.runnersmeetup.Profil">
+    tools:context="mi.ur.de.android.runnersmeetup.Profil"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,8 +23,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="370dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,24 +45,6 @@
             android:id="@+id/input_name"
             android:layout_gravity="center_horizontal"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/age"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/weiß"
-            android:layout_gravity="center_horizontal"/>
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textColor="@color/weiß"
-            android:ems="2"
-            android:id="@+id/input_age"
-            android:layout_gravity="center_horizontal"/>
-
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,15 +59,16 @@
                 android:textColor="@color/weiß"
                 android:id="@+id/gender"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"/>
 
             <Spinner
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/gender_spinner"
                 android:layout_below="@+id/gender"
                 android:layout_alignStart="@+id/gender"
-                android:layout_alignEnd="@+id/gender">
+                android:layout_gravity="center">
 
             </Spinner>
         </RelativeLayout>
@@ -95,7 +80,8 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/weiß"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -116,7 +102,8 @@
             android:textSize="20sp"
             android:textColor="@color/weiß"
             android:textStyle="bold"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -132,10 +119,13 @@
     </LinearLayout>
 
     <ImageButton
-        android:layout_width="97dp"
-        android:layout_height="match_parent"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:id="@+id/button_bmi"
         android:layout_gravity="center_horizontal"
         android:src="@mipmap/ok_button"
-        android:scaleType="centerCrop" />
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
 </LinearLayout>
