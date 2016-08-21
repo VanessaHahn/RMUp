@@ -7,4 +7,5 @@ public class Constants {
     public static final String KEY_CM = "cm";
     public static final String KEY_KG = "kg";
     public static final String KEY_NAME = "name";
+    public static final String KEY_GENDER = "gender";
 }

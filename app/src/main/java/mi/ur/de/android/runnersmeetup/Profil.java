@@ -18,6 +18,7 @@ public class Profil extends AppCompatActivity {
 
     private EditText inputCm, inputKg, inputName;
     private ImageButton buttonCalcBMI;
+    private String gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class Profil extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                gender = spinner.getItemAtPosition(position).toString();
             }
 
             @Override
@@ -77,6 +78,7 @@ public class Profil extends AppCompatActivity {
         i.putExtra(Constants.KEY_CM, cm);
         i.putExtra(Constants.KEY_KG, kg);
         i.putExtra(Constants.KEY_NAME, name);
+        i.putExtra(Constants.KEY_GENDER, gender);
 
         startActivity(i);
     }

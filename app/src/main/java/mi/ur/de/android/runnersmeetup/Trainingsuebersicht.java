@@ -27,32 +27,65 @@ public class Trainingsuebersicht extends AppCompatActivity {
         int cm = getIntent().getExtras().getInt(Constants.KEY_CM);
         int kg = getIntent().getExtras().getInt(Constants.KEY_KG);
         String name = getIntent().getExtras().getString(Constants.KEY_NAME);
-        showResults(cm, kg, name);
+        String gender = getIntent().getExtras().getString(Constants.KEY_GENDER);
+        showResults(cm, kg, name, gender);
     }
 
-    private void showResults(int cm, int kg, String name){
+    private void showResults(int cm, int kg, String name, String gender){
         CalculatorBmi calc = new CalculatorBmi();
         calc.setValues(cm, kg);
         double BMI = calc.calculateBMI();
         showName.setText(name + " ");
         resultBMI.setText(BMI + " ");
 
+        switch (gender){
+            case ("weiblich"):
+                bmiWeiblich(BMI);
+                break;
+            case ("männlich"):
+                bmiMännlich(BMI);
+                break;
+        }
+    }
+
+    private void bmiWeiblich(double BMI) {
+        if (BMI < 19){
+            resultText.setText("Untergewicht!");
+            image.setImageResource(R.drawable.daumen_runter);
+        } if (BMI >= 19 && BMI <= 24){
+            resultText.setText("Normalgewicht!");
+            image.setImageResource(R.drawable.daumen_hoch);
+        } if (BMI > 24 && BMI <= 29){
+            resultText.setText("Übergewicht!");
+            image.setImageResource(R.drawable.daumen_naja);
+        } if (BMI > 29 && BMI <= 39){
+            resultText.setText("Adipositas!");
+            image.setImageResource(R.drawable.daumen_runter);
+        } if (BMI > 39){
+            resultText.setText("starke Adipositas!");
+            image.setImageResource(R.drawable.daumen_runter);
+        }
+    }
+
+    private void bmiMännlich(double BMI) {
         if (BMI < 20){
             resultText.setText("Untergewicht!");
             image.setImageResource(R.drawable.daumen_runter);
         } if (BMI >= 20 && BMI <= 25){
             resultText.setText("Normalgewicht!");
             image.setImageResource(R.drawable.daumen_hoch);
-        } if (BMI > 25 && BMI <= 30){
+        } if (BMI > 25 && BMI <= 29){
             resultText.setText("Übergewicht!");
             image.setImageResource(R.drawable.daumen_naja);
-        } if (BMI > 30 && BMI <= 40){
+        } if (BMI > 29 && BMI <= 39){
             resultText.setText("Adipositas!");
             image.setImageResource(R.drawable.daumen_runter);
-        } if (BMI > 40){
+        } if (BMI > 39){
             resultText.setText("starke Adipositas!");
             image.setImageResource(R.drawable.daumen_runter);
         }
     }
+
+
 
 }
