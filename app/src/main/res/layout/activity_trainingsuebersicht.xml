@@ -55,6 +55,13 @@
             android:id="@+id/result_text"
             android:layout_gravity="center_horizontal" />
 
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/showImage"
+            android:layout_gravity="right"
+            android:background="@null"/>
+
     </LinearLayout>
 
 

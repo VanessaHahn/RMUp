@@ -73,7 +73,10 @@ public class RMU_Main extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                locationManager.requestLocationUpdates("gps", 5000, 2, locationListener);
+                Intent i = new Intent(RMU_Main.this, Profil.class);
+                startActivity(i);
+
+                //locationManager.requestLocationUpdates("gps", 5000, 2, locationListener);
             }
         });
     }
