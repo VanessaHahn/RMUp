@@ -13,9 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class RMU_Main extends AppCompatActivity {
-    private Button startButton;
+    private ImageButton startButton;
     private LocationManager locationManager;
     private LocationListener locationListener;
 
@@ -23,7 +24,7 @@ public class RMU_Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rmu__main);
-        startButton = (Button) findViewById(R.id.startButton);
+        startButton = (ImageButton) findViewById(R.id.startButton);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
