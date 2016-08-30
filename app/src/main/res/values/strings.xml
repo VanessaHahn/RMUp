@@ -14,4 +14,9 @@
         <item>weiblich</item>
         <item>männlich</item>
     </string-array>
+    <string name="music_title">Musik</string>
+    <string name="gps_title">GPS</string>
+    <string name="about_title">About</string>
+    <string name="profil_title">Profil</string>
+    <string name="trainingsuebersicht_title">Trainingsübersicht</string>
 </resources>

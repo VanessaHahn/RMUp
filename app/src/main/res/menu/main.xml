@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="@string/gps_title"
+        android:id="@+id/gps_icon"
+        android:icon="@drawable/ic_place_black_24dp"
+        app:showAsAction="always"/>
+
+    <item
+        android:title="@string/music_title"
+        android:id="@+id/music_icon"
+        android:icon="@drawable/ic_audiotrack_black_24dp"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:title="@string/about_title"
+        android:id="@+id/action_about"
+        app:showAsAction="never"/>
+
+    <item
+        android:title="@string/profil_title"
+        android:id="@+id/action_profil"
+        app:showAsAction="never"/>
+
+    <item
+        android:title="@string/trainingsuebersicht_title"
+        android:id="@+id/action_trainingsuebersicht"
+        app:showAsAction="never"/>
+
+</menu>

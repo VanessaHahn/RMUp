@@ -11,6 +11,8 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -80,6 +82,37 @@ public class RMU_Main extends AppCompatActivity {
                 //locationManager.requestLocationUpdates("gps", 5000, 2, locationListener);
             }
         });
+    }
+
+    //ActionBar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.gps_icon:
+                //GPS an/aus
+                return true;
+
+            case R.id.music_icon:
+                //music an/aus
+                return true;
+
+            case R.id.action_about:
+
+                return true;
+
+            case R.id.action_profil:
+                return true;
+
+            case R.id.action_trainingsuebersicht:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 
