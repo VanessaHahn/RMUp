@@ -1,55 +1,35 @@
 package mi.ur.de.android.runnersmeetup;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Build;
-import android.provider.Settings;
+import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class RMU_Main extends AppCompatActivity {
+    private TextView distanceView;
+    private TextView velocityView;
     private ImageButton startButton;
-    private LocationManager locationManager;
-    private LocationListener locationListener;
+    private boolean run = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rmu__main);
+        distanceView = (TextView) findViewById(R.id.textView3);
+        velocityView = (TextView) findViewById(R.id.textView);
         startButton = (ImageButton) findViewById(R.id.startButton);
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                //weg+neue Strecke  location.longitude...
-            }
 
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        };
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{
@@ -76,10 +56,22 @@ public class RMU_Main extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(RMU_Main.this, Profil.class);
-                startActivity(i);
-
-                //locationManager.requestLocationUpdates("gps", 5000, 2, locationListener);
+                Intent i = new Intent(RMU_Main.this, CalculatorService.class);
+                if(!run){
+                    startService(i);
+                    CalculatorService service = new CalculatorService();
+                    while(!run){
+                        distanceView.setText("Strecke:  " + service.getCurrentDistance() + " km");
+                        velocityView.setText("Geschwindigkeit:  " + service.getCurrentVelocity()*3.6 + " km/h");
+                        try {
+                            wait(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    stopService(i);
+                }
             }
         });
     }
