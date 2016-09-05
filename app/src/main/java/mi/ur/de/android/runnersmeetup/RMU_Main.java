@@ -5,8 +5,12 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,20 +19,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class RMU_Main extends AppCompatActivity {
+public class RMU_Main extends AppCompatActivity implements CalculatorListener {
+    private TextView timeView;
     private TextView distanceView;
     private TextView velocityView;
-    private ImageButton startButton;
+    private ImageButton button;
     private boolean run = false;
+    private CalculatorService calculatorService;
+    private ServiceConnection serviceConnection;
+    private LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rmu__main);
-        distanceView = (TextView) findViewById(R.id.textView3);
+        distanceView = (TextView) findViewById(R.id.textView2);
+        timeView = (TextView) findViewById(R.id.textView3);
         velocityView = (TextView) findViewById(R.id.textView);
-        startButton = (ImageButton) findViewById(R.id.startButton);
+        button = (ImageButton) findViewById(R.id.button);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -39,6 +49,7 @@ public class RMU_Main extends AppCompatActivity {
         } else {
             configureButton();
         }
+        initServiceConnection();
     }
 
         @Override
@@ -53,28 +64,48 @@ public class RMU_Main extends AppCompatActivity {
         }
 
     private void configureButton() {
-        startButton.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(RMU_Main.this, CalculatorService.class);
-                if(!run){
+                run = !run;
+                if(run){
                     startService(i);
-                    CalculatorService service = new CalculatorService();
-                    while(!run){
-                        distanceView.setText("Strecke:  " + service.getCurrentDistance() + " km");
-                        velocityView.setText("Geschwindigkeit:  " + service.getCurrentVelocity()*3.6 + " km/h");
-                        try {
-                            wait(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
                 } else {
                     stopService(i);
                 }
             }
         });
     }
+
+    private void initServiceConnection() {
+
+        serviceConnection = new ServiceConnection() {
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                System.out.println("Service disconnected");
+            }
+
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+               calculatorService = ((CalculatorService.LocalBinder) service).getBinder();
+                if (calculatorService != null)
+                    calculatorService.setCalculatorListener(RMU_Main.this);
+            }
+        };
+    }
+
+    @Override
+    public void updateVelocityView(double velocity) {
+        velocityView.setText("Geschwindigkeit:  " + velocity + " km/h");
+    }
+
+    @Override
+    public void updateDistanceView(double distance) {
+        distanceView.setText("Strecke:  " + distance + " km");
+    }
+
 
     //ActionBar
     @Override
@@ -107,4 +138,6 @@ public class RMU_Main extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+
 

@@ -5,32 +5,42 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Binder;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
+
+import java.util.Timer;
 
 /**
  * Created by Vanessa on 01.09.2016.
  */
-public class CalculatorService extends Service {
+public class CalculatorService extends Service implements CalculatorListener{
 
-    double currentDistance;
-    int totalTime;
-    double currentVelocity;
-    double avgVelocity;
-    int numberVel;
-    LocationManager locationManager;
-    LocationListener locationListener;
-    long timeStart;
+    private static double currentDistance;
+    private static int totalTime;
+    private static double currentVelocity;
+    private double avgVelocity;
+    private int numberVel;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+    private CalculatorListener calculatorListener;
+    private CountDownTimer timer;
+    private IBinder iBinder;
 
     @Override
     public void onCreate(){
+        iBinder = new LocalBinder();
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return iBinder;
+    }
+
+    public void setCalculatorListener(CalculatorListener listener){
+        calculatorListener = listener;
     }
 
     @Override
@@ -44,15 +54,16 @@ public class CalculatorService extends Service {
                 if (lastLocation != null) {
                     currentDistance += (location.distanceTo(lastLocation) / 1000);
                 }
-                currentVelocity = location.getSpeed();
+                currentVelocity = location.getSpeed()* 3.6;
                 avgVelocity += currentVelocity;
                 numberVel++;
                 lastLocation = location;
+                updateVelocityView(currentVelocity);
+                updateDistanceView(currentDistance);
             }
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
-
             }
 
             @Override
@@ -72,15 +83,31 @@ public class CalculatorService extends Service {
 
     @Override
     public boolean stopService(Intent i){
-        avgVelocity /= numberVel;
+        avgVelocity/=numberVel;
         return super.stopService(i);
     }
 
-    public double getCurrentVelocity(){
+    class LocalBinder extends Binder {
+        CalculatorService getBinder(){ return CalculatorService.this; }
+    }
+
+    public void updateVelocityView(double velocity){
+        if(calculatorListener!=null) {
+            calculatorListener.updateVelocityView(velocity);
+        }
+    }
+
+    public void updateDistanceView(double distance){
+        if(calculatorListener!=null){
+            calculatorListener.updateDistanceView(distance);
+        }
+    }
+
+    public static double getCurrentVelocity(){
         return currentVelocity;
     }
 
-    public double getCurrentDistance(){
+    public static double getCurrentDistance(){
         return currentDistance;
     }
 }
