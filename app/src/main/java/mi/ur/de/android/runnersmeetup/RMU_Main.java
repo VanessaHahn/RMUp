@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,11 +26,10 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     private TextView timeView;
     private TextView distanceView;
     private TextView velocityView;
-    private ImageButton button;
+    private Button button;
     private boolean run = false;
     private CalculatorService calculatorService;
     private ServiceConnection serviceConnection;
-    private LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         distanceView = (TextView) findViewById(R.id.textView2);
         timeView = (TextView) findViewById(R.id.textView3);
         velocityView = (TextView) findViewById(R.id.textView);
-        button = (ImageButton) findViewById(R.id.button);
+        button = (Button) findViewById(R.id.button);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -52,16 +52,16 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         initServiceConnection();
     }
 
-        @Override
-        public void onRequestPermissionsResult( int requestCode, String[] permissions, int[] grantResults){
-            switch (requestCode) {
-                case 1:
-                    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        configureButton();
-                    }
-                    return;
-            }
+    @Override
+    public void onRequestPermissionsResult( int requestCode, String[] permissions, int[] grantResults){
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    configureButton();
+                }
+                return;
         }
+    }
 
     private void configureButton() {
         button.setOnClickListener(new View.OnClickListener() {
@@ -71,8 +71,10 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
                 run = !run;
                 if(run){
                     startService(i);
+                    button.setText("STOP");
                 } else {
                     stopService(i);
+                    button.setText("START");
                 }
             }
         });
@@ -97,15 +99,40 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     }
 
     @Override
+    protected void onPause() {
+        ActivityManager.setIsVisible(false);
+        unbindService(serviceConnection);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        ActivityManager.setIsVisible(true);
+        bindService(new Intent(RMU_Main.this, CalculatorService.class), serviceConnection, BIND_AUTO_CREATE);
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+//		stopService(new Intent(EggTimerActivity.this, EggTimerService.class));
+        super.onDestroy();
+    }
+
+    @Override
     public void updateVelocityView(double velocity) {
         velocityView.setText("Geschwindigkeit:  " + velocity + " km/h");
     }
 
     @Override
     public void updateDistanceView(double distance) {
-        distanceView.setText("Strecke:  " + distance + " km");
+        distanceView.setText("Strecke:  " + distance + " m");
     }
 
+    @Override
+    public void enableGps(){
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivity(intent);
+    }
 
     //ActionBar
     @Override
@@ -138,6 +165,3 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         return super.onOptionsItemSelected(item);
     }
 }
-
-
-

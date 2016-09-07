@@ -12,4 +12,6 @@ public interface CalculatorListener {
    // void updateTimerView(int time);
 
     //void updateCaloriesView(int kcal);
+
+    void enableGps();
 }
