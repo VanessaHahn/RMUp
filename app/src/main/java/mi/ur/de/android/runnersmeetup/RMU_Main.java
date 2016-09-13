@@ -159,16 +159,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
             case R.id.music_icon:
                 //music an/aus
                 return true;
-
-            case R.id.action_about:
-
-                return true;
-
-            case R.id.action_profil:
-                return true;
-
-            case R.id.action_trainingsuebersicht:
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }

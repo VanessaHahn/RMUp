@@ -8,18 +8,26 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_runnersmeetup"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RMU_Main">
+
+        <activity
+            android:name=".NavigationDrawer"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Trainingsuebersicht" />
+
+        <activity android:name=".RMU_Main" android:parentActivityName=".NavigationDrawer"
+            android:label="Run"/>
+        <activity android:name=".Trainingsuebersicht" android:parentActivityName=".NavigationDrawer"
+            android:label="Trainingsübersicht"/>
 
         <service
             android:name=".CalculatorService"
@@ -27,7 +35,8 @@
 
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".Settings"></activity>
+        <activity android:name=".Settings" android:parentActivityName=".NavigationDrawer"
+            android:label="Einstellungen"/>
     </application>
 
 </manifest>

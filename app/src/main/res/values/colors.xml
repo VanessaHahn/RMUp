@@ -2,9 +2,10 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#D3D3D3</color>
     <color name="dunkelGrau">#202020</color>
     <color name="hellGrau">#D3D3D3</color>
     <color name="weiß">#ffffff</color>
     <color name="schwarz">#000000</color>
+    <color name="actionBar">#123</color>
 </resources>

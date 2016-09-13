@@ -4,6 +4,8 @@ import android.media.Image;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,4 +80,25 @@ public class Trainingsuebersicht extends AppCompatActivity {
             image.setImageResource(R.drawable.daumen_runter);
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.gps_icon:
+                //GPS an/aus
+                return true;
+
+            case R.id.music_icon:
+                //music an/aus
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

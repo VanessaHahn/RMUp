@@ -12,20 +12,4 @@
         android:id="@+id/music_icon"
         android:icon="@drawable/ic_audiotrack_black_24dp"
         app:showAsAction="ifRoom"/>
-
-    <item
-        android:title="@string/about_title"
-        android:id="@+id/action_about"
-        app:showAsAction="never"/>
-
-    <item
-        android:title="@string/profil_title"
-        android:id="@+id/action_profil"
-        app:showAsAction="never"/>
-
-    <item
-        android:title="@string/trainingsuebersicht_title"
-        android:id="@+id/action_trainingsuebersicht"
-        app:showAsAction="never"/>
-
 </menu>
