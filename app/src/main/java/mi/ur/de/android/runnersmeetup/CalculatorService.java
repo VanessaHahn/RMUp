@@ -16,6 +16,7 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.support.v4.app.ActivityCompat.requestPermissions;
 
@@ -29,10 +30,11 @@ public class CalculatorService extends Service implements CalculatorListener {
     private static double currentVelocity;
     private double avgVelocity;
     private int numberVel;
+    private int kcal;
     private LocationManager locationManager;
     private LocationListener locationListener;
     private CalculatorListener calculatorListener;
-    private CountDownTimer timer;
+    private Timer timer;
     private IBinder iBinder;
 
     @Override
@@ -51,11 +53,21 @@ public class CalculatorService extends Service implements CalculatorListener {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        setupValues();
+        setupLocation();
+        //setupTimer();
+        return START_STICKY;
+    }
+
+    private void setupValues() {
         currentDistance = 0.0;
         currentVelocity = 0.0;
         avgVelocity = 0.0;
         numberVel = 0;
         totalTime = 0;
+    }
+
+    private void setupLocation() {
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             private Location lastLocation;
@@ -65,12 +77,12 @@ public class CalculatorService extends Service implements CalculatorListener {
                 if (lastLocation != null) {
                     currentDistance += location.distanceTo(lastLocation);
                 }
+                kcal = (int) currentDistance/1000 * Constants.getWeight();
                 currentVelocity = location.getSpeed() * 3.6;
-                avgVelocity += currentVelocity;
-                numberVel++;
-                lastLocation = location;
                 updateVelocityView(currentVelocity);
                 updateDistanceView(currentDistance);
+                updateCaloriesView(kcal);
+                lastLocation = location;
             }
 
             @Override
@@ -88,7 +100,31 @@ public class CalculatorService extends Service implements CalculatorListener {
             }
         };
         updateLocation();
-        return START_STICKY;
+    }
+
+    private void setupTimer() {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                String formattedTime = getFormattedTime(totalTime);
+                updateTimerView(formattedTime);
+                totalTime++;
+            }
+        },1000,1000);
+    }
+
+    private String getFormattedTime(int totalTime) {
+        int min = totalTime/60;
+        int sek = totalTime - (60 * min);
+        return ""+min+":"+sek;
+    }
+
+    @Override
+    public void updateTimerView(String time) {
+        if(calculatorListener!=null){
+            calculatorListener.updateTimerView(time);
+        }
     }
 
     @Override
@@ -99,12 +135,15 @@ public class CalculatorService extends Service implements CalculatorListener {
     }
 
     private void updateLocation() {
-        locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
+        locationManager.requestLocationUpdates("gps", 10000, 0, locationListener);
     }
 
     @Override
     public boolean stopService(Intent i){
         avgVelocity/=numberVel;
+        if(timer!=null) {
+            timer.cancel();
+        }
         return super.stopService(i);
     }
 
@@ -124,11 +163,17 @@ public class CalculatorService extends Service implements CalculatorListener {
         }
     }
 
+    public void updateCaloriesView(int kcal){
+        if(calculatorListener!=null){
+            calculatorListener.updateCaloriesView(kcal);
+        }
+    }
+
     public static double getCurrentVelocity(){
-        return (int) currentVelocity;
+        return currentVelocity;
     }
 
     public static double getCurrentDistance(){
-        return (int) currentDistance;
+        return currentDistance;
     }
 }

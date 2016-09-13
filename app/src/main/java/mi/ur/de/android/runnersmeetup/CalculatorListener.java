@@ -9,9 +9,9 @@ public interface CalculatorListener {
 
     void updateDistanceView(double distance);
 
-   // void updateTimerView(int time);
+    void updateTimerView(String time);
 
-    //void updateCaloriesView(int kcal);
+    void updateCaloriesView(int kcal);
 
     void enableGps();
 }

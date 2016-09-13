@@ -19,7 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Profil" />
         <activity android:name=".Trainingsuebersicht" />
 
         <service
@@ -27,7 +26,8 @@
             android:enabled="true" />
 
         <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>

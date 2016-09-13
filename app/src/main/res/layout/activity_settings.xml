@@ -4,38 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/activity_vertical_margin"
-    tools:context="mi.ur.de.android.runnersmeetup.RegisterActivity">
-
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="Name"
-        android:ems="10"
-        android:id="@+id/input_name" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint = "Passwort"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/input_password1" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:hint="Passwort"
-        android:ems="10"
-        android:id="@+id/input_password2" />
+    android:padding = "16dp"
+    tools:context="mi.ur.de.android.runnersmeetup.Settings">
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/input_gender"
+        android:id="@+id/gender_spinner"
         android:spinnerMode="dropdown" />
 
     <EditText
@@ -65,7 +40,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
-        android:id="@+id/button_register"/>
+        android:text="SPEICHERN"
+        android:id="@+id/store_button" />
 
 </LinearLayout>

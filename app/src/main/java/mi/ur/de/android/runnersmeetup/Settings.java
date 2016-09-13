@@ -6,31 +6,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class Profil extends AppCompatActivity {
-
-    Spinner spinner;
-    ArrayAdapter<CharSequence> adapter;
-
-    private EditText inputCm, inputKg, inputName;
-    private ImageButton buttonCalcBMI;
-    private String gender;
+public class Settings extends AppCompatActivity {
+    private EditText inputCm, inputKg, inputPhone;
+    private Spinner spinner;
+    private int cm = 180, kg = 77;
+    private String gender = "männlich", phone = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profil);
+        setContentView(R.layout.activity_settings);
         initSpinner();
         initButton();
     }
 
     private void initSpinner(){
         spinner = (Spinner) findViewById(R.id.gender_spinner);
-        adapter = ArrayAdapter.createFromResource(this,R.array.gender_options,android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.gender_options,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -41,19 +39,17 @@ public class Profil extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-
     }
 
     private void initButton(){
-        inputName = (EditText) findViewById(R.id.input_name);
         inputCm = (EditText) findViewById(R.id.input_cm);
         inputKg = (EditText) findViewById(R.id.input_kg);
+        inputPhone = (EditText) findViewById(R.id.input_phone);
 
-        buttonCalcBMI = (ImageButton) findViewById(R.id.button_bmi);
-        buttonCalcBMI.setOnClickListener(new View.OnClickListener() {
+        Button storeButton = (Button) findViewById(R.id.store_button);
+        storeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initToast();
@@ -70,17 +66,14 @@ public class Profil extends AppCompatActivity {
     }
 
     private void readValues(){
-        String name = inputName.getText().toString();
-        int kg = Integer.parseInt(inputKg.getText().toString());
-        int cm = Integer.parseInt(inputCm.getText().toString());
+        kg = Integer.parseInt(inputKg.getText().toString());
+        cm = Integer.parseInt(inputCm.getText().toString());
+        phone = inputPhone.getText().toString();
+        setValues(gender,cm,kg,phone);
+    }
 
-        Intent i = new Intent(this, Trainingsuebersicht.class);
-        i.putExtra(Constants.KEY_CM, cm);
-        i.putExtra(Constants.KEY_KG, kg);
-        i.putExtra(Constants.KEY_NAME, name);
-        i.putExtra(Constants.KEY_GENDER, gender);
-
-        startActivity(i);
+    public void setValues(String gender, int cm, int kg, String phone){
+        Constants.setValues(gender,cm,kg,phone);
     }
 
 }

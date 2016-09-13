@@ -23,9 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class RMU_Main extends AppCompatActivity implements CalculatorListener {
-    private TextView timeView;
-    private TextView distanceView;
-    private TextView velocityView;
+    private TextView timeView, distanceView, velocityView, caloriesView;
     private Button button;
     private boolean run = false;
     private CalculatorService calculatorService;
@@ -126,6 +124,16 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     @Override
     public void updateDistanceView(double distance) {
         distanceView.setText("Strecke:  " + distance + " m");
+    }
+
+    @Override
+    public void updateTimerView(String time){
+        timeView.setText("Zeit:  " + time + " min");
+    }
+
+    @Override
+    public void updateCaloriesView(int kcal){
+        caloriesView.setText("Kalorien:  " + kcal + " kcal");
     }
 
     @Override

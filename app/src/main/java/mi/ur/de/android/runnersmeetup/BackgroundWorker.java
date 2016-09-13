@@ -29,8 +29,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... params) {
         String type = params[0];
         //IP verändern
-        String login_url = "http://10.0.2.2/login.php";
-        String register_url = "http://10.0.2.2/login.php";
+        String login_url = "http://hostinger.de/login.php";
+        String register_url = "http://hostinger.de/register.php";
         if(type.equals("login")){
             try {
                 String user_name = params[1];

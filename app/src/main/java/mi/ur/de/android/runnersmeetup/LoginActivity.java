@@ -4,29 +4,44 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText usernameText, passwordText;
+    private EditText inputName, inputPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        usernameText = (EditText) findViewById(R.id.username);
-        passwordText = (EditText) findViewById(R.id.password);
+        inputName = (EditText) findViewById(R.id.input_name);
+        inputPassword = (EditText) findViewById(R.id.input_password);
+
     }
 
-    public void OnLogin(View view){
-        String username = usernameText.getText().toString();
-        String password = passwordText.getText().toString();
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.button_login:
+                login();
+                break;
+            case R.id.button_register:
+                openRegActivity();
+                break;
+        }
+    }
+
+    public void login(){
+        String name = inputName.getText().toString();
+        String password = inputPassword.getText().toString();
         String type = "login";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, username, password);
+        backgroundWorker.execute(type, name, password);
     }
 
-    public void OpenReg(View view){
+    public void openRegActivity(){
         startActivity(new Intent(this,RegisterActivity.class));
     }
+
 }

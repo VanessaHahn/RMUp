@@ -21,15 +21,8 @@ public class Trainingsuebersicht extends AppCompatActivity {
         showName = (TextView) findViewById(R.id.show_name);
         resultBMI = (TextView) findViewById(R.id.result_text);
         resultText = (TextView) findViewById(R.id.result_bmi);
-        getExtras();
     }
-    private void getExtras(){
-        int cm = getIntent().getExtras().getInt(Constants.KEY_CM);
-        int kg = getIntent().getExtras().getInt(Constants.KEY_KG);
-        String name = getIntent().getExtras().getString(Constants.KEY_NAME);
-        String gender = getIntent().getExtras().getString(Constants.KEY_GENDER);
-        showResults(cm, kg, name, gender);
-    }
+
 
     private void showResults(int cm, int kg, String name, String gender){
         CalculatorBmi calc = new CalculatorBmi();
@@ -85,7 +78,4 @@ public class Trainingsuebersicht extends AppCompatActivity {
             image.setImageResource(R.drawable.daumen_runter);
         }
     }
-
-
-
 }
