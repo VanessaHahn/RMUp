@@ -4,10 +4,11 @@ package mi.ur.de.android.runnersmeetup;
  * Created by Medion on 20.08.2016.
  */
 public class Constants {
-    public static final String KEY_CM = "cm";
-    public static final String KEY_KG = "kg";
-    public static final String KEY_PHONE = "name";
-    public static final String KEY_GENDER = "gender";
+    private static int id;
+    private static String name;
+
+    private static boolean run;
+    private static boolean logged;
 
     private static int size = 180;
     private static int weight = 77;
@@ -17,12 +18,50 @@ public class Constants {
     public static void setValues(String genderNew, int sizeNew, int weightNew, String phoneNew){
         if(genderNew.equals("männlich")){
             gender = true;
-        } else {
+        } else if(genderNew.equals("weiblich")){
             gender = false;
         }
-        size = sizeNew;
-        weight = weightNew;
-        phone = phoneNew;
+        if(sizeNew != 0) {
+            size = sizeNew;
+        }
+        if(weightNew != 0) {
+            weight = weightNew;
+        }
+        if(!phoneNew.equals("") && phoneNew != null){
+            phone = phoneNew;
+        }
+    }
+
+    public static void setRun(boolean runCondition){
+        run = runCondition;
+    }
+
+    public static void setLogged(boolean loggedCondition){
+        logged = loggedCondition;
+    }
+
+    public static void setName(String userName){
+        name = userName;
+    }
+
+    public static void setId(int userId){
+        id = userId;
+    }
+
+    public static String getName(){
+        return name;
+    }
+
+    public static int getId() {
+        return id;
+    }
+
+    public static boolean isLogged(){
+        return logged;
+    }
+
+    public static boolean isRun(){
+        return run;
     }
 
     public static int getSize(){
