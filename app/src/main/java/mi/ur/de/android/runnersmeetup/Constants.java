@@ -13,13 +13,11 @@ public class Constants {
     private static int size = 180;
     private static int weight = 77;
     private static String phone = "";
-    private static boolean gender = true;
+    private static String gender = "männlich";
 
     public static void setValues(String genderNew, int sizeNew, int weightNew, String phoneNew){
-        if(genderNew.equals("männlich")){
-            gender = true;
-        } else if(genderNew.equals("weiblich")){
-            gender = false;
+        if(genderNew.equals("weiblich")){
+            gender = "weiblich";
         }
         if(sizeNew != 0) {
             size = sizeNew;
@@ -72,7 +70,7 @@ public class Constants {
         return weight;
     }
 
-    public static boolean getGender(){
+    public static String getGender(){
         return gender;
     }
 

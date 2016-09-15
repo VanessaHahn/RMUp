@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -25,7 +26,6 @@ import android.widget.Toast;
 public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     private TextView timeView, distanceView, velocityView, caloriesView;
     private Button button;
-    private boolean run = false;
     private CalculatorService calculatorService;
     private ServiceConnection serviceConnection;
 
@@ -37,6 +37,12 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         timeView = (TextView) findViewById(R.id.textView3);
         velocityView = (TextView) findViewById(R.id.textView);
         button = (Button) findViewById(R.id.button);
+
+        SharedPreferences prefs = getSharedPreferences("RunCondition",MODE_PRIVATE);
+        Constants.setRun(prefs.getBoolean("run", false));
+        if(Constants.isRun()){
+            button.setText("STOP");
+        }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -66,13 +72,14 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(RMU_Main.this, CalculatorService.class);
-                run = !run;
-                if(run){
+                if(!Constants.isRun()){
                     startService(i);
                     button.setText("STOP");
+                    Constants.setRun(true);
                 } else {
                     stopService(i);
                     button.setText("START");
+                    Constants.setRun(false);
                 }
             }
         });
@@ -111,8 +118,16 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     }
 
     @Override
+    public void finish(){
+        SharedPreferences prefs = getSharedPreferences("RunCondition",MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("run", Constants.isRun());
+        editor.commit();
+        super.finish();
+    }
+
+    @Override
     protected void onDestroy() {
-//		stopService(new Intent(EggTimerActivity.this, EggTimerService.class));
         super.onDestroy();
     }
 
@@ -162,4 +177,5 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

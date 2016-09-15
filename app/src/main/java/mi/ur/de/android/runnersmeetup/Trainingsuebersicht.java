@@ -1,5 +1,6 @@
 package mi.ur.de.android.runnersmeetup;
 
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,9 @@ public class Trainingsuebersicht extends AppCompatActivity {
         showName = (TextView) findViewById(R.id.show_name);
         resultBMI = (TextView) findViewById(R.id.result_text);
         resultText = (TextView) findViewById(R.id.result_bmi);
+
+        SharedPreferences prefs = getSharedPreferences("Settings",MODE_PRIVATE);
+        Constants.setValues(prefs.getString("gender","männlich"),prefs.getInt("size",180),prefs.getInt("weight",77),prefs.getString("phone",""));
     }
 
 
@@ -99,6 +103,18 @@ public class Trainingsuebersicht extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void finish(){
+        SharedPreferences prefs = getSharedPreferences("Settings",MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("gender", Constants.getGender());
+        editor.putInt("size", Constants.getSize());
+        editor.putInt("weight", Constants.getWeight());
+        editor.putString("phone", Constants.getPhone());
+        editor.commit();
+        super.finish();
     }
 
 }
