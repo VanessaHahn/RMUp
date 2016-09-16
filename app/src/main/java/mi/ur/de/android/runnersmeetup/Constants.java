@@ -129,7 +129,11 @@ public class Constants {
     public static String getFormatedTime(int time) {
         int min = time/60;
         int sek = time - (60*min);
-        return min + ":" + sek;
+        if(sek < 10){
+            return min + ":0" + sek;
+        }else {
+            return min + ":" + sek;
+        }
     }
 
     public static boolean getLogged() {
