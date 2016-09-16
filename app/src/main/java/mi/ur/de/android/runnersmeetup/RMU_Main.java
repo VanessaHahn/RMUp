@@ -31,6 +31,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     private CalculatorService calculatorService;
     private ServiceConnection serviceConnection;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         velocityView = (TextView) findViewById(R.id.textView);
         caloriesView = (TextView) findViewById(R.id.textView4);
         button = (Button) findViewById(R.id.button);
+
 
         SharedPreferences prefs = getSharedPreferences("RunCondition",MODE_PRIVATE);
         Constants.setRun(prefs.getBoolean("run", false));
@@ -77,6 +79,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
                 Intent i = new Intent(RMU_Main.this, CalculatorService.class);
                 if(!Constants.isRun()){
                     startService(i);
+                    stopService(i);
                     button.setText("STOP");
                     Constants.setRun(true);
                 } else {
@@ -135,22 +138,45 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     }
 
     @Override
-    public void updateVelocityView(double velocity) {
-        velocityView.setText("Geschwindigkeit:  " + velocity + " km/h");
+    public void updateVelocityView(final double velocity) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                velocityView.setText("Geschwindigkeit:  " + velocity + " km/h");
+            }
+        });
+
     }
 
     @Override
-    public void updateDistanceView(double distance) {
-        distanceView.setText("Strecke:  " + distance + " m");
+    public void updateDistanceView(final double distance) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                distanceView.setText("Strecke:  " + distance + " m");
+            }
+        });
+
     }
     @Override
-    public void updateTimerView(String time){
-        timeView.setText("Zeit:  " + time + " min");
+    public void updateTimerView(final String time){
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                timeView.setText("Zeit:  " + time + " min");
+            }
+        });
     }
 
     @Override
-    public void updateCaloriesView(int kcal){
-        caloriesView.setText("Kalorien:  " + kcal + " kcal");
+    public void updateCaloriesView(final int kcal){
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                caloriesView.setText("Kalorien:  " + kcal + " kcal");
+            }
+        });
+
     }
 
     @Override

@@ -14,6 +14,7 @@ import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -54,7 +55,7 @@ public class CalculatorService extends Service implements CalculatorListener {
     public int onStartCommand(Intent intent, int flags, int startId) {
         setupValues();
         setupLocation();
-        //setupTimer();
+        setupTimer();
         return START_STICKY;
     }
 
@@ -67,18 +68,27 @@ public class CalculatorService extends Service implements CalculatorListener {
 
     private void setupLocation() {
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean isGPSEnabled = locationManager
+                .isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if(isGPSEnabled == false){
+            Log.e("Location", "Error GPS not available");
+        }else{
+            Log.d("Location", "GPS starten.");
+        }
+
         locationListener = new LocationListener() {
             private Location lastLocation;
 
             @Override
             public void onLocationChanged(Location location) {
+                Log.d("Location", "New Location found");
                 if (lastLocation != null) {
                     currentDistance += location.distanceTo(lastLocation);
                 } else {
                     Constants.setLocationLongitude(location.getLongitude());
                     Constants.setLocationLatitude(location.getLatitude());
                 }
-                kcal = (int) (currentDistance/1000.0 * (double) Constants.getWeight());
+                kcal = (int) (currentDistance / 1000.0 * (double) Constants.getWeight());
                 currentVelocity = location.getSpeed() * 3.6;
                 updateVelocityView(currentVelocity);
                 updateDistanceView(currentDistance);
@@ -88,6 +98,7 @@ public class CalculatorService extends Service implements CalculatorListener {
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
+                Log.i("Location", "Stauts changed: " + status);
             }
 
             @Override
@@ -99,6 +110,7 @@ public class CalculatorService extends Service implements CalculatorListener {
             public void onProviderDisabled(String provider) {
                 enableGps();
             }
+
         };
         updateLocation();
     }
@@ -110,27 +122,39 @@ public class CalculatorService extends Service implements CalculatorListener {
             public void run() {
                 String formattedTime = Constants.getFormatedTime(totalTime);
                 updateTimerView(formattedTime);
+                Log.d("Timer", "Timer status: " + totalTime);
                 totalTime++;
             }
-        },1000,1000);
+        }, 0, 1000);
     }
 
     @Override
     public void updateTimerView(String time) {
-        if(calculatorListener!=null){
+        if (calculatorListener != null) {
             calculatorListener.updateTimerView(time);
         }
     }
 
     @Override
     public void enableGps() {
-        if(calculatorListener!=null){
+        if (calculatorListener != null) {
             calculatorListener.enableGps();
         }
     }
 
     private void updateLocation() {
-        locationManager.requestLocationUpdates("gps", 10000, 0, locationListener);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
+        Log.d("Location", "Location request started");
     }
 
     @Override
@@ -139,13 +163,19 @@ public class CalculatorService extends Service implements CalculatorListener {
         Constants.setAvgVelocity(avgVelocity);
         Constants.setDistance(currentDistance);
         Constants.setTime(totalTime);
-        if(timer!=null) {
+        if(timer != null) {
             timer.cancel();
         }
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
         backgroundworker.execute("changeValues",Constants.getDistance(),Constants.getTime(),Constants.getAvgVelocity());
 
         return super.stopService(i);
+    }
+
+    @Override
+    public void onDestroy(){
+
+        Log.d("Service", "Destroy Service");
     }
 
     class LocalBinder extends Binder {
