@@ -153,7 +153,12 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                distanceView.setText("Strecke:  " + distance + " m");
+                if(distance < 1000){
+                    distanceView.setText("Strecke:  " + distance + " m");
+                }else{
+                    distanceView.setText("Strecke:  " + distance/1000 + " km");
+                }
+                
             }
         });
 
