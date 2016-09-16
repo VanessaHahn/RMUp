@@ -10,6 +10,12 @@ public class Constants {
     private static boolean run;
     private static boolean logged;
 
+    private static double avgVelocity = 0;
+    private static double distance = 0;
+    private static int time;
+    private static double locationLongitude;
+    private static double locationLatitude;
+
     private static int size = 180;
     private static int weight = 77;
     private static String phone = "";
@@ -18,6 +24,8 @@ public class Constants {
     public static void setValues(String genderNew, int sizeNew, int weightNew, String phoneNew){
         if(genderNew.equals("weiblich")){
             gender = "weiblich";
+        } else {
+            gender = "männlich";
         }
         if(sizeNew != 0) {
             size = sizeNew;
@@ -25,9 +33,7 @@ public class Constants {
         if(weightNew != 0) {
             weight = weightNew;
         }
-        if(!phoneNew.equals("") && phoneNew != null){
-            phone = phoneNew;
-        }
+        phone = phoneNew;
     }
 
     public static void setRun(boolean runCondition){
@@ -62,6 +68,18 @@ public class Constants {
         return run;
     }
 
+    public static String getAvgVelocity(){
+        return "" + avgVelocity;
+    }
+
+    public static String getLocationLongitude() {
+        return "" + locationLongitude;
+    }
+
+    public static String getLocationLatitude(){
+        return "" + locationLatitude;
+    }
+
     public static int getSize(){
         return size;
     }
@@ -76,5 +94,49 @@ public class Constants {
 
     public static String getPhone(){
         return phone;
+    }
+
+    public static void setLocationLatitude(double latitude) {
+        locationLatitude = latitude;
+    }
+
+    public static void setLocationLongitude(double longitude) {
+        locationLongitude = longitude;
+    }
+
+    public static void setAvgVelocity(double velocity) {
+        avgVelocity = velocity;
+    }
+
+    public static void setDistance(double newDistance) {
+        distance = newDistance;
+    }
+
+    public static void setTime(int newTime) {
+        time = newTime;
+    }
+    
+
+    public static String getDistance() {
+        return "" + distance;
+    }
+
+    public static String getTime() {
+        String formatedTime = getFormatedTime(time);
+        return formatedTime;
+    }
+
+    public static String getFormatedTime(int time) {
+        int min = time/60;
+        int sek = time - (60*min);
+        return min + ":" + sek;
+    }
+
+    public static boolean getLogged() {
+        return logged;
+    }
+
+    public static void setPhone(String phoneNew) {
+        phone = phoneNew;
     }
 }

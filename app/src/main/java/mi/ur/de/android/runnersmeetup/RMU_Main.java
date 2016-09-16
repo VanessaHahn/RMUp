@@ -23,6 +23,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     private TextView timeView, distanceView, velocityView, caloriesView;
     private Button button;
@@ -36,6 +38,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         distanceView = (TextView) findViewById(R.id.textView2);
         timeView = (TextView) findViewById(R.id.textView3);
         velocityView = (TextView) findViewById(R.id.textView);
+        caloriesView = (TextView) findViewById(R.id.textView4);
         button = (Button) findViewById(R.id.button);
 
         SharedPreferences prefs = getSharedPreferences("RunCondition",MODE_PRIVATE);
@@ -140,7 +143,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     public void updateDistanceView(double distance) {
         distanceView.setText("Strecke:  " + distance + " m");
     }
-
     @Override
     public void updateTimerView(String time){
         timeView.setText("Zeit:  " + time + " min");

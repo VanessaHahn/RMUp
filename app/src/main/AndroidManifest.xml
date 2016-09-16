@@ -12,7 +12,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".NavigationDrawer"
             android:label="@string/app_name"
@@ -23,11 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".RMU_Main" android:parentActivityName=".NavigationDrawer"
-            android:label="Run"/>
-        <activity android:name=".Trainingsuebersicht" android:parentActivityName=".NavigationDrawer"
-            android:label="Trainingsübersicht"/>
+        <activity
+            android:name=".RMU_Main"
+            android:label="Run"
+            android:parentActivityName=".NavigationDrawer" />
+        <activity
+            android:name=".Trainingsuebersicht"
+            android:label="Trainingsübersicht"
+            android:parentActivityName=".NavigationDrawer" />
 
         <service
             android:name=".CalculatorService"
@@ -35,8 +37,14 @@
 
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".Settings" android:parentActivityName=".NavigationDrawer"
-            android:label="Einstellungen"/>
+        <activity
+            android:name=".Settings"
+            android:label="Einstellungen"
+            android:parentActivityName=".NavigationDrawer" />
+        <activity
+            android:name=".FriendsActivity"
+            android:label="@string/title_activity_friends"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

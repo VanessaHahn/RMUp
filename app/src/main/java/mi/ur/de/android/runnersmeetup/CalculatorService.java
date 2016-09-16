@@ -29,7 +29,6 @@ public class CalculatorService extends Service implements CalculatorListener {
     private static int totalTime;
     private static double currentVelocity;
     private double avgVelocity;
-    private int numberVel;
     private int kcal;
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -63,7 +62,6 @@ public class CalculatorService extends Service implements CalculatorListener {
         currentDistance = 0.0;
         currentVelocity = 0.0;
         avgVelocity = 0.0;
-        numberVel = 0;
         totalTime = 0;
     }
 
@@ -76,6 +74,9 @@ public class CalculatorService extends Service implements CalculatorListener {
             public void onLocationChanged(Location location) {
                 if (lastLocation != null) {
                     currentDistance += location.distanceTo(lastLocation);
+                } else {
+                    Constants.setLocationLongitude(location.getLongitude());
+                    Constants.setLocationLatitude(location.getLatitude());
                 }
                 kcal = (int) currentDistance/1000 * Constants.getWeight();
                 currentVelocity = location.getSpeed() * 3.6;
@@ -107,17 +108,11 @@ public class CalculatorService extends Service implements CalculatorListener {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                String formattedTime = getFormattedTime(totalTime);
+                String formattedTime = Constants.getFormatedTime(totalTime);
                 updateTimerView(formattedTime);
                 totalTime++;
             }
         },1000,1000);
-    }
-
-    private String getFormattedTime(int totalTime) {
-        int min = totalTime/60;
-        int sek = totalTime - (60 * min);
-        return ""+min+":"+sek;
     }
 
     @Override
@@ -140,10 +135,16 @@ public class CalculatorService extends Service implements CalculatorListener {
 
     @Override
     public boolean stopService(Intent i){
-        avgVelocity/=numberVel;
+        avgVelocity = (currentDistance / totalTime) * 3.6;
+        Constants.setAvgVelocity(avgVelocity);
+        Constants.setDistance(currentDistance);
+        Constants.setTime(totalTime);
         if(timer!=null) {
             timer.cancel();
         }
+        BackgroundWorker backgroundworker = new BackgroundWorker(this);
+        backgroundworker.execute("changeValues",Constants.getDistance(),Constants.getTime(),Constants.getAvgVelocity());
+
         return super.stopService(i);
     }
 
