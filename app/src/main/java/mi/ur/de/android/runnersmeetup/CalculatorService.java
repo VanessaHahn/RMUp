@@ -78,7 +78,7 @@ public class CalculatorService extends Service implements CalculatorListener {
                     Constants.setLocationLongitude(location.getLongitude());
                     Constants.setLocationLatitude(location.getLatitude());
                 }
-                kcal = (int) currentDistance/1000 * Constants.getWeight();
+                kcal = (int) (currentDistance/1000.0 * (double) Constants.getWeight());
                 currentVelocity = location.getSpeed() * 3.6;
                 updateVelocityView(currentVelocity);
                 updateDistanceView(currentDistance);
