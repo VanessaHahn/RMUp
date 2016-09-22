@@ -87,11 +87,12 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
             public void onClick(View v) {
                 Intent i = new Intent(RMU_Main.this, CalculatorService.class);
                 if(!Constants.isRun()){
+                    bindService(new Intent(RMU_Main.this, CalculatorService.class), serviceConnection, BIND_AUTO_CREATE);
                     startService(i);
-                    stopService(i);
                     button.setText("STOP");
                     Constants.setRun(true);
                 } else {
+                    unbindService(serviceConnection);
                     stopService(i);
                     button.setText("START");
                     Constants.setRun(false);
@@ -128,7 +129,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     @Override
     protected void onResume() {
         ActivityManager.setIsVisible(true);
-        bindService(new Intent(RMU_Main.this, CalculatorService.class), serviceConnection, BIND_AUTO_CREATE);
+
         super.onResume();
     }
 

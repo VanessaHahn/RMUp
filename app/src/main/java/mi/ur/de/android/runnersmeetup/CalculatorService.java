@@ -52,6 +52,12 @@ public class CalculatorService extends Service implements CalculatorListener {
         return iBinder;
     }
 
+    @Override
+    public boolean onUnbind(Intent intent) {
+        // All clients have unbound with unbindService()
+        return true;
+    }
+
     public void setCalculatorListener(CalculatorListener listener) {
         calculatorListener = listener;
     }
@@ -232,9 +238,42 @@ public class CalculatorService extends Service implements CalculatorListener {
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
+        super.onDestroy();
 
-        Log.d("Service", "Destroy Service");
+        Log.d("Service", "onDestroy");
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+        // Stop Location Listener
+        if (locationManager != null) {
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            locationManager.removeUpdates(locationListener);
+            locationManager = null;
+        }
+        setupValues(); // Reset Values
+        // Reset GUI to Default
+        updateDistanceView(0);
+        updateCaloriesView(0);
+
+        updateTimerView("00:00");
+        updateTimeInKMView("00:00");
+
+        updateVelocityView(0);
+        updateVelocityMeanView(0);
+
+
     }
 
     class LocalBinder extends Binder {
