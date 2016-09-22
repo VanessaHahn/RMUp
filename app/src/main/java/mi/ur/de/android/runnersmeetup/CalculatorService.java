@@ -28,14 +28,19 @@ public class CalculatorService extends Service implements CalculatorListener {
 
     private static double currentDistance;
     private static int totalTime;
+    private static int totalTimeLastKM; //Timer stand bei letzen Kiliometerwechsel
+    private static int currentKilometer;
     private static double currentVelocity;
     private double avgVelocity;
+    private long avgCounter;
     private int kcal;
     private LocationManager locationManager;
     private LocationListener locationListener;
     private CalculatorListener calculatorListener;
     private Timer timer;
     private IBinder iBinder;
+    private long lastTimeStamp; // Fuer die Berechnung der Geschwindigkeit auf Basis von GPS
+
 
     @Override
     public void onCreate() {
@@ -60,10 +65,13 @@ public class CalculatorService extends Service implements CalculatorListener {
     }
 
     private void setupValues() {
-        currentDistance = 0.0;
-        currentVelocity = 0.0;
-        avgVelocity = 0.0;
-        totalTime = 0;
+        currentDistance = 0.0; //Meter
+        currentVelocity = 0.0; //KM/H
+        avgVelocity = 0.0;  //KM/H
+        totalTime = 0; //Sekunds
+        avgCounter = 0; // Counter
+        totalTimeLastKM = 0; // counter
+        currentKilometer = 0; //KM
     }
 
     private void setupLocation() {
@@ -81,19 +89,54 @@ public class CalculatorService extends Service implements CalculatorListener {
 
             @Override
             public void onLocationChanged(Location location) {
+                long timeDifference;
                 Log.d("Location", "New Location found");
+
                 if (lastLocation != null) {
+                    // Laufstrecke aktualisieren
                     currentDistance += location.distanceTo(lastLocation);
+
+                    if(lastTimeStamp != 0){
+                        // Zeitdifferenz
+                        timeDifference = System.currentTimeMillis() - lastTimeStamp;
+
+                        // Geschwindigkeit
+                        //      Formel Herleitung
+                        //      location.distanceTo(lastLocation) in Meter
+                        //      timeDifference in Millisekunden
+                        //      currentVelocity = (location.distanceTo(lastLocation) / 1000) / (timeDifference / (1000 * 60 * 60))
+                        //      currentVelocity = (location.distanceTo(lastLocation) * 1000 * 60 * 60) / (1000 * timeDifference)
+                        //      currentVelocity = (location.distanceTo(lastLocation) * 60 * 60) / (timeDifference)
+                        currentVelocity = (location.distanceTo(lastLocation) * 60 * 60) / timeDifference;
+
+                    }
+
+
+                    // Kalorien Verbrauch
+                    kcal = (int) calculateKCal(currentDistance);
+
+                    // Mittlere Geschwindigkeit
+                    // Basis eines Gewichteten Mitellwertes: https://de.wikipedia.org/wiki/Gewichtung
+                    // avgVelocity = (avgCounter * avgVelocity + currentVelocity) / (avgCounter + 1)
+                    // Der letzte Durchschnittswert mit allen bisherigen Berechnungen gewichtet,
+                    // der neue Wert immer mit 1
+                    avgVelocity = (avgCounter * avgVelocity + currentVelocity) / (avgCounter + 1);
+                    avgCounter++;
+                    // Update GUI View
+                    updateVelocityView(currentVelocity);
+                    updateDistanceView(currentDistance);
+                    updateVelocityMeanView(avgVelocity);
+                    updateCaloriesView(kcal);
+
+
                 } else {
+
                     Constants.setLocationLongitude(location.getLongitude());
                     Constants.setLocationLatitude(location.getLatitude());
+                    //return; // Nothing to calculate if we have no lastLocalation
                 }
-                kcal = (int) (currentDistance / 1000.0 * (double) Constants.getWeight());
-                currentVelocity = location.getSpeed() * 3.6;
-                updateVelocityView(currentVelocity);
-                updateDistanceView(currentDistance);
-                updateCaloriesView(kcal);
                 lastLocation = location;
+                lastTimeStamp = System.currentTimeMillis();
             }
 
             @Override
@@ -121,6 +164,22 @@ public class CalculatorService extends Service implements CalculatorListener {
             @Override
             public void run() {
                 String formattedTime = Constants.getFormatedTime(totalTime);
+
+                // Abschaetzen der Strecke und Kalorien
+                long timeDifference = System.currentTimeMillis() - lastTimeStamp;
+                double esitmatedDistance =  currentDistance + ((double)(timeDifference/1000) * (currentVelocity / 3.6));
+                int esitmatedKcal = calculateKCal(esitmatedDistance);
+
+                // Berechnung  der Zeit in diesem Kilometer
+                if(currentKilometer != (int)(currentDistance/1000)){
+                    totalTimeLastKM = totalTime;
+                    currentKilometer = (int)(currentDistance/1000);
+                }
+                String formattedKMTime = Constants.getFormatedTime(totalTime - totalTimeLastKM);
+                updateTimeInKMView(formattedKMTime);
+
+                updateDistanceView(esitmatedDistance);
+                updateCaloriesView(esitmatedKcal);
                 updateTimerView(formattedTime);
                 Log.d("Timer", "Timer status: " + totalTime);
                 totalTime++;
@@ -200,11 +259,30 @@ public class CalculatorService extends Service implements CalculatorListener {
         }
     }
 
+    public void updateVelocityMeanView(final double meanSpeed){
+        if(calculatorListener!=null){
+            calculatorListener.updateVelocityMeanView(meanSpeed);
+        }
+    }
+
+    public void updateTimeInKMView(final String time){
+        if(calculatorListener!=null){
+            calculatorListener.updateTimeInKMView(time);
+        }
+    }
+
     public static double getCurrentVelocity(){
         return currentVelocity;
     }
 
     public static double getCurrentDistance(){
         return currentDistance;
+    }
+
+
+    private int calculateKCal(double distance){
+
+        // Kalorien Verbrauch
+        return ((int) ((double) distance / 1000.0 * (double) Constants.getWeight()));
     }
 }

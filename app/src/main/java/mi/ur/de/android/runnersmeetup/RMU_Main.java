@@ -151,7 +151,8 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                velocityView.setText("Geschwindigkeit:  " + velocity + " km/h");
+                String formatedVelo = String.format("%.0f", velocity);
+                velocityView.setText("Geschwindigkeit:  " + formatedVelo + " km/h");
             }
         });
 
@@ -163,9 +164,11 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
             @Override
             public void run() {
                 if(distance < 1000){
-                    distanceView.setText("Strecke:  " + distance + " m");
+                    String formatedDist = String.format("%.0f", distance);
+                    distanceView.setText("Strecke:  " + formatedDist + " m");
                 }else{
-                    distanceView.setText("Strecke:  " + distance/1000 + " km");
+                    String formatedDist = String.format("%.3f", distance/1000);
+                    distanceView.setText("Strecke:  " + formatedDist + " km");
                 }
                 
             }
@@ -182,20 +185,23 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         });
     }
 
-
-    public void updateVelcityMeanView(final String meanSpeed){
+    @Override
+    public void updateVelocityMeanView(final double meanSpeed){
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                velcityMeanView.setText("Durschnittsgeschwindigkeit:  " +  meanSpeed + " km/h");
+                String formatedMeanVelo = String.format("%.0f", meanSpeed);
+                velcityMeanView.setText("Durschnittsgeschwindigkeit:  " +  formatedMeanVelo + " km/h");
             }
         });
     }
+    @Override
     public void updateTimeInKMView(final String time){
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                timeView.setText("Zeit in diesem Kilometer:  " + time + " min");
+
+                timeInKMView.setText("Zeit in diesem Kilometer:  " + time + " min");
             }
         });
     }

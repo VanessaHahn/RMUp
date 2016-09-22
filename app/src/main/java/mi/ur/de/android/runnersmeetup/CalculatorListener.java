@@ -13,5 +13,9 @@ public interface CalculatorListener {
 
     void updateCaloriesView(int kcal);
 
+    void updateTimeInKMView(final String time);
+
+    void updateVelocityMeanView(final double meanSpeed);
+
     void enableGps();
 }
