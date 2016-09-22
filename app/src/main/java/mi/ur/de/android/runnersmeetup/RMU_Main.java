@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +43,10 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         caloriesView = (TextView) findViewById(R.id.textView4);
         button = (Button) findViewById(R.id.button);
 
+        /*if(!Constants.isLogged()){
+            Intent i = new Intent(RMU_Main.this,LoginActivity.class);
+            startActivity(i);
+        }*/
 
         SharedPreferences prefs = getSharedPreferences("RunCondition",MODE_PRIVATE);
         Constants.setRun(prefs.getBoolean("run", false));
@@ -201,11 +206,13 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.gps_icon:
-                //GPS an/aus
+                Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
                 return true;
 
             case R.id.music_icon:
-                //music an/aus
+                Intent ii = new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER);
+                startActivityForResult(ii,1);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -1,6 +1,7 @@
 package mi.ur.de.android.runnersmeetup;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,67 +14,49 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class Settings extends AppCompatActivity {
-    private EditText inputCm, inputKg, inputPhone;
-    private Spinner spinner;
-    private int cm = 180, kg = 77;
-    private String gender = "männlich", phone = "";
+
+    private EditText cm,kg,phone;
+    private Button speichern;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        initSpinner();
+
+        cm = (EditText) findViewById(R.id.input_cm);
+        kg = (EditText) findViewById(R.id.input_kg);
+        phone = (EditText) findViewById(R.id.input_phone);
+        SharedPreferences mySPR = getSharedPreferences("MySPFILE",0);
+        cm.setText(mySPR.getString("KEY_CM",""));
+        kg.setText(mySPR.getString("KEY_KG",""));
+        phone.setText(mySPR.getString("KEY_PHONE",""));
         initButton();
     }
 
-    private void initSpinner(){
-        spinner = (Spinner) findViewById(R.id.gender_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.gender_options,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                gender = spinner.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+    @Override
+    protected void onStop(){
+        super.onStop();
+        SharedPreferences mySPR = getSharedPreferences("MySPFILE",0);
+        SharedPreferences.Editor editor = mySPR.edit();
+        editor.putString("KEY_CM", cm.getText().toString());
+        editor.putString("KEY_KG", kg.getText().toString());
+        editor.putString("KEY_PHONE",phone.getText().toString());
+        editor.commit();
     }
 
     private void initButton(){
-        inputCm = (EditText) findViewById(R.id.input_cm);
-        inputKg = (EditText) findViewById(R.id.input_kg);
-        inputPhone = (EditText) findViewById(R.id.input_phone);
-
-        Button storeButton = (Button) findViewById(R.id.store_button);
-        storeButton.setOnClickListener(new View.OnClickListener() {
+        speichern = (Button) findViewById(R.id.button);
+        speichern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initToast();
-                readValues();
+                int inputCm = Integer.parseInt(cm.getText().toString());
+                int inputKg = Integer.parseInt(kg.getText().toString());
+                Intent i = new Intent(Settings.this, Trainingsuebersicht.class);
+                i.putExtra(Constants.KEYCM,inputCm);
+                i.putExtra(Constants.KEYKG,inputKg);
+                startActivity(i);
             }
         });
-    }
-
-    private void initToast(){
-        String text = "Profil gespeichert!";
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(this,text,duration);
-        toast.show();
-    }
-
-    private void readValues(){
-        kg = Integer.parseInt(inputKg.getText().toString());
-        cm = Integer.parseInt(inputCm.getText().toString());
-        phone = inputPhone.getText().toString();
-        setValues(gender,cm,kg,phone);
-    }
-
-    public void setValues(String gender, int cm, int kg, String phone){
-        Constants.setValues(gender,cm,kg,phone);
     }
 
 }

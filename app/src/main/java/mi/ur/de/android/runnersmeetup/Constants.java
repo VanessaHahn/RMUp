@@ -21,6 +21,9 @@ public class Constants {
     private static String phone = "";
     private static String gender = "männlich";
 
+    public static final String KEYCM = "cm";
+    public static final String KEYKG = "kg";
+
     public static void setValues(String genderNew, int sizeNew, int weightNew, String phoneNew){
         if(genderNew.equals("weiblich")){
             gender = "weiblich";

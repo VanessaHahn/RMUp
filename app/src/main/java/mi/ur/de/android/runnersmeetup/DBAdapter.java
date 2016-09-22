@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by Vanessa on 15.09.2016.
  */
-public class DBAdapter extends ArrayAdapter<RunItem>{
+/*public class DBAdapter extends ArrayAdapter<RunItem>{
     private ArrayList<RunItem> runItems;
     private Context context;
 
@@ -46,4 +46,4 @@ public class DBAdapter extends ArrayAdapter<RunItem>{
 
         return v;
     }
-}
+}*/

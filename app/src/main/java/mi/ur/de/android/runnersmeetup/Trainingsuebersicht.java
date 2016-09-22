@@ -1,8 +1,10 @@
 package mi.ur.de.android.runnersmeetup;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,75 +15,54 @@ import android.widget.Toast;
 
 public class Trainingsuebersicht extends AppCompatActivity {
 
-    private TextView resultBMI, resultText, showName;
-    private ImageView image;
+    private TextView resultBMI, resultText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainingsuebersicht);
-        image = (ImageView) findViewById(R.id.showImage);
-        showName = (TextView) findViewById(R.id.show_name);
         resultBMI = (TextView) findViewById(R.id.result_text);
         resultText = (TextView) findViewById(R.id.result_bmi);
 
-        SharedPreferences prefs = getSharedPreferences("Settings",MODE_PRIVATE);
-        Constants.setValues(prefs.getString("gender","männlich"),prefs.getInt("size",180),prefs.getInt("weight",77),prefs.getString("phone",""));
-    }
+        Intent i = getIntent();
+        Bundle extras = i.getExtras();
+        if(extras!=null) {
+            int cm = extras.getInt(Constants.KEYCM);
+            int kg = extras.getInt(Constants.KEYKG);
 
-
-    private void showResults(int cm, int kg, String name, String gender){
-        CalculatorBmi calc = new CalculatorBmi();
-        calc.setValues(cm, kg);
-        double BMI = calc.calculateBMI();
-        showName.setText(name + " ");
-        resultBMI.setText(BMI + " ");
-
-        switch (gender){
-            case ("weiblich"):
-                bmiWeiblich(BMI);
-                break;
-            case ("männlich"):
-                bmiMännlich(BMI);
-                break;
+            CalculatorBmi calc = new CalculatorBmi();
+            calc.setValues(cm, kg);
+            double BMI = calc.calculateBMI();
+            resultBMI.setText(BMI + " ");
+            setText(BMI);
         }
     }
 
-    private void bmiWeiblich(double BMI) {
-        if (BMI < 19){
-            resultText.setText("Untergewicht!");
-            image.setImageResource(R.drawable.daumen_runter);
-        } if (BMI >= 19 && BMI <= 24){
-            resultText.setText("Normalgewicht!");
-            image.setImageResource(R.drawable.daumen_hoch);
-        } if (BMI > 24 && BMI <= 29){
-            resultText.setText("Übergewicht!");
-            image.setImageResource(R.drawable.daumen_naja);
-        } if (BMI > 29 && BMI <= 39){
-            resultText.setText("Adipositas!");
-            image.setImageResource(R.drawable.daumen_runter);
-        } if (BMI > 39){
-            resultText.setText("starke Adipositas!");
-            image.setImageResource(R.drawable.daumen_runter);
-        }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        SharedPreferences mySPR = getSharedPreferences("MySPFILE",0);
+        SharedPreferences.Editor editor = mySPR.edit();
+        editor.putString("KEY_CM", resultBMI.getText().toString());
+        editor.putString("KEY_KG", resultText.getText().toString());
+        editor.commit();
     }
 
-    private void bmiMännlich(double BMI) {
-        if (BMI < 20){
+    private void setText(double BMI){
+        if (BMI < 19) {
             resultText.setText("Untergewicht!");
-            image.setImageResource(R.drawable.daumen_runter);
-        } if (BMI >= 20 && BMI <= 25){
+        }
+        if (BMI >= 19 && BMI <= 24) {
             resultText.setText("Normalgewicht!");
-            image.setImageResource(R.drawable.daumen_hoch);
-        } if (BMI > 25 && BMI <= 29){
+        }
+        if (BMI > 24 && BMI <= 29) {
             resultText.setText("Übergewicht!");
-            image.setImageResource(R.drawable.daumen_naja);
-        } if (BMI > 29 && BMI <= 39){
+        }
+        if (BMI > 29 && BMI <= 39) {
             resultText.setText("Adipositas!");
-            image.setImageResource(R.drawable.daumen_runter);
-        } if (BMI > 39){
+        }
+        if (BMI > 39) {
             resultText.setText("starke Adipositas!");
-            image.setImageResource(R.drawable.daumen_runter);
         }
     }
 
@@ -95,26 +76,17 @@ public class Trainingsuebersicht extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.gps_icon:
-                //GPS an/aus
+                Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
                 return true;
 
             case R.id.music_icon:
-                //music an/aus
+                Intent ii = new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER);
+                startActivityForResult(ii,1);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void finish(){
-        SharedPreferences prefs = getSharedPreferences("Settings",MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("gender", Constants.getGender());
-        editor.putInt("size", Constants.getSize());
-        editor.putInt("weight", Constants.getWeight());
-        editor.putString("phone", Constants.getPhone());
-        editor.commit();
-        super.finish();
-    }
 
 }

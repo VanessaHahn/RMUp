@@ -7,12 +7,6 @@
     android:padding = "16dp"
     tools:context="mi.ur.de.android.runnersmeetup.Settings">
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/gender_spinner"
-        android:spinnerMode="dropdown" />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,6 +35,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SPEICHERN"
-        android:id="@+id/store_button" />
+        android:id="@+id/button" />
 
 </LinearLayout>

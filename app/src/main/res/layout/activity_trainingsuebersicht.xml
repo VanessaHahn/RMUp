@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/wald"
+    android:background="@color/hellGrau"
     tools:context="mi.ur.de.android.runnersmeetup.Trainingsuebersicht">
 
     <LinearLayout
@@ -15,15 +15,6 @@
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:weightSum="1">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/show_name"
-            android:textSize="30sp"
-            android:textColor="@color/weiß"
-            android:textStyle="bold"
-            android:hint="@string/name_hint"/>
 
         <TextView
             android:layout_width="wrap_content"
