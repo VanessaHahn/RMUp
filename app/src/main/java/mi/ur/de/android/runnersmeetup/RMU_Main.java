@@ -27,7 +27,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 public class RMU_Main extends AppCompatActivity implements CalculatorListener {
-    private TextView timeView, distanceView, velocityView, caloriesView;
+    private TextView timeView, distanceView, velocityView, caloriesView, velcityMeanView, timeInKMView;
     private Button button;
     private CalculatorService calculatorService;
     private ServiceConnection serviceConnection;
@@ -41,7 +41,11 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         timeView = (TextView) findViewById(R.id.textView3);
         velocityView = (TextView) findViewById(R.id.textView);
         caloriesView = (TextView) findViewById(R.id.textView4);
+        velcityMeanView = (TextView) findViewById(R.id.meanVelo);
+        timeInKMView = (TextView) findViewById(R.id.timeInKiloMeter);
         button = (Button) findViewById(R.id.button);
+
+
 
         /*if(!Constants.isLogged()){
             Intent i = new Intent(RMU_Main.this,LoginActivity.class);
@@ -177,6 +181,25 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
             }
         });
     }
+
+
+    public void updateVelcityMeanView(final String meanSpeed){
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                velcityMeanView.setText("Durschnittsgeschwindigkeit:  " +  meanSpeed + " km/h");
+            }
+        });
+    }
+    public void updateTimeInKMView(final String time){
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                timeView.setText("Zeit in diesem Kilometer:  " + time + " min");
+            }
+        });
+    }
+
 
     @Override
     public void updateCaloriesView(final int kcal){
