@@ -29,7 +29,7 @@ public class Trainingsuebersicht extends AppCompatActivity {
         if(extras!=null) {
             int cm = extras.getInt(Constants.KEYCM);
             int kg = extras.getInt(Constants.KEYKG);
-
+            //BMI
             CalculatorBmi calc = new CalculatorBmi();
             calc.setValues(cm, kg);
             double BMI = calc.calculateBMI();
