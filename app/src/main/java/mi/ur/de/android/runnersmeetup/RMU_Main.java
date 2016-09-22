@@ -94,8 +94,15 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
                 } else {
                     unbindService(serviceConnection);
                     stopService(i);
-                    button.setText("START");
                     Constants.setRun(false);
+                    int resultTime = Integer.parseInt(timeView.getText().toString());
+                    int resultDistance = Integer.parseInt(distanceView.getText().toString());
+                    int resultKalorien = Integer.parseInt(caloriesView.getText().toString());
+                    Intent ii = new Intent(RMU_Main.this,Trainingsuebersicht.class);
+                    ii.putExtra(Constants.KEY_TIME, resultTime);
+                    ii.putExtra(Constants.KEY_DISTANCE, resultDistance);
+                    ii.putExtra(Constants.KEY_CALORIES, resultKalorien);
+                    startActivity(ii);
                 }
             }
         });
