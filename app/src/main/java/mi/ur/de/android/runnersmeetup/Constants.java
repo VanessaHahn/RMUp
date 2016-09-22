@@ -24,6 +24,10 @@ public class Constants {
     public static final String KEYCM = "cm";
     public static final String KEYKG = "kg";
 
+    public static final String KEY_TIME = "time";
+    public static final String KEY_DISTANCE = "distance";
+    public static final String KEY_CALORIES = "calories";
+
     public static void setValues(String genderNew, int sizeNew, int weightNew, String phoneNew){
         if(genderNew.equals("weiblich")){
             gender = "weiblich";

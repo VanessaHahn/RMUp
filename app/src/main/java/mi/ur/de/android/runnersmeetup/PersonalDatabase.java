@@ -17,7 +17,7 @@ import java.util.Locale;
 /**
  * Created by Vanessa on 15.09.2016.
  */
-public class PersonalDatabase {
+/*public class PersonalDatabase {
     private static final String DATABASE_NAME = "personalData.db";
     private static final int DATABASE_VERSION = 1;
 
@@ -110,4 +110,4 @@ public class PersonalDatabase {
 
         }
     }
-}
+}*/
