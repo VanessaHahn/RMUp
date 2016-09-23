@@ -262,6 +262,14 @@ public class CalculatorService extends Service implements CalculatorListener {
             locationManager.removeUpdates(locationListener);
             locationManager = null;
         }
+
+        //Intent i = new Intent(CalculatorService.this,Trainingsuebersicht.class);
+        //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        /*i.putExtra(Constants.KEY_TIME,totalTime);
+        i.putExtra(Constants.KEY_DISTANCE,currentDistance);
+        i.putExtra(Constants.KEY_CALORIES,kcal);*/
+        //startActivity(i);
+
         setupValues(); // Reset Values
         // Reset GUI to Default
         updateDistanceView(0);

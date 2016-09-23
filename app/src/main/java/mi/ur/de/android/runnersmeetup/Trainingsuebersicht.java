@@ -93,14 +93,13 @@ public class Trainingsuebersicht extends AppCompatActivity {
     }
 
     private void data(){
-        Intent ii = getIntent();
+        /*Intent ii = getIntent();
         Bundle extra = ii.getExtras();
-        if(extra!=null){
-            int time = extra.getInt(Constants.KEY_TIME);
-            int distance = extra.getInt(Constants.KEY_DISTANCE);
-            int calories = extra.getInt(Constants.KEY_CALORIES);
-            //addNewRun(time,distance,calories);
-        }
+        int time = extra.getInt(Constants.KEY_TIME);
+        double distance = extra.getDouble(Constants.KEY_DISTANCE);
+        int calories = extra.getInt(Constants.KEY_CALORIES);
+        addNewRun(time,distance,calories);*/
+
     }
 
     private void initListView(){
@@ -120,11 +119,11 @@ public class Trainingsuebersicht extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
-    /*private void addNewRun(int time, int distance, int calorien){
-        RunItem newRun = new RunItem(time, distance,calorien);
+    private void addNewRun(int time, double distance, int calories){
+        RunItem newRun = new RunItem(time, distance,calories);
         runItems.add(newRun);
         adapter.notifyDataSetChanged();
-    }*/
+    }
 
     private void removeTaskAtPostition(int position){
         if(runItems.get(position) == null){

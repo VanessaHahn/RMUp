@@ -45,7 +45,7 @@ public class MyAdapter extends ArrayAdapter<RunItem> {
             TextView calorien = (TextView) v.findViewById(R.id.calories);
 
             time.setText(run.getTime());
-            distance.setText(run.getDistance());
+            distance.setText(""+run.getDistance());
             calorien.setText(run.getCalories());
         }
 

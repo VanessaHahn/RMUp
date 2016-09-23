@@ -10,10 +10,10 @@ import java.util.Locale;
  */
 public class RunItem {
     private int time;
-    private int distance;
+    private double distance;
     private int calories;
 
-    public RunItem(int time,int distance,int calories) {
+    public RunItem(int time,double distance,int calories) {
         this.time = time;
         this.distance = distance;
         this.calories = calories;
@@ -23,7 +23,7 @@ public class RunItem {
         return time;
     }
 
-    public int getDistance(){
+    public double getDistance(){
         return distance;
     }
 

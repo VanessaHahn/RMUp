@@ -28,10 +28,9 @@ import org.w3c.dom.Text;
 
 public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     private TextView timeView, distanceView, velocityView, caloriesView, velcityMeanView, timeInKMView;
-    private Button button;
     private CalculatorService calculatorService;
     private ServiceConnection serviceConnection;
-
+    private ImageButton playbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         caloriesView = (TextView) findViewById(R.id.textView4);
         velcityMeanView = (TextView) findViewById(R.id.meanVelo);
         timeInKMView = (TextView) findViewById(R.id.timeInKiloMeter);
-        button = (Button) findViewById(R.id.button);
+        playbutton = (ImageButton) findViewById(R.id.imageButton);
 
 
 
@@ -55,7 +54,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         SharedPreferences prefs = getSharedPreferences("RunCondition",MODE_PRIVATE);
         Constants.setRun(prefs.getBoolean("run", false));
         if(Constants.isRun()){
-            button.setText("STOP");
+            playbutton.setImageResource(R.drawable.stopbutton);
         }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -82,27 +81,19 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     }
 
     private void configureButton() {
-        button.setOnClickListener(new View.OnClickListener() {
+        playbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(RMU_Main.this, CalculatorService.class);
                 if(!Constants.isRun()){
                     bindService(new Intent(RMU_Main.this, CalculatorService.class), serviceConnection, BIND_AUTO_CREATE);
                     startService(i);
-                    button.setText("STOP");
+                    playbutton.setImageResource(R.drawable.stopbutton);
                     Constants.setRun(true);
                 } else {
                     unbindService(serviceConnection);
-                    stopService(i);
                     Constants.setRun(false);
-                    int resultTime = Integer.parseInt(timeView.getText().toString());
-                    int resultDistance = Integer.parseInt(distanceView.getText().toString());
-                    int resultKalorien = Integer.parseInt(caloriesView.getText().toString());
-                    Intent ii = new Intent(RMU_Main.this,Trainingsuebersicht.class);
-                    ii.putExtra(Constants.KEY_TIME, resultTime);
-                    ii.putExtra(Constants.KEY_DISTANCE, resultDistance);
-                    ii.putExtra(Constants.KEY_CALORIES, resultKalorien);
-                    startActivity(ii);
+                    stopService(i);
                 }
             }
         });
@@ -208,7 +199,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 timeInKMView.setText("Zeit in diesem Kilometer:  " + time + " min");
             }
         });
