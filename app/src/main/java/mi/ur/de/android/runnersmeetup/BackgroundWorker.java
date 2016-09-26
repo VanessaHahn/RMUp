@@ -33,6 +33,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
         String type = params[0];
         String login_url = "http://runnersmeetup.hol.es/login.php";
         String register_url = "http://runnersmeetup.hol.es/register.php";
+        String setPos_url = "http://runnersmeetup.hol.es/setPos.php";
+        String getPos_url = "http://runnersmeetup.hol.es/readPos.php";
         String changeValues_url = "http://runnersmeetup.hol.es/values.php";
         String filter_url = "http://runnersmeetup.hol.es/filter.php";
         if(type.equals("login")){
@@ -71,7 +73,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
             }catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if(type.equals("register")){
+        } else if(type.equals("register")) {
             try {
                 String name = params[1];
                 String password = params[2];
@@ -84,8 +86,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&"
-                        + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8")+"&"
-                + URLEncoder.encode("mobile", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8");
+                        + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&"
+                        + URLEncoder.encode("mobile", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8");
 
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
@@ -102,12 +104,83 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 inputStream.close();
                 httpURLConnection.disconnect();
                 alertDialog.setTitle("Login Status");
-                if(!result.contains("Error:")){
+                if (!result.contains("Error:")) {
                     String[] results = result.split(" / ");
                     result = results[0];
                     Constants.setId(Integer.parseInt(results[1]));
                 }
-                return new String[]{"login",result};
+                return new String[]{"login", result};
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(type.equals("setPos")){
+            try {
+                String id = params[1];
+                String longitude = params[2];
+                String lateral = params[3];
+                URL url = new URL(setPos_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8") + "&"
+                        + URLEncoder.encode("long", "UTF-8") + "=" + URLEncoder.encode(longitude, "UTF-8")+"&"
+                        + URLEncoder.encode("lat", "UTF-8") + "=" + URLEncoder.encode(lateral, "UTF-8");
+                Log.d("Backroundworker_setPos", "post_data: <" + post_data + ">");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                Log.d("Backroundworker_setPos", "result: <" + result + ">");
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return new String[]{"setPos",result};
+            }catch (MalformedURLException e) {
+                e.printStackTrace();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(type.equals("getPos")){
+            try {
+                String id = params[1];
+
+                URL url = new URL(getPos_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
+                Log.d("Backroundworker_getPos", "post_data: <" + post_data + ">");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                Log.d("Backroundworker_getPos", "result: <" + result + ">");
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return new String[]{"getPos",result};
             }catch (MalformedURLException e) {
                 e.printStackTrace();
             }catch (IOException e) {
