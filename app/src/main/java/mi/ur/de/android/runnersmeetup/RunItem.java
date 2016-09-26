@@ -9,25 +9,13 @@ import java.util.Locale;
  * Created by Vanessa on 15.09.2016.
  */
 public class RunItem {
-    //private int time;
-    private String time;
-    //private int calories;
+    private String newRun;
 
-    public RunItem(String time) {
-       // this.time = time;
-        this.time = time;
-        //this.calories = calories;
+    public RunItem(String newRun) {
+        this.newRun = newRun;
     }
 
-    //public int getTime(){
-      //  return time;
-    //}
-
-    public String getTime(){
-        return time;
+    public String getNewRun(){
+        return newRun;
     }
-
-    //public int getCalories(){
-      //  return calories;
-    //}
 }

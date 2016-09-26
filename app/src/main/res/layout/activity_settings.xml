@@ -8,33 +8,76 @@
     tools:context="mi.ur.de.android.runnersmeetup.Settings">
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
         android:hint="Größe in cm"
         android:ems="10"
-        android:id="@+id/input_cm" />
+        android:gravity="center"
+        android:inputType="number"
+        android:id="@+id/input_cm"
+        android:layout_gravity="center_horizontal" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:hint="Gewicht in kg"
         android:ems="10"
-        android:id="@+id/input_kg" />
+        android:gravity="center"
+        android:id="@+id/input_kg"
+        android:layout_gravity="center_horizontal" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="phone"
         android:hint="Telefon (mobil)"
+        android:gravity="center"
         android:ems="10"
-        android:id="@+id/input_phone" />
+        android:id="@+id/input_phone"
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SPEICHERN"
-        android:id="@+id/button" />
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="löschen"
+        android:id="@+id/buttonlöschen"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Eingaben gespeichert:"
+        android:paddingTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/eingabetext"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cmSettings"
+        android:hint="---"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/kgSettings"
+        android:hint="---"
+        android:layout_gravity="center_horizontal" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/phoneSettings"
+        android:hint="---"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

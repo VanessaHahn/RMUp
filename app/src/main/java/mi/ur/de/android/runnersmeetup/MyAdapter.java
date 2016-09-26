@@ -40,13 +40,9 @@ public class MyAdapter extends ArrayAdapter<RunItem> {
         if (run != null) {
 
 
-            //TextView time = (TextView) v.findViewById(R.id.time);
-            TextView time = (TextView) v.findViewById(R.id.time);
-            //TextView calorien = (TextView) v.findViewById(R.id.calories);
+            TextView newRun = (TextView) v.findViewById(R.id.time);
 
-            //time.setText(run.getTime());
-            time.setText(run.getTime());
-            //calorien.setText(run.getCalories());
+            newRun.setText(run.getNewRun());
         }
 
         return v;

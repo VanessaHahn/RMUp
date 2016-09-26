@@ -1,5 +1,7 @@
 package mi.ur.de.android.runnersmeetup;
 
+import android.util.Log;
+
 /**
  * Created by Medion on 20.08.2016.
  */
@@ -23,6 +25,9 @@ public class Constants {
 
     public static final String KEYCM = "cm";
     public static final String KEYKG = "kg";
+    public static final String KEYPHONE = "phone";
+    public static final String KEYBMI = "BMI";
+    public static final String KEYBMITEXT = "BMIText";
 
     public static final String KEY_TIME = "time";
     public static final String KEY_DISTANCE = "distance";
@@ -149,5 +154,23 @@ public class Constants {
 
     public static void setPhone(String phoneNew) {
         phone = phoneNew;
+    }
+    public static boolean parseLoginString(String dbString) {
+        Log.d("Constants_DBParser", "DataBase String" + dbString);
+        if(dbString.indexOf("/") > 0){
+            String[] splitString = dbString.split("/");
+            if(splitString.length  == 4){
+                int id = Integer.parseInt(splitString[1]);
+                int gesch = Integer.parseInt(splitString[2]);
+                String handy = splitString[3];
+                Constants.setAvgVelocity(gesch);
+                Constants.setId(id);
+                Constants.setPhone(handy);
+                return true;
+            } //else return
+        } //else return
+        return false;
+
+
     }
 }

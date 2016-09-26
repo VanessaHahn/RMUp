@@ -3,6 +3,7 @@ package mi.ur.de.android.runnersmeetup;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -26,17 +27,20 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
     BackgroundWorker(Context ctx){
         context = ctx;
     }
+
     @Override
     protected String[] doInBackground(String... params) {
         String type = params[0];
-        String login_url = "http://hostinger.de/login.php";
-        String register_url = "http://hostinger.de/register.php";
-        String changeValues_url = "http://hostinger.de/values.php";
-        String filter_url = "http://hostinger.de/filter.php";
+        String login_url = "http://runnersmeetup.hol.es/login.php";
+        String register_url = "http://runnersmeetup.hol.es/register.php";
+        String changeValues_url = "http://runnersmeetup.hol.es/values.php";
+        String filter_url = "http://runnersmeetup.hol.es/filter.php";
         if(type.equals("login")){
             try {
                 String user_name = params[1];
                 String password = params[2];
+                Log.d("Backroundworker", "UserName: " + user_name);
+                Log.d("Backroundworker", "Password: " + password);
                 URL url = new URL(login_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -44,7 +48,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+                String post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8") + "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+                Log.d("Backroundworker", "post_data: <" + post_data + ">");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -56,15 +61,11 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+                Log.d("Backroundworker", "Result: <" + result + ">");
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
                 alertDialog.setTitle("Login Status");
-                if(!result.equals("login not success")){
-                    String[] results = result.split(" / ");
-                    result = results[0];
-                    Constants.setId(Integer.parseInt(results[1]));
-                }
                 return new String[]{"login",result};
             }catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -188,7 +189,6 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
         }
         return null;
     }
-
 
     @Override
     protected void onPreExecute(){

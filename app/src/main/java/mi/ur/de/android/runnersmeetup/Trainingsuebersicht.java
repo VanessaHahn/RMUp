@@ -1,20 +1,23 @@
 package mi.ur.de.android.runnersmeetup;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.media.Image;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,62 +30,41 @@ public class Trainingsuebersicht extends AppCompatActivity {
     private TextView resultBMI, resultText;
     private ArrayList<RunItem> runItems;
     private MyAdapter adapter;
+    private Button button;
+
+    SharedPreferences prefs;
+    SharedPreferences.Editor prefsEditor;
+
+    DatabaseHelper myDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainingsuebersicht);
-        resultBMI = (TextView) findViewById(R.id.result_text);
-        resultText = (TextView) findViewById(R.id.result_bmi);
-        double BMI = BMIauslesen();
+        myDb = new DatabaseHelper(this);
 
-        SharedPreferences mySPR = getSharedPreferences("data",0);
-        resultBMI.setText(mySPR.getString("BMI",""+BMI));
-        if (BMI < 19) {
-            resultText.setText(mySPR.getString("BMITEXT","Untergewicht!"));
-        }
-        if (BMI >= 19 && BMI <= 24) {
-            resultText.setText(mySPR.getString("BMITEXT","Normalgewicht!"));
-        }
-        if (BMI > 24 && BMI <= 29) {
-            resultText.setText(mySPR.getString("BMITEXT","Übergewicht!"));
-        }
-        if (BMI > 29 && BMI <= 39) {
-            resultText.setText(mySPR.getString("BMITEXT","Adipositas!"));
-        }
-        if (BMI > 39) {
-            resultText.setText(mySPR.getString("BMITEXT","starke Adipositas!"));
-        }
+        button = (Button) findViewById(R.id.button2);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data();
+            }
+        });
+
+
+        prefs = this.getSharedPreferences("Settings",MODE_PRIVATE);
+        prefsEditor = prefs.edit();
+        resultText = (TextView) findViewById(R.id.result_bmi);
+        String BMIText = prefs.getString(Constants.KEYBMITEXT,"---");
+        resultText.setText(BMIText);
+        resultBMI = (TextView) findViewById(R.id.result_text);
+        String BMI = prefs.getString(Constants.KEYBMI,"---");
+        resultBMI.setText(BMI);
 
         initList();
         initUI();
 
 
-    }
-
-    public double BMIauslesen() {
-        Intent i = getIntent();
-        Bundle extras = i.getExtras();
-        if (extras != null) {
-            int cm = extras.getInt(Constants.KEYCM);
-            int kg = extras.getInt(Constants.KEYKG);
-
-            CalculatorBmi calc = new CalculatorBmi();
-            calc.setValues(cm, kg);
-            double BMI = calc.calculateBMI();
-            return BMI;
-        }
-        return 0.0;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        SharedPreferences mySPR = getSharedPreferences("data", 0);
-        SharedPreferences.Editor editor = mySPR.edit();
-        editor.putString("BMI", "" + BMIauslesen());
-        editor.putString("BMITEXT",resultText.getText().toString());
-        editor.commit();
     }
 
     private void initList(){
@@ -95,9 +77,25 @@ public class Trainingsuebersicht extends AppCompatActivity {
         initListAdapter();
     }
 
-    /*private void data(){
-            addNewRun(time);
-    }*/
+    private void data(){
+        Cursor res = myDb.getAllData();
+        StringBuffer buffer = new StringBuffer();
+        while(res.moveToNext()){
+            buffer.append(res.getString(0)+". Lauf"+"\n");
+            buffer.append("Time: "+res.getString(1)+" min"+"\n");
+            buffer.append("Ø: "+res.getString(2)+" km/h"+"\n");
+            buffer.append("Distance: "+res.getString(3)+" km"+"\n");
+            buffer.append("Kcal: "+res.getString(4)+"\n\n");
+            addNewRun(buffer.toString());
+
+        }
+   }
+
+    private void addNewRun(String run){
+                RunItem newRun = new RunItem(run);
+                runItems.add(newRun);
+                adapter.notifyDataSetChanged();
+    }
 
     private void initListView(){
         ListView list = (ListView) findViewById(R.id.runHistory);
@@ -116,12 +114,6 @@ public class Trainingsuebersicht extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
-    private void addNewRun(String time){
-        RunItem newRun = new RunItem(time);
-        runItems.add(newRun);
-        adapter.notifyDataSetChanged();
-    }
-
     private void removeTaskAtPostition(int position){
         if(runItems.get(position) == null){
             return;
@@ -130,35 +122,6 @@ public class Trainingsuebersicht extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
     }
-
-    /*@Override
-    protected void onStop(){
-        super.onStop();
-        SharedPreferences mySPR = getSharedPreferences("MySPFILE",0);
-        SharedPreferences.Editor editor = mySPR.edit();
-        editor.putString("KEY_CM", resultBMI.getText().toString());
-        editor.putString("KEY_KG", resultText.getText().toString());
-        editor.commit();
-    }*/
-
-    /*private void setText(double BMI){
-        if (BMI < 19) {
-            resultText.setText("Untergewicht!");
-        }
-        if (BMI >= 19 && BMI <= 24) {
-            resultText.setText("Normalgewicht!");
-        }
-        if (BMI > 24 && BMI <= 29) {
-            resultText.setText("Übergewicht!");
-        }
-        if (BMI > 29 && BMI <= 39) {
-            resultText.setText("Adipositas!");
-        }
-        if (BMI > 39) {
-            resultText.setText("starke Adipositas!");
-        }
-    }*/
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

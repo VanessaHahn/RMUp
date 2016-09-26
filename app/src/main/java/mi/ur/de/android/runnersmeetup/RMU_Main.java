@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,6 +15,7 @@ import android.os.IBinder;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,11 +34,47 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     private ServiceConnection serviceConnection;
     private ImageButton playbutton;
     private Button button;
+    private Button update;
+    DatabaseHelper myDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rmu__main);
+        myDb = new DatabaseHelper(this);
+        button = (Button) findViewById(R.id.button);
+        update = (Button) findViewById(R.id.update);
+        button.setOnClickListener(new View.OnClickListener() {
+                                      @Override
+                                      public void onClick(View v) {
+
+                                          Cursor res = myDb.getAllData();
+                                          if(res.getCount() == 0){
+                                              showMessage("Error","Nothing found");
+                                              return;
+                                          }
+
+                                          StringBuffer buffer = new StringBuffer();
+                                          while(res.moveToNext()){
+                                              buffer.append("Id :"+res.getString(0)+"\n");
+                                              buffer.append("Time :"+res.getString(1)+"\n");
+                                              buffer.append("Avge :"+res.getString(2)+"\n");
+                                              buffer.append("Distance :"+res.getString(3)+"\n");
+                                              buffer.append("Kcal :"+res.getString(4)+"\n\n");
+                                              //addNewRun(res.getInt(1),res.getDouble(2),res.getDouble(3),res.getInt(4));
+                                          }
+
+                                          showMessage("Data",buffer.toString());
+
+
+
+                                      }
+                                  }
+        );
+
+
+
+
         distanceView = (TextView) findViewById(R.id.textView2);
         timeView = (TextView) findViewById(R.id.textView3);
         velocityView = (TextView) findViewById(R.id.textView);
@@ -44,6 +82,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         velcityMeanView = (TextView) findViewById(R.id.meanVelo);
         timeInKMView = (TextView) findViewById(R.id.timeInKiloMeter);
         playbutton = (ImageButton) findViewById(R.id.imageButton);
+
 
 
         /*if(!Constants.isLogged()){
@@ -69,6 +108,14 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         initServiceConnection();
     }
 
+    public void showMessage(String title, String Message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(Message);
+        builder.show();
+    }
+
     @Override
     public void onRequestPermissionsResult( int requestCode, String[] permissions, int[] grantResults){
         switch (requestCode) {
@@ -92,6 +139,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
                     Constants.setRun(true);
                 } else {
                     unbindService(serviceConnection);
+                    playbutton.setImageResource(R.drawable.playbutton);
                     Constants.setRun(false);
                     stopService(i);
                 }
@@ -156,6 +204,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         });
 
     }
+
 
     @Override
     public void updateDistanceView(final double distance) {

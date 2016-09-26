@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,10 +42,30 @@ public class CalculatorService extends Service implements CalculatorListener {
     private IBinder iBinder;
     private long lastTimeStamp; // Fuer die Berechnung der Geschwindigkeit auf Basis von GPS
 
+    DatabaseHelper myDb;
 
     @Override
     public void onCreate() {
         iBinder = new LocalBinder();
+        myDb = new DatabaseHelper(this);
+    }
+
+    public void AddData(){
+        boolean isInserted = myDb.insertData(totalTime,avgVelocity,currentDistance,kcal);
+
+        if(isInserted = true){
+            String text = "insert";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(CalculatorService.this,text,duration);
+            toast.show();
+            Log.d("db","insert");
+        } else {
+            String text = "not insert";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(CalculatorService.this,text,duration);
+            toast.show();
+            Log.d("db", "not insert");
+        }
     }
 
     @Override
@@ -60,10 +81,6 @@ public class CalculatorService extends Service implements CalculatorListener {
 
     public void setCalculatorListener(CalculatorListener listener) {
         calculatorListener = listener;
-    }
-
-    public int sendkcal(){
-        return kcal;
     }
 
     @Override
@@ -267,7 +284,16 @@ public class CalculatorService extends Service implements CalculatorListener {
             locationManager = null;
         }
 
-        /*setupValues(); // Reset Values
+        //Intent i = new Intent(CalculatorService.this,Trainingsuebersicht.class);
+        //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        /*i.putExtra(Constants.KEY_TIME,totalTime);
+        i.putExtra(Constants.KEY_DISTANCE,currentDistance);
+        i.putExtra(Constants.KEY_CALORIES,kcal);*/
+        //startActivity(i);
+
+        AddData();
+
+        setupValues(); // Reset Values
         // Reset GUI to Default
         updateDistanceView(0);
         updateCaloriesView(0);
@@ -276,7 +302,7 @@ public class CalculatorService extends Service implements CalculatorListener {
         updateTimeInKMView("00:00");
 
         updateVelocityView(0);
-        updateVelocityMeanView(0);*/
+        updateVelocityMeanView(0);
 
 
     }
