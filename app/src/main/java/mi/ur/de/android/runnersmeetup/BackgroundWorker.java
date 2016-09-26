@@ -76,6 +76,9 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 String name = params[1];
                 String password = params[2];
                 String phone = params[3];
+
+                Log.d("Backroundworker_register", "UserName: " + name);
+                Log.d("Backroundworker_register", "Password: " + password);
                 URL url = new URL(register_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -86,7 +89,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&"
                         + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8")+"&"
                 + URLEncoder.encode("mobile", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8");
-
+                Log.d("Backroundworker_regist", "post_data: <" + post_data + ">");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -101,12 +104,6 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
-                alertDialog.setTitle("Login Status");
-                if(!result.contains("Error:")){
-                    String[] results = result.split(" / ");
-                    result = results[0];
-                    Constants.setId(Integer.parseInt(results[1]));
-                }
                 return new String[]{"login",result};
             }catch (MalformedURLException e) {
                 e.printStackTrace();

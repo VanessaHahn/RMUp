@@ -9,63 +9,37 @@
 
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="Name"
         android:ems="10"
-        android:id="@+id/input_name" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint = "Passwort"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/input_password1" />
+        android:id="@+id/input_name"
+        android:layout_gravity="center_horizontal"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint = "Passwort"
         android:inputType="textPassword"
-        android:hint="Passwort"
         android:ems="10"
-        android:id="@+id/input_password2" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/input_gender"
-        android:spinnerMode="dropdown" />
+        android:id="@+id/input_password"
+        android:layout_gravity="center_horizontal"/>
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Größe in cm"
-        android:ems="10"
-        android:id="@+id/input_cm" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:hint="Gewicht in kg"
-        android:ems="10"
-        android:id="@+id/input_kg" />
-
-    <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="phone"
         android:hint="Telefon (mobil)"
         android:ems="10"
-        android:id="@+id/input_phone" />
+        android:id="@+id/input_phone"
+        android:layout_gravity="center_horizontal"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register"
-        android:id="@+id/button_register"/>
+        android:id="@+id/button_register"
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

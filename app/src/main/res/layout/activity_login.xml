@@ -38,6 +38,6 @@
         android:layout_height="wrap_content"
         android:text="Register"
         android:id="@+id/button_register"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

@@ -25,6 +25,13 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.input_password);
         login = (Button) findViewById(R.id.button_login);
         register = (Button) findViewById(R.id.button_register);
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
     }
 
     public void OnLogin(View view){
@@ -54,8 +61,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void openRegActivity(){
-        startActivity(new Intent(this,RegisterActivity.class));
-    }
 
 }

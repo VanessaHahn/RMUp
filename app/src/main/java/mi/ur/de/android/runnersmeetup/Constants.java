@@ -155,6 +155,7 @@ public class Constants {
     public static void setPhone(String phoneNew) {
         phone = phoneNew;
     }
+
     public static boolean parseLoginString(String dbString) {
         Log.d("Constants_DBParser", "DataBase String" + dbString);
         if(dbString.indexOf("/") > 0){
