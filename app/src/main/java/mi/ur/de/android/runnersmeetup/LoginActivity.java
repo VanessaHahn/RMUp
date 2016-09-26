@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
@@ -35,7 +36,8 @@ public class LoginActivity extends AppCompatActivity {
 
         try {
             if(Constants.parseLoginString(returnAsyncTask.get()[1])){
-                // Succsefull
+                Toast.makeText(this,"Welcome",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this,NavigationDrawer.class));
                 Log.d("LoginActivity", "Login Succsefull");
             }else{
                 // Not Succsefull

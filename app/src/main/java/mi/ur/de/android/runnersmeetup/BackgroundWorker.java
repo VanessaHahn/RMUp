@@ -65,7 +65,6 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
-                alertDialog.setTitle("Login Status");
                 return new String[]{"login",result};
             }catch (MalformedURLException e) {
                 e.printStackTrace();
