@@ -9,25 +9,25 @@ import java.util.Locale;
  * Created by Vanessa on 15.09.2016.
  */
 public class RunItem {
-    private int time;
-    private double distance;
-    private int calories;
+    //private int time;
+    private String time;
+    //private int calories;
 
-    public RunItem(int time,double distance,int calories) {
+    public RunItem(String time) {
+       // this.time = time;
         this.time = time;
-        this.distance = distance;
-        this.calories = calories;
+        //this.calories = calories;
     }
 
-    public int getTime(){
+    //public int getTime(){
+      //  return time;
+    //}
+
+    public String getTime(){
         return time;
     }
 
-    public double getDistance(){
-        return distance;
-    }
-
-    public int getCalories(){
-        return calories;
-    }
+    //public int getCalories(){
+      //  return calories;
+    //}
 }

@@ -31,6 +31,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     private CalculatorService calculatorService;
     private ServiceConnection serviceConnection;
     private ImageButton playbutton;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         velcityMeanView = (TextView) findViewById(R.id.meanVelo);
         timeInKMView = (TextView) findViewById(R.id.timeInKiloMeter);
         playbutton = (ImageButton) findViewById(R.id.imageButton);
-
 
 
         /*if(!Constants.isLogged()){

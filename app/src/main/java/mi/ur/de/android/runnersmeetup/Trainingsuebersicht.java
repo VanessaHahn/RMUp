@@ -1,5 +1,7 @@
 package mi.ur.de.android.runnersmeetup;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
@@ -7,6 +9,7 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,20 +90,14 @@ public class Trainingsuebersicht extends AppCompatActivity {
     }
 
     private void initUI(){
-        data();
+        //data();
         initListView();
         initListAdapter();
     }
 
-    private void data(){
-        /*Intent ii = getIntent();
-        Bundle extra = ii.getExtras();
-        int time = extra.getInt(Constants.KEY_TIME);
-        double distance = extra.getDouble(Constants.KEY_DISTANCE);
-        int calories = extra.getInt(Constants.KEY_CALORIES);
-        addNewRun(time,distance,calories);*/
-
-    }
+    /*private void data(){
+            addNewRun(time);
+    }*/
 
     private void initListView(){
         ListView list = (ListView) findViewById(R.id.runHistory);
@@ -119,8 +116,8 @@ public class Trainingsuebersicht extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
-    private void addNewRun(int time, double distance, int calories){
-        RunItem newRun = new RunItem(time, distance,calories);
+    private void addNewRun(String time){
+        RunItem newRun = new RunItem(time);
         runItems.add(newRun);
         adapter.notifyDataSetChanged();
     }

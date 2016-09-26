@@ -155,13 +155,12 @@
         android:layout_gravity="center_horizontal"/>
 
     <ImageButton
-        android:layout_width="177dp"
-        android:layout_height="110dp"
+        android:layout_width="115dp"
+        android:layout_height="84dp"
         android:id="@+id/imageButton"
         android:background="@color/hellGrau"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/playbutton"
-        android:layout_weight="0.35"
         android:scaleType="centerCrop" />
 
 </LinearLayout>
