@@ -77,12 +77,14 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
             try {
                 String name = params[1];
                 String geburtsdatum = params[2];
-                String email = params[3];
-                String phone = params[4];
-                String password = params[5];
+                String geschlecht = params[3];
+                String email = params[4];
+                String phone = params[5];
+                String password = params[6];
 
                 Log.d("Backroundworker", "UserName: " + name);
                 Log.d("Backroundworker", "Geburtsdatum: " + geburtsdatum);
+                Log.d("Backgroundworker", "Geschlecht: " + geschlecht);
                 Log.d("Backroundworker", "Email " + email);
                 Log.d("Backroundworker", "Phone " + phone);
                 Log.d("Backroundworker", "Password: " + password);
@@ -95,6 +97,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&"
                         + URLEncoder.encode("geburtsdatum", "UTF-8") + "=" + URLEncoder.encode(geburtsdatum, "UTF-8")+"&"
+                        + URLEncoder.encode("geschlecht", "UTF-8") + "=" + URLEncoder.encode(geschlecht, "UTF-8")+"&"
                         + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8")+"&"
                         + URLEncoder.encode("phone", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8")+"&"
                         + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");

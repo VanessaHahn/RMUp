@@ -37,31 +37,40 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void OnLogin(View view){
-        Log.d("Button login", "button login clicked");
+
         String name = inputName.getText().toString();
         String password = inputPassword.getText().toString();
-        Log.d("Button login", "name "+ name + " password " +password);
         String type = "login";
-        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundWorker.execute(type, name, password);
 
-        try {
-            if(Constants.parseLoginString(returnAsyncTask.get()[1])){
-                Toast.makeText(this,"Welcome",Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this,NavigationDrawer.class));
-                Log.d("LoginActivity", "Login Succsefull");
-            }else{
+        if((inputName.getText().length() != 0) && (inputPassword.getText().length() != 0)) {
+            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+            AsyncTask<String, Void, String[]> returnAsyncTask = backgroundWorker.execute(type, name, password);
+
+            try {
+                if (Constants.parseLoginString(returnAsyncTask.get()[1])) {
+                    Toast.makeText(this, "Welcome", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(this, NavigationDrawer.class));
+                    Log.d("LoginActivity", "Login Succsefull");
+                } else {
+                    // Not Succsefull
+                    Log.d("LoginActivity", "Login Fail!");
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                // Not Succsefull
+                Log.d("LoginActivity", "Login Fail!");
+            } catch (ExecutionException e) {
+                e.printStackTrace();
                 // Not Succsefull
                 Log.d("LoginActivity", "Login Fail!");
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            // Not Succsefull
-            Log.d("LoginActivity", "Login Fail!");
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            // Not Succsefull
-            Log.d("LoginActivity", "Login Fail!");
+        } else {
+            if(inputName.getText().length() == 0){
+                inputName.setError("Eingabe fehlt");
+            }
+            if(inputPassword.getText().length() == 0){
+                inputPassword.setError("Eingabe fehlt");
+            }
         }
     }
 
