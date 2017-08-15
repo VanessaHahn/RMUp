@@ -76,11 +76,16 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
         } else if(type.equals("register")) {
             try {
                 String name = params[1];
-                String password = params[2];
-                String phone = params[3];
+                String geburtsdatum = params[2];
+                String email = params[3];
+                String phone = params[4];
+                String password = params[5];
 
-                Log.d("Backroundworker_register", "UserName: " + name);
-                Log.d("Backroundworker_register", "Password: " + password);
+                Log.d("Backroundworker", "UserName: " + name);
+                Log.d("Backroundworker", "Geburtsdatum: " + geburtsdatum);
+                Log.d("Backroundworker", "Email " + email);
+                Log.d("Backroundworker", "Phone " + phone);
+                Log.d("Backroundworker", "Password: " + password);
                 URL url = new URL(register_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -89,8 +94,10 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&"
-                        + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8")+"&"
-                		+ URLEncoder.encode("mobile", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8");
+                        + URLEncoder.encode("geburtsdatum", "UTF-8") + "=" + URLEncoder.encode(geburtsdatum, "UTF-8")+"&"
+                        + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8")+"&"
+                        + URLEncoder.encode("phone", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8")+"&"
+                        + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
                 Log.d("Backroundworker_regist", "post_data: <" + post_data + ">");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
@@ -103,10 +110,11 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+                Log.d("Backroundworker", "Result: <" + result + ">");
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
-                return new String[]{"login",result};
+                return new String[]{"register",result};
             }catch (MalformedURLException e) {
                 e.printStackTrace();
             }catch (IOException e) {
