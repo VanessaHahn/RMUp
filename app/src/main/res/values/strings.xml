@@ -20,9 +20,9 @@
     <string name="profil_title">Profil</string>
     <string name="trainingsuebersicht_title">Trainingsübersicht</string>
     <string-array name="filter_options">
-        <item>+ in der Nähe</item>
-        <item>+ ähnliche Geschwindigkeit</item>
-        <item>+ ähnlich lange Strecke</item>
+        <item>in der Nähe</item>
+        <item>ähnliche Geschwindigkeit</item>
+        <item>ähnlich lange Strecke</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
