@@ -19,6 +19,11 @@
     <string name="about_title">About</string>
     <string name="profil_title">Profil</string>
     <string name="trainingsuebersicht_title">Trainingsübersicht</string>
+    <string-array name="filter_options">
+        <item>+ in der Nähe</item>
+        <item>+ ähnliche Geschwindigkeit</item>
+        <item>+ ähnlich lange Strecke</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -178,4 +183,7 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 </resources>
