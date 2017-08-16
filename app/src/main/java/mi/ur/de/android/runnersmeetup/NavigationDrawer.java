@@ -78,9 +78,9 @@ public class NavigationDrawer extends AppCompatActivity
         } else if (id == R.id.nav_statistic) {
             startActivity(new Intent(this, Trainingsuebersicht.class));
         } else if (id == R.id.nav_settings) {
-            startActivity(new Intent(this, Settings.class));
+            startActivity(new Intent(this, Einstellungen.class));
         } else if (id == R.id.nav_friends){
-
+            startActivity(new Intent(this, Settings.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
