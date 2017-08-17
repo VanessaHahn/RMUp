@@ -14,6 +14,11 @@
         <item>weiblich</item>
         <item>männlich</item>
     </string-array>
+    <string-array name="sortieren_nach_items">
+        <item>Datum</item>
+        <item>km/h</item>
+        <item>km</item>
+    </string-array>
     <string name="music_title">Musik</string>
     <string name="gps_title">GPS</string>
     <string name="about_title">About</string>

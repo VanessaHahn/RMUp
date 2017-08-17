@@ -48,6 +48,7 @@
             android:name=".FriendsActivity"
             android:label="@string/title_activity_friends"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Einstellungen"></activity>
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"

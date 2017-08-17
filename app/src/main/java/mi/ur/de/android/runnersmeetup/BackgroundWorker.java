@@ -76,15 +76,19 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
         } else if(type.equals("register")) {
             try {
                 String name = params[1];
-                String geburtsdatum = params[2];
-                String geschlecht = params[3];
-                String email = params[4];
-                String phone = params[5];
-                String password = params[6];
+                String geschlecht = params[2];
+                String geburtsdatum = params[3];
+                String cm = params[4];
+                String kg = params[5];
+                String email = params[6];
+                String phone = params[7];
+                String password = params[8];
 
                 Log.d("Backroundworker", "UserName: " + name);
-                Log.d("Backroundworker", "Geburtsdatum: " + geburtsdatum);
                 Log.d("Backgroundworker", "Geschlecht: " + geschlecht);
+                Log.d("Backroundworker", "Geburtsdatum: " + geburtsdatum);
+                Log.d("Backgroundworker", "cm: " + cm);
+                Log.d("Backgroundworker", "kg: " + kg);
                 Log.d("Backroundworker", "Email " + email);
                 Log.d("Backroundworker", "Phone " + phone);
                 Log.d("Backroundworker", "Password: " + password);
@@ -96,8 +100,10 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&"
-                        + URLEncoder.encode("geburtsdatum", "UTF-8") + "=" + URLEncoder.encode(geburtsdatum, "UTF-8")+"&"
                         + URLEncoder.encode("geschlecht", "UTF-8") + "=" + URLEncoder.encode(geschlecht, "UTF-8")+"&"
+                        + URLEncoder.encode("geburtsdatum", "UTF-8") + "=" + URLEncoder.encode(geburtsdatum, "UTF-8")+"&"
+                        + URLEncoder.encode("cm", "UTF-8") + "=" + URLEncoder.encode(cm, "UTF-8")+"&"
+                        + URLEncoder.encode("kg", "UTF-8") + "=" + URLEncoder.encode(kg, "UTF-8")+"&"
                         + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8")+"&"
                         + URLEncoder.encode("phone", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8")+"&"
                         + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
