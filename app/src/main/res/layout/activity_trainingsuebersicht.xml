@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,67 +7,78 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/hellGrau"
+    android:orientation="vertical"
     tools:context="mi.ur.de.android.runnersmeetup.Trainingsuebersicht">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1">
-
-        <ImageView
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:paddingTop="10dp"
-            android:id="@+id/imageWaage"
-            android:src="@drawable/bmi"
-            android:layout_gravity="center_horizontal" />
+    <RelativeLayout
+        android:layout_width="233dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="15dp">
 
         <TextView
+            android:id="@+id/sortieren_nach"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="---"
-            android:textColorHint="@color/weiß"
-            android:textColor="@color/weiß"
-            android:textStyle="normal"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:id="@+id/result_bmi"
-            android:paddingTop="5dp"
-            android:layout_gravity="center_horizontal" />
+            android:text="sortieren nach"
+            android:textSize="17dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="---"
-            android:textColorHint="@color/weiß"
-            android:textColor="@color/weiß"
-            android:textStyle="normal"
-            android:textSize="20sp"
-            android:id="@+id/result_text"
-            android:gravity="center"
-            android:paddingBottom="10dp"
-            android:layout_gravity="center_horizontal" />
-
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Laufübersicht"
-            android:id="@+id/button2"
-            android:layout_gravity="center_horizontal" />
-
-
-
-        <ListView
-            android:id="@+id/runHistory"
+        <Spinner
+            android:id="@+id/sortieren_nach_items"
             android:layout_width="match_parent"
-            android:layout_height="314dp"
-            android:animateLayoutChanges="true"
-            android:padding="10dp"
-            android:background="@color/weiß"/>
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/sortieren_nach" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="19dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/hellGrau">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:text="Datum"
+            android:textSize="17dp"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/textView9"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:text="km/h"
+            android:textSize="17dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:text="km"
+            android:textSize="17dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:text="min"
+            android:textSize="17dp"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/textView10"
+            android:gravity="center_horizontal"/>
+    </RelativeLayout>
+
+</LinearLayout>

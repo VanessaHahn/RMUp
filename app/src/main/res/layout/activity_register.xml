@@ -9,14 +9,40 @@
     android:weightSum="1">
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="222dp"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
+        android:layout_marginTop="10dp"
         android:hint="Benutzername"
         android:ems="10"
         android:maxLength="20"
         android:id="@+id/input_register_name"
         android:layout_gravity="center_horizontal"/>
+
+    <RelativeLayout
+        android:layout_width="216dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal">
+
+
+        <TextView
+            android:id="@+id/register_geschlecht"
+            android:layout_width="92dp"
+            android:layout_height="49dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:text="Geschlecht"
+            android:textSize="18dp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/register_geschlecht" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="170dp"
@@ -85,33 +111,71 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="237dp"
-        android:layout_height="50dp"
+        android:layout_width="120dp"
+        android:layout_height="44dp"
         android:layout_gravity="center_horizontal">
 
+        <EditText
+            android:id="@+id/input_register_cm"
+            android:layout_width="235dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="Größe"
+            android:maxLength="3"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_toStartOf="@+id/Profil_cm" />
 
-    <TextView
-        android:id="@+id/register_geschlecht"
-        android:layout_width="93dp"
-        android:layout_height="49dp"
-        android:text="Geschlecht"
-        android:textSize="18dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true" />
+        <TextView
+            android:id="@+id/Profil_cm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="cm"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/register_geschlecht" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="120dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal">
+
+        <EditText
+            android:id="@+id/input_register_kg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ems="10"
+            android:hint="Gewicht"
+            android:gravity="center_horizontal"
+            android:inputType="numberSigned"
+            android:maxLength="3"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/Profil_kg" />
+
+        <TextView
+            android:id="@+id/Profil_kg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="kg "
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true" />
+
+
     </RelativeLayout>
 
     <EditText
         android:id="@+id/input_register_email"
-        android:layout_width="wrap_content"
+        android:layout_width="222dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Email"
@@ -121,7 +185,7 @@
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="222dp"
         android:layout_height="wrap_content"
         android:inputType="phone"
         android:hint="Telefon (mobil)"
@@ -132,7 +196,7 @@
 
     <EditText
         android:id="@+id/input_register_pw1"
-        android:layout_width="wrap_content"
+        android:layout_width="222dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:ems="10"
@@ -142,7 +206,7 @@
 
     <EditText
         android:id="@+id/input_register_pw2"
-        android:layout_width="wrap_content"
+        android:layout_width="222dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:ems="10"
@@ -156,6 +220,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
         android:text="Register" />
 
 

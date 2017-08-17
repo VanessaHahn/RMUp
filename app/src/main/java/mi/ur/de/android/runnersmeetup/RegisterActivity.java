@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText inputName, inputDay, inputMonth, inputYear, inputEmail, inputPhone, inputPassword1, inputPassword2;
+    private EditText inputName, inputDay, inputMonth, inputYear, inputCm, inputKg, inputEmail, inputPhone, inputPassword1, inputPassword2;
     private Spinner spinner;
 
     @Override
@@ -30,6 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
         inputDay = (EditText) findViewById(R.id.input_register_day);
         inputMonth = (EditText) findViewById(R.id.input_register_month);
         inputYear = (EditText) findViewById(R.id.input_register_year);
+        inputKg = (EditText) findViewById(R.id.input_register_kg);
+        inputCm = (EditText) findViewById(R.id.input_register_cm);
         inputEmail = (EditText) findViewById(R.id.input_register_email);
         inputPhone = (EditText) findViewById(R.id.input_register_phone);
         inputPassword1 = (EditText) findViewById(R.id.input_register_pw1);
@@ -91,18 +93,20 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void onReg(){
         String name = inputName.getText().toString();
+        String geschlecht = spinner.getSelectedItem().toString();
         String day = inputDay.getText().toString();
         String month = inputMonth.getText().toString();
         String year = inputYear.getText().toString();
         String date = ""+year+"."+month+"."+day;
-        String geschlecht = spinner.getSelectedItem().toString();
+        String cm = inputCm.getText().toString();
+        String kg = inputKg.getText().toString();
         String email = inputEmail.getText().toString();
         String phone = inputPhone.getText().toString();
         String password1 = inputPassword1.getText().toString();
         String type = "register";
 
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundWorker.execute(type, name, date, geschlecht, email, phone, password1);
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundWorker.execute(type, name, geschlecht, date, cm, kg, email, phone, password1);
         //Constants.setValues(gender,size,weight,phone);
 
         try {
