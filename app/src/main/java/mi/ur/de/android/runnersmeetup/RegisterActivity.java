@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -51,20 +52,40 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String password1 = inputPassword1.getText().toString();
                 String password2 = inputPassword2.getText().toString();
-
+                int day = Integer.parseInt(inputDay.getText().toString());
+                int month = Integer.parseInt(inputMonth.getText().toString());
+                int year = Integer.parseInt(inputYear.getText().toString());
+                String email = inputEmail.getText().toString();
+                String regex = "^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_-]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$";
                 if(inputName.getText().length() != 0
                         && inputDay.getText().length() != 0
                         && inputMonth.getText().length() != 0
                         && inputYear.getText().length() != 0
                         && inputEmail.getText().length() != 0
                         && inputPassword1.getText().length() != 0
-                        && inputPassword2.getText().length() != 0){
-                    if(password1.equals(password2)){
-                        onReg();
-                    } else {
+                        && inputPassword2.getText().length() != 0
+                        && (email.matches(regex))
+                        && password1.equals(password2)
+                        && (day>0 && day<=31)
+                        && (month>0 && month<=12)
+                        && (year>1917 && year<2017)){
+                    onReg();
+                } else {
+                    if(!(day>0 && day<=31)){
+                        inputDay.setError("Ungültige Eingabe!");
+                    }
+                    if(!(month>0 && month<=12)){
+                        inputMonth.setError("Ungültige Eingabe!");
+                    }
+                    if(!(year>1917 && year<2017)){
+                        inputYear.setError("Ungültige Eingabe!");
+                    }
+                    if(!(email.matches(regex))){
+                        inputEmail.setError("Keine korrekte Email!");
+                    }
+                    if(!(password1.equals(password2))){
                         inputPassword2.setError("Passwörter nicht identisch!");
                     }
-                } else {
                     if(inputName.getText().length() == 0){
                         inputName.setError("fehlende Eingabe!");
                     }
