@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -17,11 +18,17 @@ public class FriendsActivity extends AppCompatActivity {
     private ExpandableListView listView;
     private ArrayList<String> friends;
     private ArrayAdapter<String> arrayAdapter;
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
+
+        spinner = (Spinner) findViewById(R.id.filterSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.filter_options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
         listView = (ExpandableListView) findViewById(R.id.expandableListView);
         friends = new ArrayList<String>();
