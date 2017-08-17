@@ -3,10 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RMUp.iml" filepath="$PROJECT_DIR$/RMUp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/RMUp.iml" filepath="$PROJECT_DIR$/RMUp.iml" />
       <module fileurl="file://$PROJECT_DIR$/RunnersMeetUp.iml" filepath="$PROJECT_DIR$/RunnersMeetUp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
