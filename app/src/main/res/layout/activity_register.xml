@@ -8,16 +8,37 @@
     tools:context="mi.ur.de.android.runnersmeetup.RegisterActivity"
     android:weightSum="1">
 
+    <RelativeLayout
+        android:layout_width="221dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/runnersmeetup"
+            android:id="@+id/circleImageView" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Profilbild ändern"
+            android:textSize="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
     <EditText
         android:layout_width="222dp"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:layout_marginTop="10dp"
         android:hint="Benutzername"
         android:ems="10"
         android:maxLength="20"
         android:id="@+id/input_register_name"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"/>
 
     <RelativeLayout
         android:layout_width="216dp"
@@ -113,64 +134,58 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="120dp"
-        android:layout_height="44dp"
+        android:layout_width="223dp"
+        android:layout_height="43dp"
         android:layout_gravity="center_horizontal">
 
         <EditText
             android:id="@+id/input_register_cm"
-            android:layout_width="235dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number"
-            android:hint="Größe"
-            android:maxLength="3"
-            android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal"
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:hint="Größe"
+            android:inputType="number"
+            android:maxLength="3"
+            android:layout_alignParentTop="true"
             android:layout_toStartOf="@+id/Profil_cm" />
 
         <TextView
             android:id="@+id/Profil_cm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cm"
-            android:textSize="18sp"
-            android:gravity="center_vertical"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignTop="@+id/Profil_kg"
+            android:gravity="center_vertical"
+            android:text="cm"
+            android:textSize="18sp" />
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="120dp"
-        android:layout_height="44dp"
-        android:layout_gravity="center_horizontal">
 
         <EditText
             android:id="@+id/input_register_kg"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:ems="10"
-            android:hint="Gewicht"
-            android:gravity="center_horizontal"
-            android:inputType="numberSigned"
-            android:maxLength="3"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/Profil_kg" />
+            android:layout_gravity="center_horizontal"
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:hint="Gewicht"
+            android:inputType="numberSigned"
+            android:maxLength="3" />
 
         <TextView
             android:id="@+id/Profil_kg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="kg "
-            android:textSize="18sp"
+            android:layout_alignBottom="@+id/input_register_kg"
+            android:layout_alignTop="@+id/input_register_kg"
+            android:layout_toEndOf="@+id/input_register_kg"
             android:gravity="center_vertical"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true" />
+            android:text="kg "
+            android:textSize="18sp" />
 
 
     </RelativeLayout>
@@ -222,7 +237,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
         android:text="Register" />
 
 

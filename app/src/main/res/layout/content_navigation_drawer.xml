@@ -215,4 +215,9 @@
             android:layout_toStartOf="@+id/textView10"
             android:gravity="center_horizontal"/>
     </RelativeLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/bitmapView"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 </LinearLayout>
