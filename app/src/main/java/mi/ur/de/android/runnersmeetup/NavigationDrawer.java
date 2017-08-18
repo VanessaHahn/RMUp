@@ -1,9 +1,15 @@
 package mi.ur.de.android.runnersmeetup;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,12 +20,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.util.concurrent.ExecutionException;
 
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Spinner spinner;
+    private ImageView view;
+    private ImageView profilbild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +39,10 @@ public class NavigationDrawer extends AppCompatActivity
         setContentView(R.layout.activity_navigation_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        profilbild = (ImageView) findViewById(R.id.imageView);
+
+        view = (ImageView) findViewById(R.id.bitmapView);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -41,7 +57,42 @@ public class NavigationDrawer extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        String name = "jutta";
+        String type = "showProfil";
+
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundWorker.execute(type, name);
+        //Constants.setValues(gender,size,weight,phone);
+
+        try {
+            Log.d("returnAsyncTask", ""+returnAsyncTask.get()[1]);
+            String bitmap = returnAsyncTask.get()[1];
+
+            byte[] decodedByte = Base64.decode(bitmap, 0);
+            Bitmap picture = BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+            view.setImageBitmap(picture);
+
+            if(returnAsyncTask.get()[1].equals("true")){
+                Toast.makeText(this,"Registration successful",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this,LoginActivity.class));
+            }else{
+                // Not successful
+                Log.d("RegisterActivity", "Registration failed!");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
+        }
     }
+
+
+
 
     @Override
     public void onBackPressed() {
