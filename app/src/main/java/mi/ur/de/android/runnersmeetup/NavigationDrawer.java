@@ -58,7 +58,7 @@ public class NavigationDrawer extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        String name = "sven";
+        String name = "jonas";
         String type = "showProfil";
 
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
