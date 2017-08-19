@@ -163,13 +163,13 @@ public class Constants {
         Log.d("Constants_DBParser", "DataBase String: " + dbString);
         if(dbString.indexOf("/") > 0){
             String[] splitString = dbString.split("/");
-            if(splitString.length  == 4){
+            if(splitString.length  == 3){
                 int id = Integer.parseInt(splitString[1]);
-                int gesch = Integer.parseInt(splitString[2]);
-                String handy = splitString[3];
-                Constants.setAvgVelocity(gesch);
-                Constants.setId(id);
-                Constants.setPhone(handy);
+                //int gesch = Integer.parseInt(splitString[2]);
+                //String handy = splitString[3];
+                //Constants.setAvgVelocity(gesch);
+                //Constants.setId(id);
+                //Constants.setPhone(handy);
                 // Hier Eigene Poistion auslesen und einen Läufer erzeugen und hinterlegen
                 return true;
             } //else return
