@@ -89,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 view.setImageBitmap(bitmap);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 0, baos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
                 byte[] b = baos.toByteArray();
                 picture = Base64.encodeToString(b, Base64.DEFAULT);
                 Log.d("picture in string", ""+picture);

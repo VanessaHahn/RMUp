@@ -58,7 +58,7 @@ public class NavigationDrawer extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        String name = "jutta";
+        String name = "sven";
         String type = "showProfil";
 
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
@@ -137,13 +137,18 @@ public class NavigationDrawer extends AppCompatActivity
             startActivity(new Intent(this, RMU_Main.class));
         } else if (id == R.id.nav_statistic) {
             startActivity(new Intent(this, Trainingsuebersicht.class));
+        } else if (id == R.id.nav_friends){
+            //startActivity(new Intent(this, FriendsActivity.class));
+        } else if (id == R.id.nav_veranstaltungen) {
+            //startActivity(new Intent(this, Einstellungen.class));
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, Einstellungen.class));
-        } else if (id == R.id.nav_friends){
-            startActivity(new Intent(this, Settings.class));
-        }
+        } else if (id == R.id.nav_logout){
+            //startActivity(new Intent(this, Settings.class));
+    }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

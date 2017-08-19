@@ -11,18 +11,26 @@
             android:icon="@drawable/ic_menu_statistic"
             android:title="Trainingsübersicht" />
         <item
+            android:id="@+id/nav_friends"
+            android:icon="@drawable/ic_menu_friends"
+            android:title="Freunde" />
+        <item
+            android:id="@+id/nav_veranstaltungen"
+            android:icon="@drawable/icons_ereignis_vielleicht_angenommen"
+            android:title="Veranstaltungen" />
+        <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_settings"
+            android:icon="@drawable/icons_einstellungen"
             android:title="Einstellungen" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/icons_abmelden"
+            android:title="Logout" />
+
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_friends"
-                android:icon="@drawable/ic_menu_friends"
-                android:title="Freunde" />
-        </menu>
-    </item>
+
+
+
 
 </menu>
