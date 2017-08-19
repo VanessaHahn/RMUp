@@ -2,6 +2,7 @@ package mi.ur.de.android.runnersmeetup;
 
 import android.Manifest;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -38,7 +39,6 @@ public class CalculatorService extends Service implements CalculatorListener {
     private LocationManager locationManager;
     private LocationListener locationListener;
     private CalculatorListener calculatorListener;
-    private Timer timer;
     private IBinder iBinder;
     private long lastTimeStamp; // Fuer die Berechnung der Geschwindigkeit auf Basis von GPS
 
@@ -50,19 +50,19 @@ public class CalculatorService extends Service implements CalculatorListener {
         myDb = new DatabaseHelper(this);
     }
 
-    public void AddData(){
-        boolean isInserted = myDb.insertData(totalTime,avgVelocity,currentDistance,kcal);
+    public void AddData() {
+        boolean isInserted = myDb.insertData(totalTime, avgVelocity, currentDistance, kcal);
 
-        if(isInserted = true){
+        if (isInserted = true) {
             String text = "insert";
             int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(CalculatorService.this,text,duration);
+            Toast toast = Toast.makeText(CalculatorService.this, text, duration);
             toast.show();
-            Log.d("db","insert");
+            Log.d("db", "insert");
         } else {
             String text = "not insert";
             int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(CalculatorService.this,text,duration);
+            Toast toast = Toast.makeText(CalculatorService.this, text, duration);
             toast.show();
             Log.d("db", "not insert");
         }
@@ -87,7 +87,6 @@ public class CalculatorService extends Service implements CalculatorListener {
     public int onStartCommand(Intent intent, int flags, int startId) {
         setupValues();
         setupLocation();
-        setupTimer();
         return START_STICKY;
     }
 
@@ -95,64 +94,52 @@ public class CalculatorService extends Service implements CalculatorListener {
         currentDistance = 0.0; //Meter
         currentVelocity = 0.0; //KM/H
         avgVelocity = 0.0;  //KM/H
-        totalTime = 0; //Sekunds
-        avgCounter = 0; // Counter
+        totalTime = 0; //Sekunden
         totalTimeLastKM = 0; // counter
         currentKilometer = 0; //KM
     }
 
     private void setupLocation() {
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        boolean isGPSEnabled = locationManager
-                .isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if(isGPSEnabled == false){
-            Log.e("Location", "Error GPS not available");
-        }else{
-            Log.d("Location", "GPS starten.");
-        }
+        String service = Context.LOCATION_SERVICE;
+        LocationManager locationManager = (LocationManager) getSystemService(service);
+        String provider = LocationManager.GPS_PROVIDER;
 
         locationListener = new LocationListener() {
             private Location lastLocation;
 
             @Override
             public void onLocationChanged(Location location) {
-                long timeDifference;
                 Log.d("Location", "New Location found");
 
                 if (lastLocation != null) {
                     // Laufstrecke aktualisieren
-                    currentDistance += location.distanceTo(lastLocation);
-
-                    if(lastTimeStamp != 0){
-                        // Zeitdifferenz
-                        timeDifference = System.currentTimeMillis() - lastTimeStamp;
-
-                        // Geschwindigkeit
-                        //      Formel Herleitung
-                        //      location.distanceTo(lastLocation) in Meter
-                        //      timeDifference in Millisekunden
-                        //      currentVelocity = (location.distanceTo(lastLocation) / 1000) / (timeDifference / (1000 * 60 * 60))
-                        //      currentVelocity = (location.distanceTo(lastLocation) * 1000 * 60 * 60) / (1000 * timeDifference)
-                        //      currentVelocity = (location.distanceTo(lastLocation) * 60 * 60) / (timeDifference)
-                        currentVelocity = (location.distanceTo(lastLocation) * 60 * 60) / timeDifference;
-
+                    if((int)(currentDistance/1000)<(int)((currentDistance + location.distanceTo(lastLocation))/1000)) {
+                        totalTimeLastKM = 0;
+                        currentKilometer++;
+                    } else {
+                        totalTimeLastKM++;
                     }
-
+                    currentDistance += location.distanceTo(lastLocation);
+                    totalTime ++;
+                    String formattedTime = Constants.getFormatedTime(totalTime);
+                    String formattedKMTime = Constants.getFormatedTime(totalTimeLastKM);
+                    currentVelocity = location.getSpeed() * 3.6;
 
                     // Kalorien Verbrauch
                     kcal = (int) calculateKCal(currentDistance);
-
                     // Mittlere Geschwindigkeit
                     // Basis eines Gewichteten Mitellwertes: https://de.wikipedia.org/wiki/Gewichtung
                     // avgVelocity = (avgCounter * avgVelocity + currentVelocity) / (avgCounter + 1)
                     // Der letzte Durchschnittswert mit allen bisherigen Berechnungen gewichtet,
                     // der neue Wert immer mit 1
-                    avgVelocity = (avgCounter * avgVelocity + currentVelocity) / (avgCounter + 1);
-                    avgCounter++;
+                    avgVelocity = (currentDistance/totalTime) * 3.6;
+
                     // Update GUI View
                     updateVelocityView(currentVelocity);
                     updateDistanceView(currentDistance);
                     updateVelocityMeanView(avgVelocity);
+                    updateTimerView(formattedTime);
+                    updateTimeInKMView(formattedKMTime);
                     updateCaloriesView(kcal);
 
 
@@ -163,55 +150,26 @@ public class CalculatorService extends Service implements CalculatorListener {
                     //return; // Nothing to calculate if we have no lastLocalation
                 }
                 lastLocation = location;
-                lastTimeStamp = System.currentTimeMillis();
             }
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
-                Log.i("Location", "Stauts changed: " + status);
+                Log.i("Location", "Status changed: " + status);
             }
 
             @Override
             public void onProviderEnabled(String provider) {
-
+                Log.d("Location", "GPS starten.");
             }
 
             @Override
             public void onProviderDisabled(String provider) {
+                Log.e("Location", "Error GPS not available");
                 enableGps();
             }
 
         };
         updateLocation();
-    }
-
-    private void setupTimer() {
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                String formattedTime = Constants.getFormatedTime(totalTime);
-
-                // Abschaetzen der Strecke und Kalorien
-                long timeDifference = System.currentTimeMillis() - lastTimeStamp;
-                double esitmatedDistance =  currentDistance + ((double)(timeDifference/1000) * (currentVelocity / 3.6));
-                int esitmatedKcal = calculateKCal(esitmatedDistance);
-
-                // Berechnung  der Zeit in diesem Kilometer
-                if(currentKilometer != (int)(currentDistance/1000)){
-                    totalTimeLastKM = totalTime;
-                    currentKilometer = (int)(currentDistance/1000);
-                }
-                String formattedKMTime = Constants.getFormatedTime(totalTime - totalTimeLastKM);
-                updateTimeInKMView(formattedKMTime);
-
-                updateDistanceView(esitmatedDistance);
-                updateCaloriesView(esitmatedKcal);
-                updateTimerView(formattedTime);
-                Log.d("Timer", "Timer status: " + totalTime);
-                totalTime++;
-            }
-        }, 0, 1000);
     }
 
     @Override
@@ -239,7 +197,8 @@ public class CalculatorService extends Service implements CalculatorListener {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
+        String provider = LocationManager.GPS_PROVIDER;
+        locationManager.requestLocationUpdates(provider, 1000, 0, locationListener);
         Log.d("Location", "Location request started");
     }
 
@@ -249,11 +208,10 @@ public class CalculatorService extends Service implements CalculatorListener {
         Constants.setAvgVelocity(avgVelocity);
         Constants.setDistance(currentDistance);
         Constants.setTime(totalTime);
-        if(timer != null) {
-            timer.cancel();
-        }
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
-        backgroundworker.execute("changeValues",Constants.getDistance(),Constants.getTime(),Constants.getAvgVelocity());
+
+        //um werte in db zu speichern!
+        //backgroundworker.execute("changeValues",Constants.getDistance(),Constants.getTime(),Constants.getAvgVelocity());
 
         return super.stopService(i);
     }
@@ -263,10 +221,6 @@ public class CalculatorService extends Service implements CalculatorListener {
         super.onDestroy();
 
         Log.d("Service", "onDestroy");
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
         // Stop Location Listener
         if (locationManager != null) {
 
@@ -303,8 +257,6 @@ public class CalculatorService extends Service implements CalculatorListener {
 
         updateVelocityView(0);
         updateVelocityMeanView(0);
-
-
     }
 
     class LocalBinder extends Binder {
@@ -349,9 +301,7 @@ public class CalculatorService extends Service implements CalculatorListener {
         return currentDistance;
     }
 
-
     private int calculateKCal(double distance){
-
         // Kalorien Verbrauch
         return ((int) ((double) distance / 1000.0 * (double) Constants.getWeight()));
     }
