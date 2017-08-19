@@ -72,9 +72,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
                                   }
         );
 
-
-
-
         distanceView = (TextView) findViewById(R.id.textView2);
         timeView = (TextView) findViewById(R.id.textView3);
         velocityView = (TextView) findViewById(R.id.textView);
