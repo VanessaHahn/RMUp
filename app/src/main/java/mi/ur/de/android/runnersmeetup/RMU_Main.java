@@ -128,9 +128,10 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         playbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //überhaupt intent?
                 Intent i = new Intent(RMU_Main.this, CalculatorService.class);
                 if(!Constants.isRun()){
-                    bindService(new Intent(RMU_Main.this, CalculatorService.class), serviceConnection, BIND_AUTO_CREATE);
+                    bindService(i, serviceConnection, BIND_AUTO_CREATE);
                     startService(i);
                     playbutton.setImageResource(R.drawable.stopbutton);
                     Constants.setRun(true);
