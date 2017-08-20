@@ -1,5 +1,6 @@
 package mi.ur.de.android.runnersmeetup;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -144,7 +146,24 @@ public class NavigationDrawer extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, Einstellungen.class));
         } else if (id == R.id.nav_logout){
-            //startActivity(new Intent(this, Settings.class));
+            AlertDialog.Builder logout = new AlertDialog.Builder(NavigationDrawer.this);
+            logout.setMessage("Ausloggen?")
+                    .setCancelable(false)
+                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = logout.create();
+            alert.setTitle("Logout");
+            alert.show();
     }
 
 
