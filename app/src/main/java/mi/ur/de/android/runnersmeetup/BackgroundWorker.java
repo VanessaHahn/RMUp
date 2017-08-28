@@ -135,48 +135,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
             }catch (IOException e) {
                 e.printStackTrace();
             }
-        }else if(type.equals("showProfil")) {
-            try {
-                String name = params[1];
-
-                Log.d("Backroundworker", "name: " + name);
-
-                URL url = new URL(show_data);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8");
-
-                Log.d("Backroundworker_regist", "post_data: <" + post_data + ">");
-                bufferedWriter.write(post_data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
-                String result = "";
-                String line = "";
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-                Log.d("Backroundworker", "Result: <" + result + ">");
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return new String[]{"register", result};
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-
-        else if(type.equals("setPos")){
+        } else if(type.equals("setPos")){
             try {
                 String id = params[1];
                 String longitude = params[2];
