@@ -43,7 +43,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         setContentView(R.layout.activity_rmu__main);
         myDb = new DatabaseHelper(this);
         button = (Button) findViewById(R.id.button);
-        update = (Button) findViewById(R.id.update);
+        update = (Button) findViewById(R.id.update); 
         button.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
