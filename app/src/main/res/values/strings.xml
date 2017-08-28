@@ -100,6 +100,7 @@
     <string name="title_activity_navigation_drawer">NavigationDrawer</string>
     <string name="title_activity_friends">Freunde</string>
     <string name="title_activity_profile">Profil</string>
+    <string name="title_activity_suggestions">Vorschläge</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
