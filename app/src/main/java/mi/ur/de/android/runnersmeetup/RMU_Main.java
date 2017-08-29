@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,18 +81,16 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         timeInKMView = (TextView) findViewById(R.id.timeInKiloMeter);
         playbutton = (ImageButton) findViewById(R.id.imageButton);
 
-
-
         /*if(!Constants.isLogged()){
             Intent i = new Intent(RMU_Main.this,LoginActivity.class);
             startActivity(i);
         }*/
 
-        SharedPreferences prefs = getSharedPreferences("RunCondition",MODE_PRIVATE);
-        Constants.setRun(prefs.getBoolean("run", false));
-        if(Constants.isRun()){
-            playbutton.setImageResource(R.drawable.stopbutton);
-        }
+        //SharedPreferences prefs = getSharedPreferences("RunCondition",MODE_PRIVATE);
+        Constants.setRun(false); //prefs.getBoolean("run",false)
+        //if(Constants.isRun()){
+        //  playbutton.setImageResource(R.drawable.stopbutton);
+        //}
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -128,16 +127,15 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         playbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //überhaupt intent?
                 Intent i = new Intent(RMU_Main.this, CalculatorService.class);
                 if(!Constants.isRun()){
+                    playbutton.setImageResource(R.drawable.stopbutton);
                     bindService(i, serviceConnection, BIND_AUTO_CREATE);
                     startService(i);
-                    playbutton.setImageResource(R.drawable.stopbutton);
                     Constants.setRun(true);
                 } else {
-                    unbindService(serviceConnection);
                     playbutton.setImageResource(R.drawable.playbutton);
+                    unbindService(serviceConnection);
                     Constants.setRun(false);
                     stopService(i);
                 }
@@ -156,7 +154,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
 
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-               calculatorService = ((CalculatorService.LocalBinder) service).getBinder();
+                calculatorService = ((CalculatorService.LocalBinder) service).getBinder();
                 if (calculatorService != null)
                     calculatorService.setCalculatorListener(RMU_Main.this);
             }
@@ -166,14 +164,12 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     @Override
     protected void onPause() {
         ActivityManager.setIsVisible(false);
-        unbindService(serviceConnection);
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         ActivityManager.setIsVisible(true);
-
         super.onResume();
     }
 
@@ -216,7 +212,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
                     String formatedDist = String.format("%.3f", distance/1000);
                     distanceView.setText("Strecke:  " + formatedDist + " km");
                 }
-                
+
             }
         });
 
