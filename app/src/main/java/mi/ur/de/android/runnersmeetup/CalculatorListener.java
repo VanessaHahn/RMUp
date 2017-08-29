@@ -5,6 +5,8 @@ package mi.ur.de.android.runnersmeetup;
  */
 public interface CalculatorListener {
 
+    void storeRunData(double velocity, double distance, int time);
+
     void updateVelocityView(double velocity);
 
     void updateDistanceView(double distance);

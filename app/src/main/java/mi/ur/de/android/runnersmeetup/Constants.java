@@ -165,12 +165,10 @@ public class Constants {
             String[] splitString = dbString.split("/");
             if(splitString.length  == 3){
                 int id = Integer.parseInt(splitString[1]);
-                //int gesch = Integer.parseInt(splitString[2]);
-                //String handy = splitString[3];
-                //Constants.setAvgVelocity(gesch);
-                //Constants.setId(id);
-                //Constants.setPhone(handy);
-                // Hier Eigene Poistion auslesen und einen Läufer erzeugen und hinterlegen
+                String name = splitString[2];
+                Constants.setId(id);
+                Constants.setName(name);
+                //Hier Eigene Poistion auslesen und einen Läufer erzeugen und hinterlegen
                 return true;
             } //else return
         } //else return

@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 import android.provider.MediaStore;
@@ -18,6 +19,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +30,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
+
+import java.util.concurrent.ExecutionException;
 
 public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     private TextView timeView, distanceView, velocityView, caloriesView, velcityMeanView, timeInKMView;
@@ -135,6 +139,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
                     Constants.setRun(true);
                 } else {
                     playbutton.setImageResource(R.drawable.playbutton);
+                    calculatorService.getRunData();
                     unbindService(serviceConnection);
                     Constants.setRun(false);
                     stopService(i);
@@ -185,6 +190,34 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void storeRunData(final double velocity, final double distance, final int time){
+        Log.d("storeData",""+velocity+""+distance+""+time);
+        String geschwindigkeit = ""+velocity;
+        String strecke = ""+distance;
+        String dauer = ""+time;
+        String id = ""+Constants.getId();
+        BackgroundWorker backgroundworker = new BackgroundWorker(this);
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("laufSpeichern",geschwindigkeit,strecke,dauer,id);
+        try {
+            String bool = String.valueOf(returnAsyncTask.get()[1]);
+            if(bool.equals("true")){
+                Toast.makeText(this,"Lauf gespeichert!",Toast.LENGTH_SHORT).show();
+            }else{
+                // Not successful
+                Log.d("RegisterActivity", "Registration failed!");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
+        }
     }
 
     @Override
