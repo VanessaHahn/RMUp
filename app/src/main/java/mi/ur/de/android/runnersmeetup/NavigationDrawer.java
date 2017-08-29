@@ -31,9 +31,6 @@ import java.util.concurrent.ExecutionException;
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Spinner spinner;
-    private ImageView view;
-    private ImageView profilbild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +39,6 @@ public class NavigationDrawer extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        profilbild = (ImageView) findViewById(R.id.imageView);
-
-        view = (ImageView) findViewById(R.id.bitmapView);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -52,45 +46,9 @@ public class NavigationDrawer extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        spinner = (Spinner) findViewById(R.id.sortieren_nach_items);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sortieren_nach_items, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        String name = "jonas";
-        String type = "showProfil";
-
-        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundWorker.execute(type, name);
-        //Constants.setValues(gender,size,weight,phone);
-
-        try {
-            Log.d("returnAsyncTask", ""+returnAsyncTask.get()[1]);
-            String bitmap = returnAsyncTask.get()[1];
-
-            byte[] decodedByte = Base64.decode(bitmap, 0);
-            Bitmap picture = BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
-            view.setImageBitmap(picture);
-
-            if(returnAsyncTask.get()[1].equals("true")){
-                Toast.makeText(this,"Registration successful",Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this,LoginActivity.class));
-            }else{
-                // Not successful
-                Log.d("RegisterActivity", "Registration failed!");
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            // Not successful
-            Log.d("RegisterActivity", "Registration  failed!");
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            // Not successful
-            Log.d("RegisterActivity", "Registration  failed!");
-        }
     }
 
 
