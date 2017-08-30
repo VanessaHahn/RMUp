@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class Trainingsuebersicht extends AppCompatActivity {
 
@@ -57,6 +60,13 @@ public class Trainingsuebersicht extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sortieren_nach_items, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        Button speichern = (Button) findViewById(R.id.button4);
+        speichern.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                laden();
+            }
+        });
 
 
         //prefs = this.getSharedPreferences("Settings",MODE_PRIVATE);
@@ -72,6 +82,28 @@ public class Trainingsuebersicht extends AppCompatActivity {
         //initUI();
 
 
+    }
+
+    private void laden(){
+        BackgroundWorker backgroundworker = new BackgroundWorker(this);
+        String id = ""+Constants.getId();
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("laufAnzeigen",id);
+        try {
+            if(Constants.parseLaeufeString(returnAsyncTask.get()[1])){
+                Toast.makeText(this,"Lauf gespeichert!",Toast.LENGTH_SHORT).show();
+            }else{
+                // Not successful
+                Log.d("RegisterActivity", "Registration failed!");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
+        }
     }
 
     //private void initList(){

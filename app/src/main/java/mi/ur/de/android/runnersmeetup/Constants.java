@@ -159,6 +159,14 @@ public class Constants {
         phone = phoneNew;
     }
 
+    public static boolean parseLaeufeString(String dbString){
+        if(dbString.indexOf("/")>0){
+            String[] splitString = dbString.split(" ");
+            Log.d("printArray", ""+splitString[0]);
+        }
+        return false;
+    }
+
     public static boolean parseLoginString(String dbString) {
         Log.d("Constants_DBParser", "DataBase String: " + dbString);
         if(dbString.indexOf("/") > 0){
