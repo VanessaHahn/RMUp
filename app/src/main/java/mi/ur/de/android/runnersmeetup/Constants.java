@@ -161,8 +161,11 @@ public class Constants {
 
     public static boolean parseLaeufeString(String dbString){
         if(dbString.indexOf("/")>0){
-            String[] splitString = dbString.split(" ");
-            Log.d("printArray", ""+splitString[0]);
+            String[] splitdbString = dbString.split("[.]");
+            for (int i = 0; i<4; i++){
+                String[] splitString = splitdbString[i].split("[/]");
+                Log.d("printArray", ""+splitString);
+            }
         }
         return false;
     }

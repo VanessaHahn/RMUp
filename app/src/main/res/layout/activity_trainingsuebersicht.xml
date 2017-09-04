@@ -38,7 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="19dp"
         android:layout_marginTop="10dp"
-        android:background="@color/hellGrau">
+        android:background="@color/hellGrau"
+        >
 
         <TextView
             android:id="@+id/textView8"
@@ -48,7 +49,7 @@
             android:textSize="17dp"
             android:layout_alignParentTop="true"
             android:layout_toStartOf="@+id/textView9"
-            android:gravity="center_horizontal"/>
+            android:gravity="end"/>
 
         <TextView
             android:id="@+id/textView9"
@@ -58,7 +59,7 @@
             android:textSize="17dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:gravity="center_horizontal"/>
+            android:gravity="end"/>
 
         <TextView
             android:id="@+id/textView10"
@@ -68,7 +69,7 @@
             android:textSize="17dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:gravity="center_horizontal"/>
+            android:gravity="end"/>
 
         <TextView
             android:id="@+id/textView11"
@@ -78,13 +79,13 @@
             android:textSize="17dp"
             android:layout_alignParentTop="true"
             android:layout_toStartOf="@+id/textView10"
-            android:gravity="center_horizontal"/>
+            android:gravity="end"/>
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/button4"
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_height="match_parent" />
+
 
 </LinearLayout>
