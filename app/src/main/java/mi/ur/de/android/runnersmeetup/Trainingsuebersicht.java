@@ -100,7 +100,7 @@ public class Trainingsuebersicht extends AppCompatActivity {
                     for (int x = 0; x < 4; x++) {
                         string1 = string[i].split("[/]");
                     }
-                    String[] date = string[0].split(" ");
+                    String[] date = string[i].split(" ");
                     Log.d("date",""+date[0]);
                     Log.d("date",""+date[1]);
                     Lauf lauf = new Lauf(date[0],string1[1],string1[2],string1[3]);
