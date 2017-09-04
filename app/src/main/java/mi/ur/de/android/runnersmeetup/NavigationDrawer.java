@@ -98,7 +98,7 @@ public class NavigationDrawer extends AppCompatActivity
         } else if (id == R.id.nav_statistic) {
             startActivity(new Intent(this, Trainingsuebersicht.class));
         } else if (id == R.id.nav_friends){
-            //startActivity(new Intent(this, FriendsActivity.class));
+            startActivity(new Intent(this, FriendsActivity.class));
         } else if (id == R.id.nav_veranstaltungen) {
             //startActivity(new Intent(this, Einstellungen.class));
         } else if (id == R.id.nav_settings) {
