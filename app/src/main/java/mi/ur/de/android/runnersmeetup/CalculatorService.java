@@ -147,7 +147,7 @@ public class CalculatorService extends Service implements CalculatorListener {
                     // avgVelocity = (avgCounter * avgVelocity + currentVelocity) / (avgCounter + 1)
                     // Der letzte Durchschnittswert mit allen bisherigen Berechnungen gewichtet,
                     // der neue Wert immer mit 1
-                    avgVelocity = currentDistance/totalTime;
+                    avgVelocity = (currentDistance/totalTime) * 3.6;
                     // Update GUI View
                     updateVelocityView(currentVelocity);
                     updateDistanceView(currentDistance);
@@ -244,6 +244,7 @@ public class CalculatorService extends Service implements CalculatorListener {
     @Override
     public boolean stopService(Intent i){
         avgVelocity = (currentDistance / totalTime) * 3.6;
+        storeRunData(avgVelocity,currentDistance,totalTime);
         Constants.setAvgVelocity(avgVelocity);
         Constants.setDistance(currentDistance);
         Constants.setTime(totalTime);
@@ -252,7 +253,6 @@ public class CalculatorService extends Service implements CalculatorListener {
         }
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
         backgroundworker.execute("changeValues",Constants.getDistance(),Constants.getTime(),Constants.getAvgVelocity());
-
         return super.stopService(i);
     }
 
@@ -305,8 +305,18 @@ public class CalculatorService extends Service implements CalculatorListener {
 
     }
 
+    public void getRunData() {
+        storeRunData(avgVelocity, currentDistance, totalTime);
+    }
+
     class LocalBinder extends Binder {
         CalculatorService getBinder(){ return CalculatorService.this; }
+    }
+
+    public void storeRunData(double velocity, double distance, int time){
+        if(calculatorListener!=null) {
+            calculatorListener.storeRunData(velocity, distance, time);
+        }
     }
 
     public void updateVelocityView(double velocity){

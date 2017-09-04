@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,8 +25,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class Trainingsuebersicht extends AppCompatActivity {
 
@@ -33,6 +37,7 @@ public class Trainingsuebersicht extends AppCompatActivity {
     //private MyAdapter adapter;
     //private Button button;
     private Spinner spinner;
+    public ListView lv1;
 
     //SharedPreferences prefs;
     //SharedPreferences.Editor prefsEditor;
@@ -53,10 +58,13 @@ public class Trainingsuebersicht extends AppCompatActivity {
         //    }
         //});
 
+        lv1 = (ListView) findViewById(R.id.listView);
+
         spinner = (Spinner) findViewById(R.id.sortieren_nach_items);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sortieren_nach_items, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        laden();
 
 
         //prefs = this.getSharedPreferences("Settings",MODE_PRIVATE);
@@ -72,6 +80,49 @@ public class Trainingsuebersicht extends AppCompatActivity {
         //initUI();
 
 
+    }
+
+    private void laden(){
+        BackgroundWorker backgroundworker = new BackgroundWorker(this);
+        String id = ""+Constants.getId();
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("laufAnzeigen",id);
+        try {
+            String dbString = returnAsyncTask.get()[1];
+            if(dbString.indexOf("/")>0){
+
+                String[] string = dbString.split("[.]");
+                ArrayAdapter<String> listenadapter = new ArrayAdapter<String>(Trainingsuebersicht.this,android.R.layout.simple_list_item_1, string);
+                lv1.setAdapter(listenadapter);
+
+                ArrayList<Lauf> lauflist = new ArrayList<>();
+                for (int i = 0; i<string.length; i++) {
+                    String[] string1 = new String[string[i].length()];
+                    for (int x = 0; x < 4; x++) {
+                        string1 = string[i].split("[/]");
+                    }
+                    String[] date = string[0].split(" ");
+                    Log.d("date",""+date[0]);
+                    Log.d("date",""+date[1]);
+                    Lauf lauf = new Lauf(date[0],string1[1],string1[2],string1[3]);
+                    lauflist.add(lauf);
+                }
+
+                LaufListAdapter adapter = new LaufListAdapter(this, R.layout.adapter_view_layout, lauflist);
+                lv1.setAdapter(adapter);
+
+            } else{
+                Toast.makeText(this, "Keine Läufe gespeichert!", Toast.LENGTH_LONG).show();
+                Log.d("RegisterActivity", "Registration failed!");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
+        }
     }
 
     //private void initList(){
