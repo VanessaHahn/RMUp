@@ -1,63 +1,118 @@
 package mi.ur.de.android.runnersmeetup;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class FriendsActivity extends AppCompatActivity {
-    private ExpandableListView listView;
-    private ArrayList<String> friends;
-    private ArrayAdapter<String> arrayAdapter;
-    private Spinner spinner;
+    public ListView listView;
+    private String[] string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
+        listView = (ListView) findViewById(R.id.list);
+        searchForUser();
 
-        spinner = (Spinner) findViewById(R.id.filterSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.filter_options, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
-        listView = (ExpandableListView) findViewById(R.id.expandableListView);
-        friends = new ArrayList<String>();
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, friends);
-        listView.setAdapter(arrayAdapter);
-        SharedPreferences prefs = getSharedPreferences("DatabaseConnection",MODE_PRIVATE);
-        Constants.setId(prefs.getInt("id", -1));
-        Constants.setLogged(prefs.getBoolean("logged", false));
-        Constants.setName(prefs.getString("name", ""));
-        Constants.setPhone(prefs.getString("phone", ""));
-        searchForFriends();
     }
 
-    private void searchForFriends() {
+    private void searchForUser() {
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
-        String [] params = {"filter", Constants.getAvgVelocity(), Constants.getLocationLongitude(), Constants.getLocationLatitude()};
+        String id = ""+Constants.getId();
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("filter",id);
         try {
-            manageResult(backgroundworker.execute(params).get());
+            String dbString = returnAsyncTask.get()[1];
+            Log.d("dbStringFriends",""+dbString);
+            if(dbString.indexOf("/")>0){
+                string = dbString.split("[/]");
+                final ArrayAdapter<String> listenadapter = new ArrayAdapter<String>(FriendsActivity.this,android.R.layout.simple_list_item_1, string);
+                listView.setAdapter(listenadapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        switch (listView.getPositionForView(view)){
+                            case 0:{
+                                startProfil(string[0]);
+                                break;
+                            }
+                            case 1:{
+                                startProfil(string[1]);
+                                break;
+                            }
+                            case 2:{
+                                startProfil(string[2]);
+                                break;
+                            }
+                            case 3:{
+                                startProfil(string[3]);
+                                break;
+                            }
+                            case 4:{
+                                startProfil(string[4]);
+                                break;
+                            }
+                            case 5:{
+                                startProfil(string[5]);
+                                break;
+                            }
+                            case 6:{
+                                startProfil(string[6]);
+                                break;
+                            }
+                            case 7:{
+                                startProfil(string[7]);
+                                break;
+                            }
+                            case 8:{
+                                startProfil(string[8]);
+                                break;
+                            }
+                            case 9:{
+                                startProfil(string[9]);
+                                break;
+                            }
+
+                        }
+                    }
+                });
+
+          } else{
+                Toast.makeText(this, "Keine ähnlichen Läufer!", Toast.LENGTH_LONG).show();
+                Log.d("RegisterActivity", "Registration failed!");
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
+
     }
 
-    private void manageResult(String[] result) {
-        for(String s: result){
-            friends.add(s);
-        }
+    public void startProfil(String name){
+        Intent profilIntent = new Intent(FriendsActivity.this, ProfileActivity.class);
+        profilIntent.putExtra("Username",name);
+        startActivity(profilIntent);
+        Log.d("name",""+name);
     }
 
     @Override

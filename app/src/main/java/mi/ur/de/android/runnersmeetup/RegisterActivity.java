@@ -39,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 1;
     private CircleImageView view;
     private Button bildändern;
-    String picture = "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkz\n" +
+    String pic = "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkz\n" +
             "ODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2Nj\n" +
             "Y2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAIAAgADASIA\n" +
             "AhEBAxEB/8QAGwABAAIDAQEAAAAAAAAAAAAAAAECAwQFBgf/xABFEAABBAEDAgUCAwcCAwUIAwEB\n" +
@@ -143,8 +143,8 @@ public class RegisterActivity extends AppCompatActivity {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
                 byte[] b = baos.toByteArray();
-                picture = Base64.encodeToString(b, Base64.DEFAULT);
-                Log.d("picture in string", ""+picture);
+                pic = Base64.encodeToString(b, Base64.DEFAULT);
+                Log.d("picture in string", ""+pic);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -240,6 +240,7 @@ public class RegisterActivity extends AppCompatActivity {
         String email = inputEmail.getText().toString();
         String phone = inputPhone.getText().toString();
         String password1 = inputPassword1.getText().toString();
+        String picture = "";
         String type = "register";
         Log.d("picture in string", ""+picture);
 
@@ -249,6 +250,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         try {
             String bool = String.valueOf(returnAsyncTask.get()[1]);
+            Log.d("returnAsyncTaskResult",""+bool);
 
             if(bool.equals("Benutzername vergeben")){
                 inputName.setError("Benutzername vergeben!");

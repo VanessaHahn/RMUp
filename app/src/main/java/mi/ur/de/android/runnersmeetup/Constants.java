@@ -161,18 +161,27 @@ public class Constants {
         phone = phoneNew;
     }
 
+    public static boolean parseLaeufeString(String dbString){
+        if(dbString.indexOf("/")>0){
+            String[] splitdbString = dbString.split("[.]");
+            for (int i = 0; i<4; i++){
+                String[] splitString = splitdbString[i].split("[/]");
+                Log.d("printArray", ""+splitString);
+            }
+        }
+        return false;
+    }
+
     public static boolean parseLoginString(String dbString) {
         Log.d("Constants_DBParser", "DataBase String: " + dbString);
         if(dbString.indexOf("/") > 0){
             String[] splitString = dbString.split("/");
             if(splitString.length  == 3){
                 int id = Integer.parseInt(splitString[1]);
-                //int gesch = Integer.parseInt(splitString[2]);
-                //String handy = splitString[3];
-                //Constants.setAvgVelocity(gesch);
-                //Constants.setId(id);
-                //Constants.setPhone(handy);
-                // Hier Eigene Poistion auslesen und einen Läufer erzeugen und hinterlegen
+                String name = splitString[2];
+                Constants.setId(id);
+                Constants.setName(name);
+                //Hier Eigene Poistion auslesen und einen Läufer erzeugen und hinterlegen
                 return true;
             } //else return
         } //else return
