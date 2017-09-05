@@ -317,18 +317,8 @@ public class CalculatorService extends Service implements CalculatorListener {
 
     }
 
-    public void getRunData() {
-        storeRunData(avgVelocity, currentDistance, totalTime);
-    }
-
     class LocalBinder extends Binder {
         CalculatorService getBinder(){ return CalculatorService.this; }
-    }
-
-    public void storeRunData(double velocity, double distance, int time){
-        if(calculatorListener!=null) {
-            calculatorListener.storeRunData(velocity, distance, time);
-        }
     }
 
     public void updateVelocityView(double velocity){
