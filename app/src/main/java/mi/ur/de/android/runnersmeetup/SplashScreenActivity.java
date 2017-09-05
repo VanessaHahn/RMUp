@@ -1,9 +1,11 @@
 package mi.ur.de.android.runnersmeetup;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,6 +20,11 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        SharedPreferences prefs = getSharedPreferences("RunCondition",MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("run", false);
+        editor.commit();
 
         circularProgress = (ProgressBar) findViewById(R.id.progressBar);
         circularProgress.setVisibility(View.VISIBLE);
@@ -36,5 +43,4 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         },4000);
     }
-
 }
