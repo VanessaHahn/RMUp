@@ -356,11 +356,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         startActivity(intent);
     }
 
-    @Override
-    public void storeRunData(double velocity, double distance, int time) {
-        Log.d("StoreData", "data: " + velocity + "km/h, " + distance + "m, " + time+ "s");
-    }
-
     //ActionBar
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
