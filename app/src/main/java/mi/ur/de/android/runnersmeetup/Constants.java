@@ -1,7 +1,9 @@
 package mi.ur.de.android.runnersmeetup;
 
+import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
+import android.content.Intent;
 
 import java.util.ArrayList;
 

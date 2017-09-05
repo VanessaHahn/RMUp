@@ -1,7 +1,10 @@
 package mi.ur.de.android.runnersmeetup;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -19,6 +22,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.Menu;
@@ -26,11 +30,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.w3c.dom.Text;
-
+import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
 
 public class RMU_Main extends AppCompatActivity implements CalculatorListener {
@@ -40,7 +44,12 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     private ImageButton playbutton;
     private Button button;
     private Button update;
-    DatabaseHelper myDb;
+    private DatabaseHelper myDb;
+    private NotificationManager notificationManager;
+    private Notification.Builder notificationBuilder;
+    private Notification notification;
+    private RemoteViews remoteViews;
+    private int notifyID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,11 +99,12 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
             startActivity(i);
         }*/
 
-        //SharedPreferences prefs = getSharedPreferences("RunCondition",MODE_PRIVATE);
-        Constants.setRun(false); //prefs.getBoolean("run",false)
-        //if(Constants.isRun()){
-        //  playbutton.setImageResource(R.drawable.stopbutton);
-        //}
+        SharedPreferences prefs = getSharedPreferences("RunCondition",MODE_PRIVATE);
+        Constants.setRun(prefs.getBoolean("run",false));
+        Log.d("Hallo", String.valueOf(Constants.isRun()));
+        if(Constants.isRun()){
+          playbutton.setImageResource(R.drawable.stopbutton);
+        }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -105,7 +115,9 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         } else {
             configureButton();
         }
-        initServiceConnection();
+        if(!Constants.isRun()) {
+            initServiceConnection();
+        }
     }
 
     public void showMessage(String title, String Message){
@@ -131,18 +143,18 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         playbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(RMU_Main.this, CalculatorService.class);
+                Intent intent = new Intent(RMU_Main.this, CalculatorService.class);
                 if(!Constants.isRun()){
                     playbutton.setImageResource(R.drawable.stopbutton);
-                    bindService(i, serviceConnection, BIND_AUTO_CREATE);
-                    startService(i);
+                    bindService(intent, serviceConnection, BIND_AUTO_CREATE);
+                    startService(intent);
                     Constants.setRun(true);
                 } else {
                     playbutton.setImageResource(R.drawable.playbutton);
                     calculatorService.getRunData();
                     unbindService(serviceConnection);
                     Constants.setRun(false);
-                    stopService(i);
+                    stopService(intent);
                 }
             }
         });
@@ -169,27 +181,73 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     @Override
     protected void onPause() {
         ActivityManager.setIsVisible(false);
+        if(Constants.isRun()) {
+            notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+// Sets an ID for the notification, so it can be updated
+            notifyID = 1;
+                        /*mNotifyBuilder = new NotificationCompat.Builder(this)
+                    .setContentTitle("RunnersMeetUp")
+                    .setContentText(R.drawable.tacho + "  0.0 km/h\n"
+                            + R.drawable.distance + "  0 km\n"
+                            + R.drawable.stopuhr + "  0:00 min")
+                    .setSmallIcon(R.drawable.runnersmeetup);*/
+            remoteViews = new RemoteViews(getPackageName(), R.layout.run_notification);
+            notificationBuilder= new Notification.Builder(getApplicationContext());
+            //notificationBuilder.setStyle(new Notification.BigPictureStyle())
+            notificationBuilder.setSmallIcon(R.drawable.runnersmeetup);
+            notificationBuilder.setContent(remoteViews);
+            notification = notificationBuilder.build();
+            notification.bigContentView = remoteViews;
+            notificationManager.notify(notifyID , notification);
+        }
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         ActivityManager.setIsVisible(true);
+        notificationManager = null;
         super.onResume();
     }
 
     @Override
     public void finish(){
-        SharedPreferences prefs = getSharedPreferences("RunCondition",MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("run", Constants.isRun());
-        editor.commit();
         super.finish();
     }
 
     @Override
     protected void onDestroy() {
+        SharedPreferences prefs = getSharedPreferences("RunCondition",MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("run", Constants.isRun());
+        editor.commit();
         super.onDestroy();
+    }
+
+    @Override
+    public void updateNotification(double velocity, double distance, String time) {
+        if(notificationManager != null) {
+            // Start of a loop that processes data and then notifies the user
+            /*mNotifyBuilder.setContentText(R.drawable.tacho + "  " + new DecimalFormat("0.0").format(velocity * 3.6) + " km/h" + "\n"
+                    + R.drawable.distance + "  " + ((int) distance / 1000.0) + " km" + "\n"
+                    + R.drawable.stopuhr + "  " + time + " min")
+            // Because the ID remains unchanged, the existing notification is
+            // updated.
+            notificationManager.notify(
+                    notifyID,
+                    mNotifyBuilder.build());*/
+
+            remoteViews.setTextViewText(R.id.velocity, new DecimalFormat("0.0").format(velocity));
+            remoteViews.setTextViewText(R.id.distance, new DecimalFormat("0.000").format(distance/1000));
+            remoteViews.setTextViewText(R.id.time, time);
+            remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.runnersmeetup);
+            remoteViews.setImageViewResource(R.id.velocity_icon, R.drawable.tacho);
+            remoteViews.setImageViewResource(R.id.distance_icon, R.drawable.distance);
+            remoteViews.setImageViewResource(R.id.time_icon, R.drawable.stopuhr);
+
+            notificationBuilder.setContent(remoteViews);
+            notificationManager.notify(notifyID , notification);
+        }
     }
 
     @Override
@@ -225,7 +283,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                String formatedVelo = String.format("%.0f", velocity);
+                String formatedVelo = String.format("%.1f", velocity);
                 velocityView.setText("Geschwindigkeit:  " + formatedVelo + " km/h");
             }
         });
@@ -265,7 +323,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                String formatedMeanVelo = String.format("%.0f", meanSpeed);
+                String formatedMeanVelo = String.format("%.1f", meanSpeed);
                 velcityMeanView.setText("Durschnittsgeschwindigkeit:  " +  formatedMeanVelo + " km/h");
             }
         });
@@ -296,6 +354,11 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     public void enableGps(){
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startActivity(intent);
+    }
+
+    @Override
+    public void storeRunData(double velocity, double distance, int time) {
+        Log.d("StoreData", "data: " + velocity + "km/h, " + distance + "m, " + time+ "s");
     }
 
     //ActionBar

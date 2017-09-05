@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/notification_icon"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginRight="5dp" >
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/velocity_icon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="7dp"
+        android:layout_toEndOf="@+id/notification_icon">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/velocity"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/velocity_icon"
+        android:layout_toEndOf="@+id/velocity_icon"
+        android:text="0,0"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/black"
+        android:textSize="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/velocity_icon"
+        android:layout_toEndOf="@+id/velocity"
+        android:text=" km/h"
+        android:textColor="@android:color/black"
+        android:textSize="12dp" />
+         
+    <ImageView
+        android:id="@+id/distance_icon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="26dp"
+        android:layout_toEndOf="@+id/notification_icon" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/distance_icon"
+        android:layout_toEndOf="@+id/distance_icon"
+        android:text="0,000"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/black"
+        android:textSize="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/distance_icon"
+        android:layout_toEndOf="@+id/distance"
+        android:text=" km"
+        android:textColor="@android:color/black"
+        android:textSize="12dp" />  
+
+    <ImageView
+        android:id="@+id/time_icon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="43dp"
+        android:layout_toEndOf="@+id/notification_icon" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/time_icon"
+        android:layout_toEndOf="@+id/time_icon"
+        android:text="00:00"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/black"
+        android:textSize="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/time_icon"
+        android:layout_toEndOf="@+id/time"
+        android:text=" min"
+        android:textColor="@android:color/black"
+        android:textSize="12dp" /> 
+    </RelativeLayout>

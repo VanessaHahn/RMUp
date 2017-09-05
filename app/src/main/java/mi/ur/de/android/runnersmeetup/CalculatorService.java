@@ -1,7 +1,9 @@
 package mi.ur.de.android.runnersmeetup;
 
 import android.Manifest;
+import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -14,9 +16,11 @@ import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -41,8 +45,7 @@ public class CalculatorService extends Service implements CalculatorListener {
     private Timer timer;
     private IBinder iBinder;
     private long lastTimeStamp; // Fuer die Berechnung der Geschwindigkeit auf Basis von GPS
-
-    DatabaseHelper myDb;
+    private DatabaseHelper myDb;
 
     @Override
     public void onCreate() {
@@ -135,7 +138,6 @@ public class CalculatorService extends Service implements CalculatorListener {
                         //      currentVelocity = (location.distanceTo(lastLocation) * 1000 * 60 * 60) / (1000 * timeDifference)
                         //      currentVelocity = (location.distanceTo(lastLocation) * 60 * 60) / (timeDifference)
                         currentVelocity = location.getSpeed() *3.6;
-
                     }
 
 
@@ -148,6 +150,7 @@ public class CalculatorService extends Service implements CalculatorListener {
                     // Der letzte Durchschnittswert mit allen bisherigen Berechnungen gewichtet,
                     // der neue Wert immer mit 1
                     avgVelocity = (currentDistance/totalTime) * 3.6;
+                  
                     // Update GUI View
                     updateVelocityView(currentVelocity);
                     updateDistanceView(currentDistance);
@@ -208,8 +211,17 @@ public class CalculatorService extends Service implements CalculatorListener {
                 updateTimerView(formattedTime);
                 Log.d("Timer", "Timer status: " + totalTime);
                 totalTime++;
+
+                updateNotification(currentVelocity, esitmatedDistance, formattedTime);
             }
         }, 0, 1000);
+    }
+
+    @Override
+    public void updateNotification(double velocity, double distance, String time) {
+        if (calculatorListener != null) {
+            calculatorListener.updateNotification(velocity, distance, time);
+        }
     }
 
     @Override
@@ -260,7 +272,7 @@ public class CalculatorService extends Service implements CalculatorListener {
     public void onDestroy() {
         super.onDestroy();
 
-        Log.d("Service", "onDestroy");
+        Log.d("ServiceOnDestroy", "onDestroy");
         if (timer != null) {
             timer.cancel();
             timer = null;
@@ -346,6 +358,17 @@ public class CalculatorService extends Service implements CalculatorListener {
     public void updateTimeInKMView(final String time){
         if(calculatorListener!=null){
             calculatorListener.updateTimeInKMView(time);
+        }
+    }
+
+    public void getRunData() {
+        storeRunData(avgVelocity, currentDistance, totalTime);
+    }
+
+    public void storeRunData(double velocity, double distance, int time) {
+        if(calculatorListener!=null){
+            calculatorListener.storeRunData(velocity, distance, time);
+            Log.d("StoreData", "calculatorListener");
         }
     }
 

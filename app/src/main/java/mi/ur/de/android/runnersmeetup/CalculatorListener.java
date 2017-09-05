@@ -19,5 +19,9 @@ public interface CalculatorListener {
 
     void updateVelocityMeanView(final double meanSpeed);
 
+    void updateNotification(double velocity, double distance, String time);
+
     void enableGps();
+
+    void storeRunData(double velocity, double distance, int time);
 }

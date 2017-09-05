@@ -63,7 +63,7 @@
             android:id="@+id/meanVelo"
             android:layout_gravity="center_vertical"
             android:layout_toRightOf="@id/durchschnittszeichen"/>
-        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
