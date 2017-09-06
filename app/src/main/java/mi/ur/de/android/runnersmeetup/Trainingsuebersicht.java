@@ -36,8 +36,10 @@ public class Trainingsuebersicht extends AppCompatActivity {
     //private ArrayList<RunItem> runItems;
     //private MyAdapter adapter;
     //private Button button;
+    private TextView geschwindigkeitView;
     private Spinner spinner;
     public ListView lv1;
+    private int avgVelocity;
 
     //SharedPreferences prefs;
     //SharedPreferences.Editor prefsEditor;
@@ -58,6 +60,7 @@ public class Trainingsuebersicht extends AppCompatActivity {
         //    }
         //});
 
+        geschwindigkeitView = (TextView) findViewById(R.id.textView16);
         lv1 = (ListView) findViewById(R.id.listView);
 
         spinner = (Spinner) findViewById(R.id.sortieren_nach_items);
@@ -89,8 +92,12 @@ public class Trainingsuebersicht extends AppCompatActivity {
         try {
             String dbString = returnAsyncTask.get()[1];
             if(dbString.indexOf("/")>0){
-
-                String[] string = dbString.split("[.]");
+                String[] dbString1 = dbString.split("[|]");
+                avgVelocity = Integer.parseInt(dbString1[0]);
+                geschwindigkeitView.setText(""+avgVelocity);
+                Log.d("string1",""+dbString1[0]);
+                Log.d("string2",""+dbString1[1]);
+                String[] string = dbString1[1].split("[.]");
                 ArrayAdapter<String> listenadapter = new ArrayAdapter<String>(Trainingsuebersicht.this,android.R.layout.simple_list_item_1, string);
                 lv1.setAdapter(listenadapter);
 

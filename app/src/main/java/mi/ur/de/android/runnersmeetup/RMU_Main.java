@@ -260,6 +260,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
         AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("laufSpeichern",geschwindigkeit,strecke,dauer,id);
         try {
+            Log.d("data",""+returnAsyncTask.get()[1]);
             String bool = String.valueOf(returnAsyncTask.get()[1]);
             if(bool.equals("true")){
                 Toast.makeText(this,"Lauf gespeichert!",Toast.LENGTH_SHORT).show();

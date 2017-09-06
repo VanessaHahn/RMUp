@@ -23,8 +23,8 @@ public class Constants {
     private static double locationLongitude;
     private static double locationLatitude;
 
-    private static int size = 180;
-    private static int weight = 77;
+    private static int size = 0;
+    private static int weight = 0;
     private static String phone = "";
     private static String gender = "männlich";
 
@@ -69,12 +69,28 @@ public class Constants {
         id = userId;
     }
 
+    public static void setGroesse(int groesse){
+        size = groesse;
+    }
+
+    public static void setGewicht(int gewicht){
+        weight = gewicht;
+    }
+
     public static String getName(){
         return name;
     }
 
     public static int getId() {
         return id;
+    }
+
+    public static int getGroesse(){
+        return size;
+    }
+
+    public static int getGewicht(){
+        return weight;
     }
 
     public static boolean isLogged(){
@@ -176,11 +192,15 @@ public class Constants {
         Log.d("Constants_DBParser", "DataBase String: " + dbString);
         if(dbString.indexOf("/") > 0){
             String[] splitString = dbString.split("/");
-            if(splitString.length  == 3){
+            if(splitString.length  == 5){
                 int id = Integer.parseInt(splitString[1]);
                 String name = splitString[2];
+                int groesse = Integer.parseInt(splitString[3]);
+                int gewicht = Integer.parseInt(splitString[4]);
                 Constants.setId(id);
                 Constants.setName(name);
+                Constants.setGroesse(groesse);
+                Constants.setGewicht(gewicht);
                 //Hier Eigene Poistion auslesen und einen Läufer erzeugen und hinterlegen
                 return true;
             } //else return
