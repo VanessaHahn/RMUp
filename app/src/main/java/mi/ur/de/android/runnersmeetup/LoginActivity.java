@@ -1,6 +1,7 @@
 package mi.ur.de.android.runnersmeetup;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -18,10 +19,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText inputName, inputPassword;
     private Button login, register;
+    private SharedPreferences.Editor prefsEditor;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefs = getSharedPreferences("LoginData",MODE_PRIVATE);
+        prefsEditor = prefs.edit();
         setContentView(R.layout.activity_login);
         inputName = (EditText) findViewById(R.id.input_login_name);
         inputPassword = (EditText) findViewById(R.id.input_login_password);
@@ -51,6 +56,9 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(this, "Welcome", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(this, NavigationDrawer.class));
                     Log.d("LoginActivity", "Login Succsefull");
+                    prefsEditor.putInt(Constants.KEY_ID, Constants.getId());
+                    prefsEditor.putString(Constants.KEY_NAME, Constants.getName());
+                    prefsEditor.commit();
                 } else {
                     // Not Succsefull
                     Log.d("LoginActivity", "Login Fail!");
