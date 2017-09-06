@@ -9,7 +9,7 @@
         android:id="@+id/notification_icon"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginRight="5dp" >
+        android:layout_marginRight="15dp" >
     </ImageView>
 
     <ImageView
@@ -32,13 +32,43 @@
         android:textSize="10dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/velocity_key"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:layout_toEndOf="@+id/velocity"
         android:text=" km/h"
         android:textColor="@android:color/black"
         android:textSize="10dp" />
+
+    <ImageView
+        android:id="@+id/meanVelocity_icon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="7dp"
+        android:layout_toEndOf="@+id/velocity_key">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/meanVelocity"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_toEndOf="@+id/meanVelocity_icon"
+        android:text="0,0"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/black"
+        android:textSize="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_toEndOf="@+id/meanVelocity"
+        android:text=" km/h"
+        android:textColor="@android:color/black"
+        android:textSize="10dp"
+        android:id="@+id/textView16" />
          
     <ImageView
         android:id="@+id/distance_icon"
@@ -60,7 +90,8 @@
         android:textSize="10dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/distance_key"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
         android:layout_toEndOf="@+id/distance"
@@ -68,6 +99,36 @@
         android:textColor="@android:color/black"
         android:textSize="10dp" />  
 
+
+    <ImageView
+        android:id="@+id/calories_icon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="26dp"
+        android:layout_toEndOf="@+id/distance_key" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/calories"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:layout_toEndOf="@+id/calories_icon"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/black"
+        android:textSize="10dp" />
+
+    <TextView
+        android:id="@+id/calories_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:layout_toEndOf="@+id/calories"
+        android:text=" kcal"
+        android:textColor="@android:color/black"
+        android:textSize="10dp" /> 
+     
     <ImageView
         android:id="@+id/time_icon"
         android:layout_width="12dp"
@@ -88,11 +149,41 @@
         android:textSize="10dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/time_key"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="43dp"
         android:layout_toEndOf="@+id/time"
         android:text=" min"
         android:textColor="@android:color/black"
         android:textSize="10dp" /> 
-    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/timeKM_icon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="43dp"
+        android:layout_toEndOf="@+id/time_key" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/timeKM"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:layout_toEndOf="@+id/timeKM_icon"
+        android:text="00:00"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/black"
+        android:textSize="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:layout_toEndOf="@+id/timeKM"
+        android:text=" min"
+        android:textColor="@android:color/black"
+        android:textSize="10dp" />
+
+</RelativeLayout>

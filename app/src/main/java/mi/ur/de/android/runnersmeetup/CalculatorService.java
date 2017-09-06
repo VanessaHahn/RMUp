@@ -212,15 +212,15 @@ public class CalculatorService extends Service implements CalculatorListener {
                 Log.d("Timer", "Timer status: " + totalTime);
                 totalTime++;
 
-                updateNotification(currentVelocity, esitmatedDistance, formattedTime);
+                updateNotification(currentVelocity, avgVelocity, esitmatedDistance, esitmatedKcal, formattedTime, formattedKMTime);
             }
         }, 0, 1000);
     }
 
     @Override
-    public void updateNotification(double velocity, double distance, String time) {
+    public void updateNotification(double velocity, double meanVelocity, double distance, int kcal, String time, String timeKM) {
         if (calculatorListener != null) {
-            calculatorListener.updateNotification(velocity, distance, time);
+            calculatorListener.updateNotification(velocity, meanVelocity, distance, kcal,  time, timeKM);
         }
     }
 

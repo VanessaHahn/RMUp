@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by Medion on 20.08.2016.
  */
 public class Constants {
-    private static int id;
+    private static int id = -1;
     private static String name;
 
     private static boolean run;
@@ -28,6 +28,8 @@ public class Constants {
     private static String phone = "";
     private static String gender = "männlich";
 
+    public static final String KEY_ID = "ID";
+    public static final String KEY_NAME = "NAME";
     public static final String KEYCM = "cm";
     public static final String KEYKG = "kg";
     public static final String KEYPHONE = "phone";
