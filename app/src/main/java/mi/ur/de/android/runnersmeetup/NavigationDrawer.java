@@ -2,6 +2,7 @@ package mi.ur.de.android.runnersmeetup;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -110,7 +111,14 @@ public class NavigationDrawer extends AppCompatActivity
                     .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            finish();
+                            SharedPreferences prefs = getSharedPreferences("LoginData",MODE_PRIVATE);
+                            SharedPreferences.Editor prefsEditor = prefs.edit();
+                            Constants.setId(-1);
+                            Constants.setName(null);
+                            prefsEditor.putInt(Constants.KEY_ID, Constants.getId());
+                            prefsEditor.putString(Constants.KEY_NAME, Constants.getName());
+                            prefsEditor.commit();
+                            startActivity(new Intent(NavigationDrawer.this, LoginActivity.class));
                         }
                     })
                     .setNegativeButton("Nein", new DialogInterface.OnClickListener() {

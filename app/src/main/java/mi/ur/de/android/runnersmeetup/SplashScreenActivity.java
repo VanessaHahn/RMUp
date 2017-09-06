@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    ProgressBar circularProgress;
+    private ProgressBar circularProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("run", false);
         editor.commit();
+
+        prefs = this.getSharedPreferences("LoginData",MODE_PRIVATE);
+        int userId = prefs.getInt(Constants.KEY_ID, -1);
+        Constants.setId(userId);
+        String userName = prefs.getString(Constants.KEY_NAME, null);
+        Constants.setName(userName);
 
         circularProgress = (ProgressBar) findViewById(R.id.progressBar);
         circularProgress.setVisibility(View.VISIBLE);
@@ -38,8 +44,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreenActivity.this,LoginActivity.class));
-                finish();
+                if(Constants.getId() != -1 && Constants.getName() != null) {
+                    startActivity(new Intent(SplashScreenActivity.this, NavigationDrawer.class));
+                } else {
+                    startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                    finish();
+                }
             }
         },4000);
     }
