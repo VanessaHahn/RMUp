@@ -205,6 +205,10 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 String strecke = params[2];
                 String dauer = params[3];
                 String id = params[4];
+                String longitude = params[5];
+                String latitude = params[6];
+                Log.d("Backroundworker", "longitude " + longitude);
+                Log.d("Backroundworker", "latitude " + latitude);
                 URL url = new URL(lauf_data);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -215,7 +219,9 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 String post_data = URLEncoder.encode("geschwindigkeit", "UTF-8") + "=" + URLEncoder.encode(geschwindigkeit, "UTF-8") + "&"
                         + URLEncoder.encode("strecke", "UTF-8") + "=" + URLEncoder.encode(strecke, "UTF-8")+"&"
                         + URLEncoder.encode("dauer", "UTF-8") + "=" + URLEncoder.encode(dauer, "UTF-8")+"&"
-                        + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
+                        + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8")+"&"
+                        + URLEncoder.encode("longitude", "UTF-8") + "=" + URLEncoder.encode(longitude, "UTF-8")+"&"
+                        + URLEncoder.encode("latitude", "UTF-8") + "=" + URLEncoder.encode(latitude, "UTF-8");
                 Log.d("Backroundworker_setPos", "post_data: <" + post_data + ">");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();

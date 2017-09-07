@@ -268,8 +268,10 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         String strecke = ""+distance;
         String dauer = ""+time;
         String id = ""+Constants.getId();
+        String longitude = Constants.getLocationLongitude();
+        String latitude = Constants.getLocationLatitude();
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
-        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("laufSpeichern",geschwindigkeit,strecke,dauer,id);
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("laufSpeichern",geschwindigkeit,strecke,dauer,id,longitude,latitude);
         try {
             Log.d("data",""+returnAsyncTask.get()[1]);
             String bool = String.valueOf(returnAsyncTask.get()[1]);
