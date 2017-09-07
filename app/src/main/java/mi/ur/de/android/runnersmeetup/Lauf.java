@@ -6,16 +6,16 @@ package mi.ur.de.android.runnersmeetup;
 
 public class Lauf {
     private String date;
-    private String gesch;
+    private float gesch;
     private String dauer;
-    private String km;
+    private float km;
 
 
-    public Lauf(String date, String gesch, String dauer, String km) {
+    public Lauf(String date, String gesch, String km, String dauer) {
         this.date = date;
-        this.gesch = gesch;
-        this.dauer = dauer;
-        this.km = km;
+        this.gesch = Float.parseFloat(gesch);
+        this.dauer = Constants.getFormatedTime(Integer.parseInt(dauer));
+        this.km = Float.parseFloat(km)/1000;
     }
 
     public String getDate() {
@@ -26,12 +26,12 @@ public class Lauf {
         this.date = date;
     }
 
-    public String getGesch() {
+    public float getGesch() {
         return gesch;
     }
 
     public void setGesch(String gesch) {
-        this.gesch = gesch;
+        this.gesch = Float.parseFloat(gesch);
     }
 
     public String getDauer() {
@@ -39,14 +39,14 @@ public class Lauf {
     }
 
     public void setDauer(String dauer) {
-        this.dauer = dauer;
+        this.dauer = Integer.parseInt(dauer)/60 + ":" + Integer.parseInt(dauer)%60;
     }
 
-    public String getKm() {
+    public float getKm() {
         return km;
     }
 
     public void setKm(String km) {
-        this.km = km;
+        this.km = Float.parseFloat(km)/1000;
     }
 }

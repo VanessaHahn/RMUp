@@ -33,24 +33,22 @@ public class LaufListAdapter extends ArrayAdapter<Lauf>{
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String date = getItem(position).getDate();
-        String gesch = getItem(position).getGesch();
+        float gesch = getItem(position).getGesch();
         String dauer = getItem(position).getDauer();
-        String km = getItem(position).getKm();
-
-        Lauf lauf = new Lauf(date,gesch,dauer,km);
+        float km = getItem(position).getKm();
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
         TextView tvDate = (TextView) convertView.findViewById(R.id.textView13);
         TextView tvGesch = (TextView) convertView.findViewById(R.id.textView12);
-        TextView tvDauer = (TextView) convertView.findViewById(R.id.textView14);
-        TextView tvKm = (TextView) convertView.findViewById(R.id.textView15);
+        TextView tvKm = (TextView) convertView.findViewById(R.id.textView14);
+        TextView tvDauer = (TextView) convertView.findViewById(R.id.textView15);
 
         tvDate.setText(date);
-        tvGesch.setText(gesch);
+        tvGesch.setText(String.valueOf(gesch));
         tvDauer.setText(dauer);
-        tvKm.setText(km);
+        tvKm.setText(String.valueOf(km));
 
         return convertView;
     }

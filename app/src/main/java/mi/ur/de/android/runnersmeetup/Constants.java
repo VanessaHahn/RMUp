@@ -24,12 +24,15 @@ public class Constants {
     private static double locationLatitude;
 
     private static int size = 0;
-    private static int weight = 0;
+    private static float weight = 0;
     private static String phone = "";
     private static String gender = "männlich";
 
     public static final String KEY_ID = "ID";
     public static final String KEY_NAME = "NAME";
+    public static final String KEY_WEIGHT = "WEIGHT";
+    public static final String KEY_SIZE = "SIZE";
+
     public static final String KEYCM = "cm";
     public static final String KEYKG = "kg";
     public static final String KEYPHONE = "phone";
@@ -40,7 +43,7 @@ public class Constants {
     public static final String KEY_DISTANCE = "distance";
     public static final String KEY_CALORIES = "calories";
 
-    public static void setValues(String genderNew, int sizeNew, int weightNew, String phoneNew){
+    public static void setValues(String genderNew, int sizeNew, float weightNew, String phoneNew){
         if(genderNew.equals("weiblich")){
             gender = "weiblich";
         } else {
@@ -75,7 +78,7 @@ public class Constants {
         size = groesse;
     }
 
-    public static void setGewicht(int gewicht){
+    public static void setGewicht(float gewicht){
         weight = gewicht;
     }
 
@@ -89,11 +92,11 @@ public class Constants {
 
     public static int getGroesse(){
         return size;
-    }
+    }                       //doppelt
 
-    public static int getGewicht(){
+    public static float getGewicht(){
         return weight;
-    }
+    }                   //auch
 
     public static boolean isLogged(){
         return logged;
@@ -119,7 +122,7 @@ public class Constants {
         return size;
     }
 
-    public static int getWeight(){
+    public static float getWeight(){
         return weight;
     }
 

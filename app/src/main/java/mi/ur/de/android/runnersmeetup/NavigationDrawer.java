@@ -115,8 +115,12 @@ public class NavigationDrawer extends AppCompatActivity
                             SharedPreferences.Editor prefsEditor = prefs.edit();
                             Constants.setId(-1);
                             Constants.setName(null);
+                            Constants.setGewicht(0);
+                            Constants.setGroesse(0);
                             prefsEditor.putInt(Constants.KEY_ID, Constants.getId());
                             prefsEditor.putString(Constants.KEY_NAME, Constants.getName());
+                            prefsEditor.putFloat(Constants.KEY_WEIGHT, Constants.getWeight());
+                            prefsEditor.putInt(Constants.KEY_SIZE, Constants.getSize());
                             prefsEditor.commit();
                             startActivity(new Intent(NavigationDrawer.this, LoginActivity.class));
                         }
