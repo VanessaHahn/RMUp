@@ -192,12 +192,17 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
                             + R.drawable.stopuhr + "  0:00 min")
                     .setSmallIcon(R.drawable.runnersmeetup);*/
             remoteViews = new RemoteViews(getPackageName(), R.layout.run_notification);
+            remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.runnersmeetup);
+            remoteViews.setImageViewResource(R.id.velocity_icon, R.drawable.tacho);
+            remoteViews.setImageViewResource(R.id.distance_icon, R.drawable.distance);
+            remoteViews.setImageViewResource(R.id.calories_icon, R.drawable.kalorienicon);
+            remoteViews.setImageViewResource(R.id.time_icon, R.drawable.stopuhr);
             notificationBuilder= new Notification.Builder(getApplicationContext());
             //notificationBuilder.setStyle(new Notification.BigPictureStyle())
             notificationBuilder.setSmallIcon(R.drawable.runnersmeetup);
             notificationBuilder.setContent(remoteViews);
             notification = notificationBuilder.build();
-            notification.bigContentView = remoteViews;
+            //notification.bigContentView = remoteViews;
             notificationManager.notify(notifyID , notification);
         }
         super.onPause();
@@ -225,7 +230,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     }
 
     @Override
-    public void updateNotification(double velocity, double distance, String time) {
+    public void updateNotification(double velocity, double meanVelocity, double distance, int calories, String time, String timeKM) {
         if(notificationManager != null) {
             // Start of a loop that processes data and then notifies the user
             /*mNotifyBuilder.setContentText(R.drawable.tacho + "  " + new DecimalFormat("0.0").format(velocity * 3.6) + " km/h" + "\n"
@@ -238,12 +243,18 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
                     mNotifyBuilder.build());*/
 
             remoteViews.setTextViewText(R.id.velocity, new DecimalFormat("0.0").format(velocity));
+            remoteViews.setTextViewText(R.id.meanVelocity, new DecimalFormat("0.0").format(meanVelocity));
             remoteViews.setTextViewText(R.id.distance, new DecimalFormat("0.000").format(distance/1000));
+            remoteViews.setTextViewText(R.id.calories, String.valueOf(calories));
             remoteViews.setTextViewText(R.id.time, time);
+            remoteViews.setTextViewText(R.id.timeKM, timeKM);
             remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.runnersmeetup);
             remoteViews.setImageViewResource(R.id.velocity_icon, R.drawable.tacho);
+            remoteViews.setImageViewResource(R.id.meanVelocity_icon, R.drawable.durchnitt);  //durchschnitt!
             remoteViews.setImageViewResource(R.id.distance_icon, R.drawable.distance);
+            remoteViews.setImageViewResource(R.id.calories_icon, R.drawable.calories);
             remoteViews.setImageViewResource(R.id.time_icon, R.drawable.stopuhr);
+            //remoteViews.setImageViewResource(R.id.timeKM_icon, R.drawable.timeKM);
 
             notificationBuilder.setContent(remoteViews);
             notificationManager.notify(notifyID , notification);

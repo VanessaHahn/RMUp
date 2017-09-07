@@ -19,7 +19,7 @@ public interface CalculatorListener {
 
     void updateVelocityMeanView(final double meanSpeed);
 
-    void updateNotification(double velocity, double distance, String time);
+    void updateNotification(double velocity, double meanVelocity, double distance, int calories, String time, String timeKM);
 
     void enableGps();
 }
