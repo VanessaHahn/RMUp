@@ -58,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("LoginActivity", "Login Succsefull");
                     prefsEditor.putInt(Constants.KEY_ID, Constants.getId());
                     prefsEditor.putString(Constants.KEY_NAME, Constants.getName());
+                    prefsEditor.putFloat(Constants.KEY_WEIGHT, Constants.getGewicht());
+                    prefsEditor.putInt(Constants.KEY_SIZE, Constants.getGroesse());
                     prefsEditor.commit();
                 } else {
                     // Not Succsefull

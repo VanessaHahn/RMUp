@@ -39,7 +39,7 @@ public class Trainingsuebersicht extends AppCompatActivity {
     private TextView geschwindigkeitView;
     private Spinner spinner;
     public ListView lv1;
-    private int avgVelocity;
+    private float avgVelocity;
 
     //SharedPreferences prefs;
     //SharedPreferences.Editor prefsEditor;
@@ -68,6 +68,7 @@ public class Trainingsuebersicht extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         laden();
+        calculateBMI();
 
 
         //prefs = this.getSharedPreferences("Settings",MODE_PRIVATE);
@@ -85,6 +86,22 @@ public class Trainingsuebersicht extends AppCompatActivity {
 
     }
 
+    private void calculateBMI() {
+        TextView BMIview = (TextView) findViewById(R.id.BMI);
+        float weight = Constants.getWeight();
+        float size = (float) Constants.getSize()/100;
+        if(weight != 0 && weight != 0) {
+            float squareSize = (size * size);
+            float bmi = weight/squareSize;
+            bmi *= 10;
+            bmi = Math.round(bmi);
+            bmi /= 10;
+            BMIview.setText(String.valueOf(bmi));
+        } else {
+            BMIview.setText("-");
+        }
+    }
+
     private void laden(){
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
         String id = ""+Constants.getId();
@@ -93,7 +110,7 @@ public class Trainingsuebersicht extends AppCompatActivity {
             String dbString = returnAsyncTask.get()[1];
             if(dbString.indexOf("/")>0){
                 String[] dbString1 = dbString.split("[|]");
-                avgVelocity = Integer.parseInt(dbString1[0]);
+                avgVelocity = Float.parseFloat(dbString1[0]);
                 geschwindigkeitView.setText(""+avgVelocity);
                 Log.d("string1",""+dbString1[0]);
                 Log.d("string2",""+dbString1[1]);
