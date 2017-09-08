@@ -167,10 +167,18 @@ public class Constants {
     public static String getFormatedTime(int time) {
         int min = time/60;
         int sek = time - (60*min);
-        if(sek < 10){
-            return min + ":0" + sek;
-        }else {
-            return min + ":" + sek;
+        if(min < 10) {
+            if(sek < 10){
+                return "0" + min + ":0" + sek;
+            }else {
+                return "0" + min + ":" + sek;
+            }
+        } else {
+            if(sek < 10){
+                return min + ":0" + sek;
+            }else {
+                return min + ":" + sek;
+            }
         }
     }
 

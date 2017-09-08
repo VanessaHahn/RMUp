@@ -56,42 +56,13 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rmu__main);
         myDb = new DatabaseHelper(this);
-        button = (Button) findViewById(R.id.button);
-        update = (Button) findViewById(R.id.update);
-        button.setOnClickListener(new View.OnClickListener() {
-                                      @Override
-                                      public void onClick(View v) {
 
-                                          Cursor res = myDb.getAllData();
-                                          if(res.getCount() == 0){
-                                              showMessage("Error","Nothing found");
-                                              return;
-                                          }
-
-                                          StringBuffer buffer = new StringBuffer();
-                                          while(res.moveToNext()){
-                                              buffer.append("Id :"+res.getString(0)+"\n");
-                                              buffer.append("Time :"+res.getString(1)+"\n");
-                                              buffer.append("Avge :"+res.getString(2)+"\n");
-                                              buffer.append("Distance :"+res.getString(3)+"\n");
-                                              buffer.append("Kcal :"+res.getString(4)+"\n\n");
-                                              //addNewRun(res.getInt(1),res.getDouble(2),res.getDouble(3),res.getInt(4));
-                                          }
-
-                                          showMessage("Data",buffer.toString());
-
-
-
-                                      }
-                                  }
-        );
-
-        distanceView = (TextView) findViewById(R.id.textView2);
-        timeView = (TextView) findViewById(R.id.textView3);
-        velocityView = (TextView) findViewById(R.id.textView);
-        caloriesView = (TextView) findViewById(R.id.textView4);
+        distanceView = (TextView) findViewById(R.id.current_distance);
+        timeView = (TextView) findViewById(R.id.current_time);
+        velocityView = (TextView) findViewById(R.id.current_velocity);
+        caloriesView = (TextView) findViewById(R.id.current_calories);
         velcityMeanView = (TextView) findViewById(R.id.meanVelo);
-        timeInKMView = (TextView) findViewById(R.id.timeInKiloMeter);
+        //timeInKMView = (TextView) findViewById(R.id.timeInKiloMeter);
         playbutton = (ImageButton) findViewById(R.id.imageButton);
 
         /*if(!Constants.isLogged()){
@@ -298,7 +269,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
             @Override
             public void run() {
                 String formatedVelo = String.format("%.1f", velocity);
-                velocityView.setText("Geschwindigkeit:  " + formatedVelo + " km/h");
+                velocityView.setText(formatedVelo);
             }
         });
 
@@ -310,13 +281,13 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(distance < 1000){
+               /* if(distance < 1000){
                     String formatedDist = String.format("%.0f", distance);
-                    distanceView.setText("Strecke:  " + formatedDist + " m");
-                }else{
+                    distanceView.setText(formatedDist);
+                }else{*/
                     String formatedDist = String.format("%.3f", distance/1000);
-                    distanceView.setText("Strecke:  " + formatedDist + " km");
-                }
+                    distanceView.setText(formatedDist);
+                //}
 
             }
         });
@@ -327,7 +298,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                timeView.setText("Zeit:  " + time + " min");
+                timeView.setText(time);
             }
         });
     }
@@ -338,18 +309,19 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
             @Override
             public void run() {
                 String formatedMeanVelo = String.format("%.1f", meanSpeed);
-                velcityMeanView.setText("Durschnittsgeschwindigkeit:  " +  formatedMeanVelo + " km/h");
+                velcityMeanView.setText(formatedMeanVelo);
             }
         });
     }
     @Override
     public void updateTimeInKMView(final String time){
-        this.runOnUiThread(new Runnable() {
+        /*this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 timeInKMView.setText("Zeit in diesem Kilometer:  " + time + " min");
             }
         });
+        */
     }
 
 
@@ -358,7 +330,7 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                caloriesView.setText("Kalorien:  " + kcal + " kcal");
+                caloriesView.setText(String.valueOf(kcal));
             }
         });
 
