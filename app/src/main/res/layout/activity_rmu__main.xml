@@ -1,179 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    android:background="@color/hellGrau"
+    android:background="@color/weiß"
     tools:context="mi.ur.de.android.runnersmeetup.RMU_Main"
     android:weightSum="1">
 
-    <LinearLayout
-        android:layout_width="354dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/layoutGeschwindigkeit">
+    <RelativeLayout
+        android:layout_width="206dp"
+        android:layout_height="67dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp">
+               
         <ImageView
+            android:id="@+id/übersicht_kmh"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:srcCompat="@drawable/tacho" />
+               
+        <TextView
+            android:id="@+id/current_velocity"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:text="0,0"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/durchschnitt_kmh_wert"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/tacho"
-            android:src="@drawable/tacho" />
+            android:layout_height="60dp"
+            android:text="km/h"
+            android:textSize="15sp"
+            android:gravity="center_vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="206dp"
+        android:layout_height="67dp"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/übersicht_km"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            app:srcCompat="@drawable/distance"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Geschwindigkeit:  0.0 km/h"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="@android:color/white"
-            android:padding="10dp"
-            android:layout_centerVertical="true"
-            android:id="@+id/textView"
-            android:layout_toRightOf="@id/tacho"/>
-    </LinearLayout>
+            android:id="@+id/current_distance"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:text="0,000"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/durchschnitt_km_wert"
+            android:layout_width="35dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical"
+            android:text="km"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="206dp"
+        android:layout_height="67dp"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/übersicht_dauer"
+            app:srcCompat="@drawable/stopuhr"/>      
+
+        <TextView
+            android:id="@+id/current_time"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:text="00:00"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+                       
+        <TextView
+            android:id="@+id/durchschnitt_dauer_wert"
+            android:layout_width="40dp"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:text="min"
+            android:textSize="15sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="206dp"
+        android:layout_height="67dp"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/übersicht_kalorien"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:srcCompat="@drawable/kalorienicon" />
+
+        <TextView
+            android:id="@+id/current_calories"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:text="0"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+           
+        <TextView
+            android:id="@+id/durchschnitt_kalorien_wert"
+            android:layout_width="40dp"
+            android:layout_height="60dp"
+            android:text="kcal"
+            android:textSize="15sp"
+            android:gravity="center_vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/layoutGeschwindigkeit"
-        android:id="@+id/layoutDurchschnitt">
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical"
+            android:text="Durchschnittliche Geschwindigkeit: "
+            android:textSize="15dp" />
+           
+        <TextView
+            android:id="@+id/meanVelo"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:text="0,0"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/textView" />
+           
         <TextView
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:id="@+id/durchschnittszeichen"
-            android:text="Ø"
-            android:textSize="40sp"
-            android:textColor="@color/schwarz"
-            android:gravity="center"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Durchnittsgeschwindigkeit:  0.0 km/h"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="@android:color/white"
-            android:padding="10dp"
-            android:id="@+id/meanVelo"
-            android:layout_gravity="center_vertical"
-            android:layout_toRightOf="@id/durchschnittszeichen"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/layoutDurchschnitt"
-        android:id="@+id/layoutStrecke">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/strecke"
-            android:src="@drawable/distance"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Strecke:  0 m"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="@android:color/white"
-            android:padding="10dp"
-            android:id="@+id/textView2"
-            android:layout_toRightOf="@+id/strecke"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/layoutStrecke"
-        android:id="@+id/layoutTime">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/time"
-            android:src="@drawable/stopuhr"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Zeit:  0:00 min"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="@android:color/white"
-            android:padding="10dp"
-            android:id="@+id/textView3"
-            android:layout_toRightOf="@+id/time"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/layoutTime"
-        android:id="@+id/layout_calories">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/caloriesImage"
-            android:src="@drawable/kalorienicon"
-            android:background="@null"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kalorien:  0 kcal"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="@android:color/white"
-            android:padding="10dp"
-            android:id="@+id/textView4"
-            android:layout_toRightOf="@id/caloriesImage"/>
-    </LinearLayout>
-
-
-    <TextView
-        android:layout_width="254dp"
-        android:layout_height="wrap_content"
-        android:text="Zeit in diesem Kilometer:  0:00 min"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="@android:color/white"
-        android:padding="10dp"
-        android:id="@+id/timeInKiloMeter"
-        android:gravity="center_horizontal"
-        android:layout_gravity="center_horizontal"/>
+            android:layout_alignParentTop="true"
+            android:text="km/h"
+            android:gravity="center_vertical"
+            android:layout_toEndOf="@+id/meanVelo"
+            android:layout_marginStart="13dp" />
+           
+    </RelativeLayout>
 
     <ImageButton
-        android:layout_width="177dp"
-        android:layout_height="110dp"
         android:id="@+id/imageButton"
-        android:background="@color/hellGrau"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/playbutton"
-        android:layout_weight="0.35"
-        android:scaleType="centerCrop" />
-
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="add"
-        android:id="@+id/button"/>
-
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/update"
-        android:text="update"/>
+        android:background="@color/weiß"
+        android:scaleType="centerCrop"
+        android:src="@drawable/playbutton" />
 
 </LinearLayout>
