@@ -3,27 +3,28 @@ package mi.ur.de.android.runnersmeetup;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Einstellungen extends AppCompatActivity {
 
-    private Bitmap bitmap;
-
-    private Uri filePath;
-    private int PICK_IMAGE_REQUEST = 1;
-    private CircleImageView profilbild;
-    private Button profilbildÄndern;
+    private Button profilbildÄndern, einstellungenSpeichern;
+    private EditText nameÄndern, telefonÄndern, emailÄndern, passwortÄndern, groesseÄndern, gewichtÄndern;
 
     String picture;
 
@@ -32,41 +33,100 @@ public class Einstellungen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_einstellungen);
 
-        profilbild = (CircleImageView) findViewById(R.id.einstellungen_profilbild);
-        profilbildÄndern = (Button) findViewById(R.id.einstellungen_profilbild_ändern);
-        profilbildÄndern.setOnClickListener(new View.OnClickListener(){
+        nameÄndern = (EditText) findViewById(R.id.profil_name_ändern);
+        telefonÄndern = (EditText) findViewById(R.id.profil_phone_ändern);
+        emailÄndern = (EditText) findViewById(R.id.profil_email_ändern);
+        passwortÄndern = (EditText) findViewById(R.id.profil_pw_ändern);
+        groesseÄndern = (EditText) findViewById(R.id.Profil_größe);
+        gewichtÄndern = (EditText) findViewById(R.id.Profil_gewicht);
+
+        nameÄndern.setText(Constants.getName());
+        telefonÄndern.setText(Constants.getPhone());
+        emailÄndern.setText(Constants.getEmail());
+        passwortÄndern.setText(Constants.getPasswort());
+        groesseÄndern.setText("" + Constants.getGroesse());
+        gewichtÄndern.setText("" + Constants.getGewicht());
+
+        einstellungenSpeichern = (Button) findViewById(R.id.einstellungen_button_speichern);
+        einstellungenSpeichern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFileChooser();
+                updateData();
             }
         });
+
     }
 
-    private void showFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
-            filePath = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                profilbild.setImageBitmap(bitmap);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
-                byte[] b = baos.toByteArray();
-                picture = Base64.encodeToString(b, Base64.DEFAULT);
-                Log.d("picture in string", ""+picture);
-            } catch (IOException e) {
-                e.printStackTrace();
+    private void updateData() {
+        int cm = Integer.parseInt(groesseÄndern.getText().toString());
+        float kg = Float.parseFloat(gewichtÄndern.getText().toString());
+        String email = emailÄndern.getText().toString();
+        String regex = "^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_-]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$";
+        if (nameÄndern.getText().length() != 0
+                && emailÄndern.getText().length() != 0
+                && passwortÄndern.getText().length() != 0
+                && (email.matches(regex))
+                && (cm > 0 && cm <= 220)
+                && (kg > 0.0 && kg <= 300.0)) {
+            onUpdate();
+        } else {
+            if (!(cm > 0 && cm <= 220)) {
+                groesseÄndern.setError("Ungültige Eingabe!");
             }
+            if (!(kg > 0.0 && kg <= 300.0)) {
+                gewichtÄndern.setError("Ungültige Eingabe!");
+            }
+            if (!(email.matches(regex))) {
+                emailÄndern.setError("Keine korrekte Email!");
+            }
+            if (nameÄndern.getText().length() == 0) {
+                nameÄndern.setError("fehlende Eingabe!");
+            }
+            if (TextUtils.isEmpty(emailÄndern.getText())) {
+                emailÄndern.setError("fehlende Eingabe!");
+            }
+            if (passwortÄndern.getText().length() == 0) {
+                passwortÄndern.setError("fehlende Eingabe!");
+            }
+        }}
+
+
+    private void onUpdate() {
+        String id = "" + Constants.getId();
+        String name = nameÄndern.getText().toString();
+        String groesse = groesseÄndern.getText().toString();
+        String gewicht = gewichtÄndern.getText().toString();
+        String email = emailÄndern.getText().toString();
+        String phone = telefonÄndern.getText().toString();
+        String password = passwortÄndern.getText().toString();
+        String type = "updateData";
+
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundWorker.execute(type, id, name, groesse, gewicht, email, phone, password);
+
+        try {
+            String bool = String.valueOf(returnAsyncTask.get()[1]);
+            Log.d("returnAsyncTaskResult",""+bool);
+
+            if(bool.equals("Benutzername vergeben")){
+                nameÄndern.setError("Benutzername vergeben!");
+            }
+
+            if(bool.equals("true")){
+                Toast.makeText(this,"Update Data!",Toast.LENGTH_SHORT).show();
+            }else{
+                // Not successful
+                Log.d("RegisterActivity", "Registration failed!");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
         }
+
     }
 }
