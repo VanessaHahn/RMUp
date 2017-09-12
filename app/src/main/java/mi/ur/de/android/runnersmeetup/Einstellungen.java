@@ -1,6 +1,7 @@
 package mi.ur.de.android.runnersmeetup;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -52,6 +53,17 @@ public class Einstellungen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateData();
+
+                SharedPreferences prefs = getSharedPreferences("LoginData",MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor = prefs.edit();
+                prefsEditor.putInt(Constants.KEY_ID, Constants.getId());
+                prefsEditor.putString(Constants.KEY_NAME, Constants.getName());
+                prefsEditor.putFloat(Constants.KEY_WEIGHT, Constants.getGewicht());
+                prefsEditor.putInt(Constants.KEY_SIZE, Constants.getGroesse());
+                prefsEditor.putString(Constants.KEY_EMAIL, Constants.getEmail());
+                prefsEditor.putString(Constants.KEY_PHONE, Constants.getPhone());
+                prefsEditor.putString(Constants.KEY_PW, Constants.getPasswort());
+                prefsEditor.commit();
             }
         });
 
@@ -113,6 +125,12 @@ public class Einstellungen extends AppCompatActivity {
             }
 
             if(bool.equals("true")){
+                Constants.setName(name);
+                Constants.setPasswort(password);
+                Constants.setEmail(email);
+                Constants.setGewicht(Float.parseFloat(gewicht));
+                Constants.setGroesse(Integer.parseInt(groesse));
+                Constants.setPhone(phone);
                 Toast.makeText(this,"Update Data!",Toast.LENGTH_SHORT).show();
             }else{
                 // Not successful
