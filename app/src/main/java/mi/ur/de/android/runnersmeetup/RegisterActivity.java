@@ -67,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                 int month = Integer.parseInt(inputMonth.getText().toString());
                 int year = Integer.parseInt(inputYear.getText().toString());
                 int cm = Integer.parseInt(inputCm.getText().toString());
-                int kg = Integer.parseInt(inputKg.getText().toString());
+                float kg = Float.parseFloat(inputKg.getText().toString());
                 String email = inputEmail.getText().toString();
                 String regex = "^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_-]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$";
                 if(inputName.getText().length() != 0
