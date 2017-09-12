@@ -41,12 +41,12 @@ public class Settings extends AppCompatActivity {
         showCm = (TextView) findViewById(R.id.cmSettings);
         showKg = (TextView) findViewById(R.id.kgSettings);
         showPhone = (TextView) findViewById(R.id.phoneSettings);
-        String inputCM = prefs.getString(Constants.KEYCM,"---");
-        String inputKG = prefs.getString(Constants.KEYKG,"---");
-        String inputPhone = prefs.getString(Constants.KEYPHONE,"---");
-        showCm.setText(inputCM+" cm");
-        showKg.setText(inputKG+" kg");
-        showPhone.setText(inputPhone);
+        //String inputCM = prefs.getString(Constants.KEYCM,"---");
+        //String inputKG = prefs.getString(Constants.KEYKG,"---");
+        //String inputPhone = prefs.getString(Constants.KEYPHONE,"---");
+        //showCm.setText(inputCM+" cm");
+        //showKg.setText(inputKG+" kg");
+        //showPhone.setText(inputPhone);
     }
 
     private void initButton(){
@@ -79,7 +79,7 @@ public class Settings extends AppCompatActivity {
                 }
                 if(phone.getText().length()>0){
                     String inputphone = phone.getText().toString();
-                    prefsEditor.putString(Constants.KEYPHONE,inputphone);
+                    //prefsEditor.putString(Constants.KEYPHONE,inputphone);
                     prefsEditor.commit();
 
                 } else {
@@ -110,7 +110,7 @@ public class Settings extends AppCompatActivity {
             public void onClick(View v) {
                 prefsEditor.remove(Constants.KEYCM);
                 prefsEditor.remove(Constants.KEYKG);
-                prefsEditor.remove(Constants.KEYPHONE);
+                //prefsEditor.remove(Constants.KEYPHONE);
                 prefsEditor.remove(Constants.KEYBMI);
                 prefsEditor.remove(Constants.KEYBMITEXT);
                 prefsEditor.commit();

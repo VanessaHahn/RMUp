@@ -24,7 +24,7 @@ import java.util.concurrent.ExecutionException;
 public class ProfileActivity extends AppCompatActivity {
 
     private TextView showName, showDate, showGeschlecht, showEmail, showGeschwindigkeit;
-    private String username, handynummer;
+    private String id, username, handynummer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +52,12 @@ public class ProfileActivity extends AppCompatActivity {
             if(dbString.indexOf("/")>0){
                 String[] string = dbString.split("[/]");
                 showName.setText(username);
-                showDate.setText(string[0]);
-                showGeschlecht.setText(string[1]);
-                showEmail.setText(string[2]);
-                handynummer = string[3];
-                showGeschwindigkeit.setText(string[4] +" km/h");
+                id = string[0];
+                showDate.setText(string[1]);
+                showGeschlecht.setText(string[2]);
+                showEmail.setText(string[3]);
+                handynummer = string[4];
+                showGeschwindigkeit.setText(string[5] +" km/h");
             } else{
                 Log.d("RegisterActivity", "Registration failed!");
             }
@@ -65,6 +66,14 @@ public class ProfileActivity extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
+        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

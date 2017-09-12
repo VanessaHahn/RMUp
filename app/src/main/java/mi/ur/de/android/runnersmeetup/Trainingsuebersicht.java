@@ -30,61 +30,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class Trainingsuebersicht extends AppCompatActivity {
+public class Trainingsuebersicht extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    //private TextView resultBMI, resultText;
-    //private ArrayList<RunItem> runItems;
-    //private MyAdapter adapter;
-    //private Button button;
     private TextView geschwindigkeitView;
     private Spinner spinner;
     public ListView lv1;
     private float avgVelocity;
 
-    //SharedPreferences prefs;
-    //SharedPreferences.Editor prefsEditor;
-
-    //DatabaseHelper myDb;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainingsuebersicht);
-        //myDb = new DatabaseHelper(this);
-
-        //button = (Button) findViewById(R.id.button2);
-        //button.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View v) {
-        //        data();
-        //    }
-        //});
-
         geschwindigkeitView = (TextView) findViewById(R.id.textView16);
         lv1 = (ListView) findViewById(R.id.listView);
 
         spinner = (Spinner) findViewById(R.id.sortieren_nach_items);
+        spinner.setOnItemSelectedListener(this);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sortieren_nach_items, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        laden();
+
         calculateBMI();
-
-
-        //prefs = this.getSharedPreferences("Settings",MODE_PRIVATE);
-        //prefsEditor = prefs.edit();
-        //resultText = (TextView) findViewById(R.id.result_bmi);
-        //String BMIText = prefs.getString(Constants.KEYBMITEXT,"---");
-        //resultText.setText(BMIText);
-        //resultBMI = (TextView) findViewById(R.id.result_text);
-        //String BMI = prefs.getString(Constants.KEYBMI,"---");
-        //resultBMI.setText(BMI);
-
-        //initList();
-        //initUI();
-
-
     }
+
 
     private void calculateBMI() {
         TextView BMIview = (TextView) findViewById(R.id.BMI);
@@ -102,10 +70,22 @@ public class Trainingsuebersicht extends AppCompatActivity {
         }
     }
 
-    private void laden(){
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String item = parent.getItemAtPosition(position).toString();
+
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
-        String id = ""+Constants.getId();
-        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("laufAnzeigen",id);
+        String userID = ""+Constants.getId();
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("laufAnzeigen",userID,item);
         try {
             String dbString = returnAsyncTask.get()[1];
             if(dbString.indexOf("/")>0){
@@ -115,11 +95,15 @@ public class Trainingsuebersicht extends AppCompatActivity {
                 Log.d("string1",""+dbString1[0]);
                 Log.d("string2",""+dbString1[1]);
                 String[] string = dbString1[1].split("[.]");
-                ArrayAdapter<String> listenadapter = new ArrayAdapter<String>(Trainingsuebersicht.this,android.R.layout.simple_list_item_1, string);
-                lv1.setAdapter(listenadapter);
 
                 ArrayList<Lauf> lauflist = new ArrayList<>();
-                for (int i = 0; i<string.length; i++) {
+
+                int laufeintraege = string.length;
+                if(laufeintraege>10){
+                    laufeintraege = 10;
+                }
+
+                for (int i = 0; i<laufeintraege; i++) {
                     String[] string1 = new String[string[i].length()];
                     for (int x = 0; x < 4; x++) {
                         string1 = string[i].split("[/]");
@@ -147,85 +131,11 @@ public class Trainingsuebersicht extends AppCompatActivity {
             // Not successful
             Log.d("RegisterActivity", "Registration  failed!");
         }
-    }
 
-    //private void initList(){
-        //runItems = new ArrayList<RunItem>();
-    //}
-
-    //private void initUI(){
-        //data();
-        //initListView();
-        //initListAdapter();
-    //}
-
-    //private void data(){
-        //Cursor res = myDb.getAllData();
-        //StringBuffer buffer = new StringBuffer();
-        //while(res.moveToNext()){
-            //buffer.append(res.getString(0)+". Lauf"+"\n");
-            //buffer.append("Time: "+res.getString(1)+" min"+"\n");
-            //buffer.append("Ø: "+res.getString(2)+" km/h"+"\n");
-            //buffer.append("Distance: "+res.getString(3)+" km"+"\n");
-            //buffer.append("Kcal: "+res.getString(4)+"\n\n");
-            //addNewRun(buffer.toString());
-
-        //}
-   //}
-
-    //private void addNewRun(String run){
-                //RunItem newRun = new RunItem(run);
-                //runItems.add(newRun);
-                //adapter.notifyDataSetChanged();
-    //}
-
-    //private void initListView(){
-        //ListView list = (ListView) findViewById(R.id.runHistory);
-        //list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            //@Override
-            //public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //removeTaskAtPostition(position);
-                //return false;
-        //    }
-        //});
-    //}
-
-    private void initListAdapter(){
-        //ListView list = (ListView) findViewById(R.id.runHistory);
-        //adapter = new MyAdapter(this, runItems);
-        //list.setAdapter(adapter);
-    }
-
-    private void removeTaskAtPostition(int position){
-        //if(runItems.get(position) == null){
-            return;
-        //} else {
-          //  runItems.remove(position);
-            //adapter.notifyDataSetChanged();
-        }
-    //}
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.gps_icon:
-                Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-                return true;
+    public void onNothingSelected(AdapterView<?> parent) {
 
-            case R.id.music_icon:
-                Intent ii = new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER);
-                startActivityForResult(ii,1);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
-
-
 }

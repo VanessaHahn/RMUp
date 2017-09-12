@@ -35,6 +35,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         Constants.setGewicht(userWeight);
         int userSize = prefs.getInt(Constants.KEY_SIZE, 0);
         Constants.setGroesse(userSize);
+        String userPhone = prefs.getString(Constants.KEY_PHONE, null);
+        Constants.setPhone(userPhone);
+        String userEmail = prefs.getString(Constants.KEY_EMAIL, null);
+        Constants.setEmail(userEmail);
+        String userPasswort = prefs.getString(Constants.KEY_PW, null);
+        Constants.setPasswort(userPasswort);
 
         circularProgress = (ProgressBar) findViewById(R.id.progressBar);
         circularProgress.setVisibility(View.VISIBLE);

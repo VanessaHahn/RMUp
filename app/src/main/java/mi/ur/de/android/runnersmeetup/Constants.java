@@ -25,7 +25,9 @@ public class Constants {
 
     private static int size = 0;
     private static float weight = 0;
-    private static String phone = "";
+    private static String phone;
+    private static String email;
+    private static String pw;
     private static String gender = "männlich";
 
     public static final String KEY_ID = "ID";
@@ -35,7 +37,9 @@ public class Constants {
 
     public static final String KEYCM = "cm";
     public static final String KEYKG = "kg";
-    public static final String KEYPHONE = "phone";
+    public static final String KEY_PHONE = "phone";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_PW = "passwort";
     public static final String KEYBMI = "BMI";
     public static final String KEYBMITEXT = "BMIText";
 
@@ -56,6 +60,19 @@ public class Constants {
             weight = weightNew;
         }
         phone = phoneNew;
+    }
+
+    public static void setEmail(String userEmail){
+        email = userEmail;
+    }
+    public static void setPasswort(String passwort){
+        pw = passwort;
+    }
+    public static String getPasswort(){
+        return pw;
+    }
+    public static String getEmail(){
+        return email;
     }
 
     public static void setRun(boolean runCondition){
@@ -205,15 +222,21 @@ public class Constants {
         Log.d("Constants_DBParser", "DataBase String: " + dbString);
         if(dbString.indexOf("/") > 0){
             String[] splitString = dbString.split("/");
-            if(splitString.length  == 5){
+            if(splitString.length  == 8){
                 int id = Integer.parseInt(splitString[1]);
                 String name = splitString[2];
-                int groesse = Integer.parseInt(splitString[3]);
-                int gewicht = Integer.parseInt(splitString[4]);
+                String telefon = splitString[3];
+                String email = splitString[4];
+                String passwort = splitString[5];
+                int groesse = Integer.parseInt(splitString[6]);
+                float gewicht = Float.parseFloat(splitString[7]);
                 Constants.setId(id);
                 Constants.setName(name);
                 Constants.setGroesse(groesse);
                 Constants.setGewicht(gewicht);
+                Constants.setPhone(telefon);
+                Constants.setEmail(email);
+                Constants.setPasswort(passwort);
                 //Hier Eigene Poistion auslesen und einen Läufer erzeugen und hinterlegen
                 return true;
             } //else return
