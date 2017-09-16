@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Einstellungen extends AppCompatActivity {
 
     private Button profilbildÄndern, einstellungenSpeichern;
-    private EditText nameÄndern, telefonÄndern, emailÄndern, passwortÄndern, groesseÄndern, gewichtÄndern;
+    private EditText nameÄndern, telefonÄndern, emailÄndern, passwortÄndern1, passwortÄndern2, groesseÄndern, gewichtÄndern;
 
     String picture;
 
@@ -33,18 +33,21 @@ public class Einstellungen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_einstellungen);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         nameÄndern = (EditText) findViewById(R.id.profil_name_ändern);
         telefonÄndern = (EditText) findViewById(R.id.profil_phone_ändern);
         emailÄndern = (EditText) findViewById(R.id.profil_email_ändern);
-        passwortÄndern = (EditText) findViewById(R.id.profil_pw_ändern);
+        passwortÄndern1 = (EditText) findViewById(R.id.profil_pw_ändern1);
+        passwortÄndern2 = (EditText) findViewById(R.id.profil_pw_ändern2);
         groesseÄndern = (EditText) findViewById(R.id.Profil_größe);
         gewichtÄndern = (EditText) findViewById(R.id.Profil_gewicht);
 
         nameÄndern.setText(Constants.getName());
         telefonÄndern.setText(Constants.getPhone());
         emailÄndern.setText(Constants.getEmail());
-        passwortÄndern.setText(Constants.getPasswort());
+        passwortÄndern1.setText(Constants.getPasswort());
+        passwortÄndern2.setText(Constants.getPasswort());
         groesseÄndern.setText("" + Constants.getGroesse());
         gewichtÄndern.setText("" + Constants.getGewicht());
 
@@ -71,21 +74,27 @@ public class Einstellungen extends AppCompatActivity {
 
     private void updateData() {
         int cm = Integer.parseInt(groesseÄndern.getText().toString());
-        float kg = Float.parseFloat(gewichtÄndern.getText().toString());
+        String kg_string = gewichtÄndern.getText().toString();
+        //float kg = Float.parseFloat(gewichtÄndern.getText().toString());
+        String kg_regex = "[0-9]{2,3}[.][0-9]";
+        String pw1 = passwortÄndern1.getText().toString();
+        String pw2 = passwortÄndern2.getText().toString();
         String email = emailÄndern.getText().toString();
         String regex = "^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_-]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$";
         if (nameÄndern.getText().length() != 0
                 && emailÄndern.getText().length() != 0
-                && passwortÄndern.getText().length() != 0
+                && passwortÄndern1.getText().length() != 0
+                && passwortÄndern2.getText().length() != 0
                 && (email.matches(regex))
+                && pw1.equals(pw2)
                 && (cm > 0 && cm <= 220)
-                && (kg > 0.0 && kg <= 300.0)) {
+                && (kg_string.matches(kg_regex))) {
             onUpdate();
         } else {
             if (!(cm > 0 && cm <= 220)) {
                 groesseÄndern.setError("Ungültige Eingabe!");
             }
-            if (!(kg > 0.0 && kg <= 300.0)) {
+            if(!(kg_string.matches(kg_regex))){
                 gewichtÄndern.setError("Ungültige Eingabe!");
             }
             if (!(email.matches(regex))) {
@@ -97,8 +106,14 @@ public class Einstellungen extends AppCompatActivity {
             if (TextUtils.isEmpty(emailÄndern.getText())) {
                 emailÄndern.setError("fehlende Eingabe!");
             }
-            if (passwortÄndern.getText().length() == 0) {
-                passwortÄndern.setError("fehlende Eingabe!");
+            if (passwortÄndern1.getText().length() == 0) {
+                passwortÄndern1.setError("fehlende Eingabe!");
+            }
+            if (passwortÄndern2.getText().length() == 0) {
+                passwortÄndern2.setError("fehlende Eingabe!");
+            }
+            if(!(pw1.equals(pw2))){
+                passwortÄndern2.setError("Passwörter nicht identisch!");
             }
         }}
 
@@ -110,7 +125,7 @@ public class Einstellungen extends AppCompatActivity {
         String gewicht = gewichtÄndern.getText().toString();
         String email = emailÄndern.getText().toString();
         String phone = telefonÄndern.getText().toString();
-        String password = passwortÄndern.getText().toString();
+        String password = passwortÄndern1.getText().toString();
         String type = "updateData";
 
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);

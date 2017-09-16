@@ -2,6 +2,7 @@ package mi.ur.de.android.runnersmeetup;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
@@ -67,9 +68,11 @@ public class RegisterActivity extends AppCompatActivity {
                 int month = Integer.parseInt(inputMonth.getText().toString());
                 int year = Integer.parseInt(inputYear.getText().toString());
                 int cm = Integer.parseInt(inputCm.getText().toString());
-                float kg = Float.parseFloat(inputKg.getText().toString());
+                String geschlecht = spinner.getSelectedItem().toString();
+                String kg = inputKg.getText().toString();
+                String kg_regex = "[0-9]{2,3}[.][0-9]";
                 String email = inputEmail.getText().toString();
-                String regex = "^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_-]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$";
+                String email_regex = "^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_-]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$";
                 if(inputName.getText().length() != 0
                         && inputDay.getText().length() != 0
                         && inputMonth.getText().length() != 0
@@ -77,20 +80,26 @@ public class RegisterActivity extends AppCompatActivity {
                         && inputEmail.getText().length() != 0
                         && inputPassword1.getText().length() != 0
                         && inputPassword2.getText().length() != 0
-                        && (email.matches(regex))
+                        && (email.matches(email_regex))
                         && password1.equals(password2)
                         && (day>0 && day<=31)
                         && (month>0 && month<=12)
                         && (year>1917 && year<2017)
                         && (cm>0 && cm<=220)
-                        && (kg>0 && kg<=300)){
+                        && (!(geschlecht.equals("---")))
+                        && (kg.matches(kg_regex))){
                     onReg();
                 } else {
                     if(!(cm>0 && cm<=220)){
                         inputCm.setError("Ungültige Eingabe!");
                     }
-                    if(!(kg>0 && kg<=300)){
+                    if(!(kg.matches(kg_regex))){
                         inputKg.setError("Ungültige Eingabe!");
+                    }
+                    if(geschlecht.equals("---")){
+                        TextView errorText = (TextView)spinner.getSelectedView();
+                        errorText.setError("Ungültige Eingabe");
+                        errorText.setTextColor(Color.RED);//just to highlight that this is an error
                     }
                     if(!(day>0 && day<=31)){
                         inputDay.setError("Ungültige Eingabe!");
@@ -101,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if(!(year>1917 && year<2017)){
                         inputYear.setError("Ungültige Eingabe!");
                     }
-                    if(!(email.matches(regex))){
+                    if(!(email.matches(email_regex))){
                         inputEmail.setError("Keine korrekte Email!");
                     }
                     if(!(password1.equals(password2))){
@@ -142,6 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
         String date = ""+year+"."+month+"."+day;
         String cm = inputCm.getText().toString();
         String kg = inputKg.getText().toString();
+        kg = kg.replace(".",",");
         String email = inputEmail.getText().toString();
         String phone = inputPhone.getText().toString();
         String password1 = inputPassword1.getText().toString();

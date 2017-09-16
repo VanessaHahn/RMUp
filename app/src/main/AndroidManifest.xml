@@ -48,12 +48,18 @@
         <activity
             android:name=".FriendsActivity"
             android:label="@string/title_activity_friends"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Einstellungen"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".NavigationDrawer"/>
+
+        <activity
+            android:name=".Einstellungen"
+            android:parentActivityName=".NavigationDrawer"/>
+
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".FriendsActivity"/>
     </application>
 
 </manifest>
