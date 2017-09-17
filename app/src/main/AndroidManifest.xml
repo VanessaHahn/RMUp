@@ -48,18 +48,17 @@
         <activity
             android:name=".FriendsActivity"
             android:label="@string/title_activity_friends"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".NavigationDrawer"/>
-
+            android:parentActivityName=".NavigationDrawer"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Einstellungen"
-            android:parentActivityName=".NavigationDrawer"/>
-
+            android:parentActivityName=".NavigationDrawer" />
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".FriendsActivity"/>
+            android:parentActivityName=".FriendsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Veranstaltungen"></activity>
     </application>
 
 </manifest>
