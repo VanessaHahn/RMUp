@@ -39,6 +39,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
         String update_data = "http://runnersmeetup.hol.es/updateData.php";
         String show_lauf = "http://runnersmeetup.hol.es/laeufe.php";
         String filter_url = "http://runnersmeetup.hol.es/filter.php";
+        String event_url = "http://runnersmeetup.hol.es/veranstaltungen.php";
+        String show_events = "http://runnersmeetup.hol.es/showEvents.php";
         if(type.equals("login")){
             try {
                 String user_name = params[1];
@@ -168,9 +170,42 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
             }catch (IOException e) {
                 e.printStackTrace();
             }
+        }else if(type.equals("showEvents")){
+            try {
+                String id = params[1];
+                URL url = new URL(show_events);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
+                Log.d("Backroundworker_setPos", "post_data: <" + post_data + ">");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                Log.d("Backroundworker_setPos", "result: <" + result + ">");
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return new String[]{"setPos",result};
+            }catch (MalformedURLException e) {
+                e.printStackTrace();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
         } else if(type.equals("showProfil")){
             try {
-                String name = params[1];
+                String id = params[1];
                 URL url = new URL(show_profil);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -178,7 +213,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8");
+                String post_data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
                 Log.d("Backroundworker_setPos", "post_data: <" + post_data + ">");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
@@ -270,6 +305,53 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                         + URLEncoder.encode("longitude", "UTF-8") + "=" + URLEncoder.encode(longitude, "UTF-8")+"&"
                         + URLEncoder.encode("latitude", "UTF-8") + "=" + URLEncoder.encode(latitude, "UTF-8");
                 Log.d("Backroundworker_setPos", "post_data: <" + post_data + ">");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                Log.d("Backroundworker_setPos", "result: <" + result + ">");
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return new String[]{"setPos",result};
+            }catch (MalformedURLException e) {
+                e.printStackTrace();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if(type.equals("event_erstellen")){
+            try {
+                String titel = params[1];
+                String datum = params[2];
+                String uhrzeit = params[3];
+                String treffpunkt = params[4];
+                String text = params[5];
+                String id = params[6];
+                Log.d("Backroundworker", "titel " + titel);
+                Log.d("Backroundworker", "datum " + datum);
+                Log.d("Backroundworker", "uhrzeit " + uhrzeit);
+                Log.d("Backroundworker", "treffpunkt " + treffpunkt);
+                Log.d("Backroundworker", "text " + text);
+                URL url = new URL(event_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("titel", "UTF-8") + "=" + URLEncoder.encode(titel, "UTF-8") + "&"
+                        + URLEncoder.encode("datum", "UTF-8") + "=" + URLEncoder.encode(datum, "UTF-8")+"&"
+                        + URLEncoder.encode("uhrzeit", "UTF-8") + "=" + URLEncoder.encode(uhrzeit, "UTF-8")+"&"
+                        + URLEncoder.encode("treffpunkt", "UTF-8") + "=" + URLEncoder.encode(treffpunkt, "UTF-8")+"&"
+                        + URLEncoder.encode("text", "UTF-8") + "=" + URLEncoder.encode(text, "UTF-8")+"&"
+                        + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
