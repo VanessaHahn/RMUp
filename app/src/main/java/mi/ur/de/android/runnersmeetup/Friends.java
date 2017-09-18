@@ -90,7 +90,7 @@ public class Friends extends AppCompatActivity {
                 });
 
             } else{
-                Toast.makeText(this, "Keine ähnlichen Läufer!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Keine Freunde hinzugefügt!", Toast.LENGTH_LONG).show();
                 Log.d("RegisterActivity", "Registration failed!");
             }
         } catch (InterruptedException e) {
