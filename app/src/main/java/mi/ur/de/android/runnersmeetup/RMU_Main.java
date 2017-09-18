@@ -218,7 +218,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
             remoteViews.setTextViewText(R.id.distance, new DecimalFormat("0.000").format(distance/1000));
             remoteViews.setTextViewText(R.id.calories, String.valueOf(calories));
             remoteViews.setTextViewText(R.id.time, time);
-            remoteViews.setTextViewText(R.id.timeKM, timeKM);
             remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.runnersmeetup);
             remoteViews.setImageViewResource(R.id.velocity_icon, R.drawable.tacho);
             remoteViews.setImageViewResource(R.id.meanVelocity_icon, R.drawable.durchnitt);  //durchschnitt!
