@@ -98,8 +98,10 @@ public class NavigationDrawer extends AppCompatActivity
             startActivity(new Intent(this, RMU_Main.class));
         } else if (id == R.id.nav_statistic) {
             startActivity(new Intent(this, Trainingsuebersicht.class));
+        } else if (id == R.id.nav_vorschlaege){
+            startActivity(new Intent(this, Vorschlaege.class));
         } else if (id == R.id.nav_friends){
-            startActivity(new Intent(this, FriendsActivity.class));
+            startActivity(new Intent(this, Friends.class));
         } else if (id == R.id.nav_veranstaltungen) {
             startActivity(new Intent(this, Veranstaltungen.class));
         } else if (id == R.id.nav_settings) {
