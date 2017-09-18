@@ -51,7 +51,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="39dp"
-            android:layout_marginTop="45dp">
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="45dp">
 
                 <TextView
                     android:id="@+id/textView7"

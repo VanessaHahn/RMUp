@@ -39,48 +39,44 @@
             android:name=".CalculatorService"
             android:enabled="true" />
 
-        <activity android:name=".LoginActivity"
-            android:label="Login"/>
-
-        <activity android:name=".RegisterActivity"
-            android:label="Register"/>
-
+        <activity
+            android:name=".LoginActivity"
+            android:label="Login" />
+        <activity
+            android:name=".RegisterActivity"
+            android:label="Register" />
         <activity
             android:name=".Settings"
             android:label="Einstellungen"
             android:parentActivityName=".NavigationDrawer" />
-
         <activity
             android:name=".Einstellungen"
             android:label="Einstellungen"
             android:parentActivityName=".NavigationDrawer" />
-
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".NavigationDrawer"/>
-
-        <activity android:name=".Veranstaltungen"
+            android:parentActivityName=".NavigationDrawer" />
+        <activity
+            android:name=".Veranstaltungen"
             android:label="Veranstaltungen"
-            android:parentActivityName=".NavigationDrawer"/>
-
-        <activity android:name=".Vorschlaege"
+            android:parentActivityName=".NavigationDrawer" />
+        <activity
+            android:name=".Vorschlaege"
             android:label="Vorschläge"
-            android:parentActivityName=".NavigationDrawer"/>
-
-        <activity android:name=".FriendsProfilActivity"
+            android:parentActivityName=".NavigationDrawer" />
+        <activity
+            android:name=".FriendsProfilActivity"
             android:label="Profil"
             android:parentActivityName=".NavigationDrawer" />
-
-        <activity android:name=".FriendsProfil"
+        <activity
+            android:name=".FriendsProfil"
             android:label="Profil"
-            android:parentActivityName=".NavigationDrawer"/>
-
-        <activity android:name=".Friends"
+            android:parentActivityName=".NavigationDrawer" />
+        <activity
+            android:name=".Friends"
             android:label="Freunde"
-            android:parentActivityName=".NavigationDrawer"/>
-
+            android:parentActivityName=".NavigationDrawer" />
     </application>
 
 </manifest>
