@@ -9,11 +9,13 @@
         android:id="@+id/notification_icon"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginRight="15dp" >
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp">
     </ImageView>
 
     <ImageView
         android:id="@+id/velocity_icon"
+        android:layout_marginLeft="10dp"
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:layout_marginTop="7dp"
@@ -45,7 +47,8 @@
         android:id="@+id/meanVelocity_icon"
         android:layout_width="12dp"
         android:layout_height="12dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/velocity_key"
         android:layout_toEndOf="@+id/velocity_key">
     </ImageView>
 
@@ -53,25 +56,27 @@
         android:id="@+id/meanVelocity"
         android:layout_width="35dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:layout_toEndOf="@+id/meanVelocity_icon"
         android:text="0,0"
         android:textAlignment="textEnd"
         android:textColor="@android:color/black"
-        android:textSize="10dp" />
+        android:textSize="10dp"
+        android:layout_alignBaseline="@+id/textView16"
+        android:layout_alignBottom="@+id/textView16"
+        android:layout_toEndOf="@+id/meanVelocity_icon" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:layout_toEndOf="@+id/meanVelocity"
         android:text=" km/h"
         android:textColor="@android:color/black"
         android:textSize="10dp"
-        android:id="@+id/textView16" />
+        android:id="@+id/textView16"
+        android:layout_alignTop="@+id/meanVelocity_icon"
+        android:layout_toEndOf="@+id/meanVelocity" />
          
     <ImageView
         android:id="@+id/distance_icon"
+        android:layout_marginLeft="10dp"
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:layout_marginTop="26dp"
@@ -102,35 +107,38 @@
 
     <ImageView
         android:id="@+id/calories_icon"
+        android:layout_marginLeft="10dp"
         android:layout_width="12dp"
         android:layout_height="12dp"
-        android:layout_marginTop="26dp"
-        android:layout_toEndOf="@+id/distance_key" >
+        android:layout_below="@+id/distance_key"
+        android:layout_toEndOf="@+id/distance_key">
     </ImageView>
 
     <TextView
         android:id="@+id/calories"
         android:layout_width="35dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
-        android:layout_toEndOf="@+id/calories_icon"
         android:text="0"
         android:textAlignment="textEnd"
         android:textColor="@android:color/black"
-        android:textSize="10dp" />
+        android:textSize="10dp"
+        android:layout_alignBaseline="@+id/calories_key"
+        android:layout_alignBottom="@+id/calories_key"
+        android:layout_toEndOf="@+id/calories_icon" />
 
     <TextView
         android:id="@+id/calories_key"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
-        android:layout_toEndOf="@+id/calories"
         android:text=" kcal"
         android:textColor="@android:color/black"
-        android:textSize="10dp" /> 
+        android:textSize="10dp"
+        android:layout_alignTop="@+id/calories_icon"
+        android:layout_toEndOf="@+id/calories" /> 
      
     <ImageView
         android:id="@+id/time_icon"
+        android:layout_marginLeft="10dp"
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:layout_marginTop="43dp"
@@ -156,34 +164,7 @@
         android:layout_toEndOf="@+id/time"
         android:text=" min"
         android:textColor="@android:color/black"
-        android:textSize="10dp" /> 
+        android:textSize="10dp" /><![CDATA[ 
 
-    <ImageView
-        android:id="@+id/timeKM_icon"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginTop="43dp"
-        android:layout_toEndOf="@+id/time_key" >
-    </ImageView>
-
-    <TextView
-        android:id="@+id/timeKM"
-        android:layout_width="35dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
-        android:layout_toEndOf="@+id/timeKM_icon"
-        android:text="00:00"
-        android:textAlignment="textEnd"
-        android:textColor="@android:color/black"
-        android:textSize="10dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
-        android:layout_toEndOf="@+id/timeKM"
-        android:text=" min"
-        android:textColor="@android:color/black"
-        android:textSize="10dp" />
-
+    ]]>
 </RelativeLayout>

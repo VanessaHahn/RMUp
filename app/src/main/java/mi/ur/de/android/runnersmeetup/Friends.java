@@ -3,32 +3,26 @@ package mi.ur.de.android.runnersmeetup;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class FriendsActivity extends AppCompatActivity {
+public class Friends extends AppCompatActivity {
+
     public ListView listView;
     private String[] string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friends);
+        setContentView(R.layout.activity_friends2);
         listView = (ListView) findViewById(R.id.list);
         searchForUser();
 
@@ -38,13 +32,13 @@ public class FriendsActivity extends AppCompatActivity {
     private void searchForUser() {
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
         String id = ""+Constants.getId();
-        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("filter",id);
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("showFriends",id);
         try {
             String dbString = returnAsyncTask.get()[1];
             Log.d("dbStringFriends",""+dbString);
             if(dbString.indexOf("/")>0){
                 string = dbString.split("[/]");
-                final ArrayAdapter<String> listenadapter = new ArrayAdapter<String>(FriendsActivity.this,android.R.layout.simple_list_item_1, string);
+                final ArrayAdapter<String> listenadapter = new ArrayAdapter<String>(Friends.this,android.R.layout.simple_list_item_1, string);
                 listView.setAdapter(listenadapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -95,8 +89,8 @@ public class FriendsActivity extends AppCompatActivity {
                     }
                 });
 
-          } else{
-                Toast.makeText(this, "Keine ähnlichen Läufer!", Toast.LENGTH_LONG).show();
+            } else{
+                Toast.makeText(this, "Keine Freunde hinzugefügt!", Toast.LENGTH_LONG).show();
                 Log.d("RegisterActivity", "Registration failed!");
             }
         } catch (InterruptedException e) {
@@ -109,10 +103,9 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     public void startProfil(String name){
-        Intent profilIntent = new Intent(FriendsActivity.this, ProfileActivity.class);
-        profilIntent.putExtra("Username",name);
-        startActivity(profilIntent);
-        Log.d("name",""+name);
+        Intent friendsProfilIntent = new Intent(Friends.this, FriendsProfil.class);
+        friendsProfilIntent.putExtra("Username",name);
+        startActivity(friendsProfilIntent);
     }
 
     @Override
