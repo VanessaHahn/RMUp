@@ -62,24 +62,32 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String username = inputName.getText().toString();
+                String username_regex = "[a-zA-Z0-9]{1,20}";
                 String password1 = inputPassword1.getText().toString();
                 String password2 = inputPassword2.getText().toString();
+                String passwort_regex = "[a-zA-Z0-9]*";
                 int day = Integer.parseInt(inputDay.getText().toString());
                 int month = Integer.parseInt(inputMonth.getText().toString());
                 int year = Integer.parseInt(inputYear.getText().toString());
                 int cm = Integer.parseInt(inputCm.getText().toString());
                 String geschlecht = spinner.getSelectedItem().toString();
+                String phone = inputPhone.getText().toString();
+                String phone_regex = "[0-9]*";
                 String kg = inputKg.getText().toString();
                 String kg_regex = "[0-9]{2,3}[.][0-9]";
                 String email = inputEmail.getText().toString();
                 String email_regex = "^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_-]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$";
-                if(inputName.getText().length() != 0
+                if((username.matches(username_regex))
                         && inputDay.getText().length() != 0
                         && inputMonth.getText().length() != 0
                         && inputYear.getText().length() != 0
                         && inputEmail.getText().length() != 0
                         && inputPassword1.getText().length() != 0
                         && inputPassword2.getText().length() != 0
+                        && (password1.matches(passwort_regex))
+                        && (password2.matches(passwort_regex))
+                        && (phone.matches(phone_regex))
                         && (email.matches(email_regex))
                         && password1.equals(password2)
                         && (day>0 && day<=31)
@@ -93,12 +101,15 @@ public class RegisterActivity extends AppCompatActivity {
                     if(!(cm>0 && cm<=220)){
                         inputCm.setError("Ungültige Eingabe!");
                     }
+                    if(!(phone.matches(phone_regex))){
+                        inputPhone.setError("Ungültige Eingabe! Ohne Sonderzeichen!");
+                    }
                     if(!(kg.matches(kg_regex))){
-                        inputKg.setError("Ungültige Eingabe!");
+                        inputKg.setError("Ungültige Eingabe! Kg in Dezimal: z.B. 50.0 kg");
                     }
                     if(geschlecht.equals("---")){
                         TextView errorText = (TextView)spinner.getSelectedView();
-                        errorText.setError("Ungültige Eingabe");
+                        errorText.setError("Ungültige Eingabe!");
                         errorText.setTextColor(Color.RED);//just to highlight that this is an error
                     }
                     if(!(day>0 && day<=31)){
@@ -116,8 +127,8 @@ public class RegisterActivity extends AppCompatActivity {
                     if(!(password1.equals(password2))){
                         inputPassword2.setError("Passwörter nicht identisch!");
                     }
-                    if(inputName.getText().length() == 0){
-                        inputName.setError("fehlende Eingabe!");
+                    if(!(username.matches(username_regex))){
+                        inputName.setError("Ungültige Eingabe! Keine Sonderzeichen!");
                     }
                     if(inputDay.getText().length() == 0){
                         inputDay.setError("fehlende Eingabe!");
@@ -136,6 +147,12 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     if(inputPassword2.getText().length() == 0){
                         inputPassword2.setError("fehlende Eingabe!");
+                    }
+                    if(!(password1.matches(passwort_regex))){
+                        inputPassword1.setError("Ungültige Eingabe! Ohne Sonderzeichen!");
+                    }
+                    if(!(password2.matches(passwort_regex))){
+                        inputPassword2.setError("Ungültige Eingabe! Ohne Sonderzeichen!");
                     }
                 }
             }

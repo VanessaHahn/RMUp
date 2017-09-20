@@ -219,7 +219,6 @@ public class Constants {
     }
 
     public static boolean parseLoginString(String dbString) {
-        Log.d("Constants_DBParser", "DataBase String: " + dbString);
         if(dbString.indexOf("/") > 0){
             String[] splitString = dbString.split("/");
             if(splitString.length  == 8){

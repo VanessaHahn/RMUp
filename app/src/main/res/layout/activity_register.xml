@@ -14,7 +14,7 @@
         android:layout_width="222dp"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="Benutzername"
+        android:hint="Benutzername *"
         android:ems="10"
         android:maxLength="20"
         android:id="@+id/input_register_name"
@@ -22,46 +22,48 @@
         android:layout_marginTop="10dp"/>
 
     <RelativeLayout
-        android:layout_width="276dp"
+        android:layout_width="254dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal">
 
 
         <TextView
             android:id="@+id/register_geschlecht"
-            android:layout_width="92dp"
+            android:layout_width="wrap_content"
             android:layout_height="49dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="center_horizontal"
             android:gravity="center_vertical"
-            android:text="Geschlecht"
-            android:textSize="18dp" />
+            android:text="Geschlecht *"
+            android:textSize="18dp"
+            android:layout_alignParentStart="true" />
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/register_geschlecht" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="170dp"
+        android:layout_width="205dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.01">
 
         <EditText
             android:id="@+id/input_register_day"
-            android:layout_width="40dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="center_horizontal"
             android:ems="2"
-            android:hint="TT"
+            android:hint="TT *"
             android:gravity="center"
             android:inputType="date"
             android:maxLength="2" />
@@ -80,10 +82,10 @@
 
         <EditText
             android:id="@+id/input_register_month"
-            android:layout_width="40dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:ems="2"
-            android:hint="MM"
+            android:hint="MM *"
             android:inputType="date"
             android:maxLength="2"
             android:gravity="center"
@@ -104,13 +106,13 @@
 
         <EditText
             android:id="@+id/input_register_year"
-            android:layout_width="70dp"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:ems="4"
             android:gravity="center"
-            android:hint="JJJJ"
+            android:hint="JJJJ *"
             android:inputType="date"
             android:maxLength="4" />
 
@@ -123,12 +125,12 @@
 
         <EditText
             android:id="@+id/input_register_cm"
-            android:layout_width="80dp"
+            android:layout_width="85dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:ems="10"
             android:gravity="center_horizontal"
-            android:hint="Größe"
+            android:hint="Größe *"
             android:inputType="number"
             android:maxLength="3"
             android:layout_alignParentTop="true"
@@ -148,14 +150,14 @@
 
         <EditText
             android:id="@+id/input_register_kg"
-            android:layout_width="80dp"
+            android:layout_width="85dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_gravity="center_horizontal"
             android:ems="10"
             android:gravity="center_horizontal"
-            android:hint="Gewicht"
+            android:hint="Gewicht *"
             android:inputType="numberDecimal"
             android:maxLength="5" />
 
@@ -178,9 +180,8 @@
         android:layout_width="222dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Email"
+        android:hint="Email *"
         android:inputType="textEmailAddress"
-        android:maxLength="30"
         android:layout_gravity="center_horizontal"/>
 
 
@@ -200,7 +201,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:ems="10"
-        android:hint="Passwort"
+        android:hint="Passwort *"
         android:maxLength="20"
         android:inputType="textPassword" />
 
@@ -210,7 +211,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:ems="10"
-        android:hint="Passwort"
+        android:hint="Passwort *"
         android:maxLength="20"
         android:inputType="textPassword" />
 
