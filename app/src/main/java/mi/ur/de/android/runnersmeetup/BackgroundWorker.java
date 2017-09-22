@@ -320,6 +320,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
                 String name = params[2];
                 String groesse = params[3];
                 String gewicht = params[4];
+                Log.d("RegisterKg",gewicht);
                 String email = params[5];
                 String phone = params[6];
                 String password = params[7];

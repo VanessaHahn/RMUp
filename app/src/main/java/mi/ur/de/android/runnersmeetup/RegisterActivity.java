@@ -168,7 +168,9 @@ public class RegisterActivity extends AppCompatActivity {
         String date = ""+year+"."+month+"."+day;
         String cm = inputCm.getText().toString();
         String kg = inputKg.getText().toString();
-        kg = kg.replace(".",",");
+        Log.d("RegisterKg",kg);
+        //kg = kg.replace(".",",");
+        //Log.d("RegisterKg",kg);
         String email = inputEmail.getText().toString();
         String phone = inputPhone.getText().toString();
         String password1 = inputPassword1.getText().toString();

@@ -30,7 +30,30 @@ public class FriendsProfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friendsprofil);
         listView = (ListView) findViewById(R.id.listFriendsEvents);
-
+        FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder deleteFriend = new AlertDialog.Builder(FriendsProfil.this);
+                ActivityCompat.requestPermissions(FriendsProfil.this,new String[]{Manifest.permission.SEND_SMS},1);
+                deleteFriend.setMessage("Freundschaft zu " + username +" löschen?")
+                        .setCancelable(false)
+                        .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                    toast();
+                            }
+                        })
+                        .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = deleteFriend.create();
+                alert.show();
+            }
+        });
         Intent i = getIntent();
         Bundle extras = i.getExtras();
         username = extras.getString("Username");
