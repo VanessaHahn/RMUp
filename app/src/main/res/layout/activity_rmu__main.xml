@@ -21,8 +21,10 @@
                
         <ImageView
             android:id="@+id/übersicht_kmh"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             app:srcCompat="@drawable/tacho" />
                
         <TextView
