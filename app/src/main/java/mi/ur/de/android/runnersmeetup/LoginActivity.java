@@ -57,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (Constants.parseLoginString(returnAsyncTask.get()[1])) {
                     Toast.makeText(this, "Welcome", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(this, NavigationDrawer.class));
-                    Log.d("LoginActivity", "Login Succsefull");
                     prefsEditor.putInt(Constants.KEY_ID, Constants.getId());
                     prefsEditor.putString(Constants.KEY_NAME, Constants.getName());
                     prefsEditor.putFloat(Constants.KEY_WEIGHT, Constants.getGewicht());

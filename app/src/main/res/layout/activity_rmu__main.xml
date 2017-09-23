@@ -14,7 +14,7 @@
     android:weightSum="1">
 
     <RelativeLayout
-        android:layout_width="206dp"
+        android:layout_width="230dp"
         android:layout_height="67dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp">
@@ -29,7 +29,7 @@
                
         <TextView
             android:id="@+id/current_velocity"
-            android:layout_width="60dp"
+            android:layout_width="100dp"
             android:layout_height="60dp"
             android:textSize="22sp"
             android:gravity="center"
@@ -44,13 +44,13 @@
             android:text="km/h"
             android:textSize="15sp"
             android:gravity="center_vertical"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="206dp"
+        android:layout_width="230dp"
         android:layout_height="67dp"
         android:layout_gravity="center_horizontal">
 
@@ -64,7 +64,7 @@
 
         <TextView
             android:id="@+id/current_distance"
-            android:layout_width="60dp"
+            android:layout_width="100dp"
             android:layout_height="60dp"
             android:textSize="22sp"
             android:gravity="center"
@@ -76,16 +76,17 @@
             android:id="@+id/durchschnitt_km_wert"
             android:layout_width="35dp"
             android:layout_height="60dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
             android:gravity="center_vertical"
             android:text="km"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="206dp"
+        android:layout_width="230dp"
         android:layout_height="67dp"
         android:layout_gravity="center_horizontal">
 
@@ -97,7 +98,7 @@
 
         <TextView
             android:id="@+id/current_time"
-            android:layout_width="60dp"
+            android:layout_width="100dp"
             android:layout_height="60dp"
             android:textSize="22sp"
             android:gravity="center"
@@ -118,7 +119,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="206dp"
+        android:layout_width="230dp"
         android:layout_height="67dp"
         android:layout_gravity="center_horizontal">
 
@@ -130,13 +131,13 @@
 
         <TextView
             android:id="@+id/current_calories"
-            android:layout_width="60dp"
+            android:layout_width="100dp"
             android:layout_height="60dp"
             android:textSize="22sp"
             android:gravity="center"
             android:text="0"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
            
         <TextView
             android:id="@+id/durchschnitt_kalorien_wert"
