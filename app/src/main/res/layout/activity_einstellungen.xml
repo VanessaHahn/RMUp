@@ -69,12 +69,21 @@
         android:layout_gravity="center_horizontal"/>
 
     <EditText
+        android:id="@+id/profil_altes_pw"
+        android:layout_width="235dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Altes Passwort"
+        android:layout_gravity="center_horizontal"/>
+
+    <EditText
         android:id="@+id/profil_pw_ändern1"
         android:layout_width="235dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        android:hint="Passwort"
+        android:hint="Neues Passwort"
         android:layout_gravity="center_horizontal"/>
 
     <EditText
@@ -83,7 +92,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        android:hint="Passwort"
+        android:hint="Neues Passwort"
         android:layout_gravity="center_horizontal"/>
 
     <RelativeLayout

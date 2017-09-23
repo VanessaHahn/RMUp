@@ -157,6 +157,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Eigene Veranstaltungen:"
+        android:gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:textSize="15sp"
         />

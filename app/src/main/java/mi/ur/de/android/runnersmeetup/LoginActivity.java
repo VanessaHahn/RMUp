@@ -3,6 +3,8 @@ package mi.ur.de.android.runnersmeetup;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

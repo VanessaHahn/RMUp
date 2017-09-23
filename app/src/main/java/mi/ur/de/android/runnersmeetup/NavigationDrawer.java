@@ -124,6 +124,7 @@ public class NavigationDrawer extends AppCompatActivity
                             prefsEditor.putFloat(Constants.KEY_WEIGHT, Constants.getWeight());
                             prefsEditor.putInt(Constants.KEY_SIZE, Constants.getSize());
                             prefsEditor.commit();
+                            finish();
                             startActivity(new Intent(NavigationDrawer.this, LoginActivity.class));
                         }
                     })

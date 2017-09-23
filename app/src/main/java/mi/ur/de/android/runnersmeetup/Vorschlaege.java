@@ -35,6 +35,7 @@ public class Vorschlaege extends AppCompatActivity {
         AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("filter",id);
         try {
             String dbString = returnAsyncTask.get()[1];
+            Log.d("dbstring",""+dbString);
             if(dbString.indexOf("/")>0){
                 string = dbString.split("[/]");
 
