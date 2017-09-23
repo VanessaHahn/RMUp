@@ -67,10 +67,14 @@ public class RegisterActivity extends AppCompatActivity {
                 String password1 = inputPassword1.getText().toString();
                 String password2 = inputPassword2.getText().toString();
                 String passwort_regex = "[a-zA-Z0-9]*";
-                int day = Integer.parseInt(inputDay.getText().toString());
-                int month = Integer.parseInt(inputMonth.getText().toString());
-                int year = Integer.parseInt(inputYear.getText().toString());
-                int cm = Integer.parseInt(inputCm.getText().toString());
+                String day = inputDay.getText().toString();
+                String day_regex = "[0-3]?[0-9]";
+                String month = inputMonth.getText().toString();
+                String month_regex = "[1,2,3,4,5,6,7,8,9,10,11,12]";
+                String year = inputYear.getText().toString();
+                String year_regex = "[1-2][0,9][0-9][0-9]";
+                String cm = inputCm.getText().toString();
+                String cm_regex = "[1-2][0-9]{1,2}";
                 String geschlecht = spinner.getSelectedItem().toString();
                 String phone = inputPhone.getText().toString();
                 String phone_regex = "[0-9]*";
@@ -90,15 +94,15 @@ public class RegisterActivity extends AppCompatActivity {
                         && (phone.matches(phone_regex))
                         && (email.matches(email_regex))
                         && password1.equals(password2)
-                        && (day>0 && day<=31)
-                        && (month>0 && month<=12)
-                        && (year>1917 && year<2017)
-                        && (cm>0 && cm<=220)
+                        && (day.matches(day_regex))
+                        && (month.matches(month_regex))
+                        && (year.matches(year_regex))
+                        && (cm.matches(cm_regex))
                         && (!(geschlecht.equals("---")))
                         && (kg.matches(kg_regex))){
                     onReg();
                 } else {
-                    if(!(cm>0 && cm<=220)){
+                    if(!(cm.matches(cm_regex))){
                         inputCm.setError("Ungültige Eingabe!");
                     }
                     if(!(phone.matches(phone_regex))){
@@ -112,13 +116,13 @@ public class RegisterActivity extends AppCompatActivity {
                         errorText.setError("Ungültige Eingabe!");
                         errorText.setTextColor(Color.RED);//just to highlight that this is an error
                     }
-                    if(!(day>0 && day<=31)){
+                    if(!(day.matches(day_regex))){
                         inputDay.setError("Ungültige Eingabe!");
                     }
-                    if(!(month>0 && month<=12)){
+                    if(!(month.matches(month_regex))){
                         inputMonth.setError("Ungültige Eingabe!");
                     }
-                    if(!(year>1917 && year<2017)){
+                    if(!(year.matches(year_regex))){
                         inputYear.setError("Ungültige Eingabe!");
                     }
                     if(!(email.matches(email_regex))){
@@ -130,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if(!(username.matches(username_regex))){
                         inputName.setError("Ungültige Eingabe! Keine Sonderzeichen!");
                     }
-                    if(inputDay.getText().length() == 0){
+                    if(TextUtils.isEmpty(inputDay.getText())){
                         inputDay.setError("fehlende Eingabe!");
                     }
                     if(inputMonth.getText().length() == 0){
@@ -169,8 +173,6 @@ public class RegisterActivity extends AppCompatActivity {
         String cm = inputCm.getText().toString();
         String kg = inputKg.getText().toString();
         Log.d("RegisterKg",kg);
-        //kg = kg.replace(".",",");
-        //Log.d("RegisterKg",kg);
         String email = inputEmail.getText().toString();
         String phone = inputPhone.getText().toString();
         String password1 = inputPassword1.getText().toString();
