@@ -1,9 +1,5 @@
 package mi.ur.de.android.runnersmeetup;
 
-/**
- * Created by Theresa on 17.09.2017.
- */
-
 public class Event {
     private String titel, datum, uhrzeit, ort, details;
 

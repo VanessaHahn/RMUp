@@ -1,21 +1,17 @@
 package mi.ur.de.android.runnersmeetup;
 
-/**
- * Created by Theresa on 04.09.2017.
- */
-
 public class RunItem {
     private String date;
-    private float gesch;
-    private String dauer;
-    private float km;
+    private float velocity;
+    private String time;
+    private float distance;
 
 
-    public RunItem(String date, String gesch, String km, String dauer) {
+    public RunItem(String date, String velocity, String distance, String time) {
         this.date = date;
-        this.gesch = Float.parseFloat(gesch);
-        this.dauer = Constants.getFormatedTime(Integer.parseInt(dauer));
-        this.km = Float.parseFloat(km)/1000;
+        this.velocity = Float.parseFloat(velocity);
+        this.time = Constants.getFormatedTime(Integer.parseInt(time));
+        this.distance = Float.parseFloat(distance)/1000;
     }
 
     public String getDate() {
@@ -26,27 +22,27 @@ public class RunItem {
         this.date = date;
     }
 
-    public float getGesch() {
-        return gesch;
+    public float getVelocity() {
+        return velocity;
     }
 
-    public void setGesch(String gesch) {
-        this.gesch = Float.parseFloat(gesch);
+    public void setVelocity(String velocity) {
+        this.velocity = Float.parseFloat(velocity);
     }
 
-    public String getDauer() {
-        return dauer;
+    public String getTime() {
+        return time;
     }
 
-    public void setDauer(String dauer) {
-        this.dauer = Integer.parseInt(dauer)/60 + ":" + Integer.parseInt(dauer)%60;
+    public void setTime(String time) {
+        this.time = Constants.getFormatedTime(Integer.parseInt(time));
     }
 
-    public float getKm() {
-        return km;
+    public float getDistance() {
+        return distance;
     }
 
-    public void setKm(String km) {
-        this.km = Float.parseFloat(km)/1000;
+    public void setDistance(String distance) {
+        this.distance = Float.parseFloat(distance)/1000;
     }
 }

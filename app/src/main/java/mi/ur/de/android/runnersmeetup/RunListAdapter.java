@@ -13,10 +13,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Theresa on 04.09.2017.
- */
-
 public class RunListAdapter extends ArrayAdapter<RunItem>{
 
     private Context mContext;
@@ -53,21 +49,3 @@ public class RunListAdapter extends ArrayAdapter<RunItem>{
         return convertView;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

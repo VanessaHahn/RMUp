@@ -38,7 +38,6 @@
             android:layout_centerHorizontal="true" />
 
         <TextView
-            android:id="@+id/durchschnitt_kmh_wert"
             android:layout_width="40dp"
             android:layout_height="60dp"
             android:text="km/h"
@@ -73,7 +72,6 @@
             android:layout_centerHorizontal="true" />
 
         <TextView
-            android:id="@+id/durchschnitt_km_wert"
             android:layout_width="35dp"
             android:layout_height="60dp"
             android:gravity="center_vertical"
@@ -107,7 +105,6 @@
             android:layout_centerHorizontal="true" />
                        
         <TextView
-            android:id="@+id/durchschnitt_dauer_wert"
             android:layout_width="40dp"
             android:layout_height="60dp"
             android:gravity="center_vertical"
@@ -140,7 +137,6 @@
         android:layout_centerHorizontal="true" />
            
         <TextView
-            android:id="@+id/durchschnitt_kalorien_wert"
             android:layout_width="40dp"
             android:layout_height="60dp"
             android:text="kcal"

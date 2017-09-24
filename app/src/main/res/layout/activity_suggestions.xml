@@ -19,7 +19,7 @@
         android:layout_marginTop="15dp"/>
 
     <ListView
-        android:id="@+id/list"
+        android:id="@+id/suggestions_list"
         android:layout_marginTop="15dp"
         android:layout_width="200dp"
         android:layout_height="372dp"
