@@ -201,6 +201,14 @@
     <string name="forbiddenMail">Keine korrekte Email!</string>
     <string name="notIdenticalPasswords">Passwörter nicht identisch!</string>
     <string name="register">register</string>
+    <string name="showRun">laufAnzeigen</string>
+    <string name="placeholder">-</string>
+    <string name="noStoredRuns">Keine Läufe gespeichert!</string>
+    <string name="filter">filter</string>
+    <string name="NoSimilarRunners">Keine ähnlichen Läufer!</string>
+    <string name="usernameKey">Username</string>
+    <string name="withoutSpecialChars">Ungültige Eingabe! Ohne Sonderzeichen!</string>
+    <string name="wrongPassword">falsches Passwort!</string>
 
     <string-array name="list_preference_entries">
         <item>Entry 1</item>

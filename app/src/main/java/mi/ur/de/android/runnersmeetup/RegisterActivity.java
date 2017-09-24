@@ -154,10 +154,10 @@ public class RegisterActivity extends AppCompatActivity {
                 inputEmail.setError(getString(R.string.missedInput));
             }
             if(!(password1.matches(PASSWORD_REGEX))){
-                inputPassword1.setError("Ungültige Eingabe! Ohne Sonderzeichen!");
+                inputPassword1.setError(getString(R.string.withoutSpecialChars));
             }
             if(!(password2.matches(PASSWORD_REGEX))){
-                inputPassword2.setError("Ungültige Eingabe! Ohne Sonderzeichen!");
+                inputPassword2.setError(getString(R.string.withoutSpecialChars));
             }
         }
     }

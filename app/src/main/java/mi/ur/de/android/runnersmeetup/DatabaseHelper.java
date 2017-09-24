@@ -6,9 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by Medion on 24.09.2016.
- */
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     public static final String DATABASE_NAME = "Runhistory.db";

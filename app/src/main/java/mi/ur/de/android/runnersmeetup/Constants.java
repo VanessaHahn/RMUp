@@ -7,9 +7,6 @@ import android.content.Intent;
 
 import java.util.ArrayList;
 
-/**
- * Created by Medion on 20.08.2016.
- */
 public class Constants {
     private static int id = -1;
     private static String name;
@@ -243,56 +240,5 @@ public class Constants {
             } //else return
         } //else return
         return false;
-    }
-    public static boolean parseSetPosString(String dbString) {
-        Log.d("Constants_DBParser", "SetPos String: " + dbString);
-        if(dbString.equals("true")){
-            return true;
-        } //else return
-        return false;
-    }
-    public static Runner parseGetPosString(String dbString) {
-        Log.d("Constants_DBParser", "getPosString: " + dbString);
-        if(dbString.indexOf("/") > 0){
-            String[] splitString = dbString.split("/");
-            if(splitString.length  == 4){
-                int id = Integer.parseInt(splitString[1]);
-                double longitude = Double.parseDouble(splitString[2]);
-                double lateral = Double.parseDouble(splitString[3]);
-                Location loc = new Location("Database");
-
-                loc.setLatitude(lateral);
-                loc.setLongitude(longitude);
-                Runner run = new Runner(id, loc);
-                return run;
-            } //else return
-        } //else return
-        return null;
-    }
-    public static ArrayList <Runner>  parseGetPosStringArray(String dbString){
-        ArrayList <Runner> runnerArray = new ArrayList<Runner>();
-        Log.d("Constants_DBParser", "parseGetPosStringArray: " + dbString);
-        if(dbString.indexOf("-") > 0) {
-            String[] splitString = dbString.split("-");
-            Runner runner;
-            for (int i = 0; i < splitString.length; i++) {
-                runner = Constants.parseGetPosString(splitString[i]);
-                runnerArray.add(runner);
-            }
-
-            return runnerArray;
-        }else{
-            if(dbString.length() > 0){
-                Runner runner = Constants.parseGetPosString(dbString);
-                if (runner != null){
-                    runnerArray.add(runner);
-                    return runnerArray;
-                }else{
-                    return null;
-                }
-
-            }
-        }
-        return null;
     }
 }

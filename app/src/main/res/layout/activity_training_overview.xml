@@ -48,7 +48,7 @@
         android:text="Durchschnittliche Geschwindigkeit:" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/avg_velocity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -71,7 +71,7 @@
         android:layout_marginTop="45dp">
 
         <TextView
-            android:id="@+id/sortieren_nach"
+            android:id="@+id/sort_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="sortieren nach"
@@ -80,11 +80,11 @@
             android:layout_alignParentStart="true" />
 
         <Spinner
-            android:id="@+id/sortieren_nach_items"
+            android:id="@+id/sort_items"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/sortieren_nach" />
+            android:layout_toRightOf="@id/sort_text" />
 
     </RelativeLayout>
 
@@ -138,7 +138,7 @@
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/run_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

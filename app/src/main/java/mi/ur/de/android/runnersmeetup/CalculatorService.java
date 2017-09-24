@@ -26,9 +26,6 @@ import java.util.TimerTask;
 
 import static android.support.v4.app.ActivityCompat.requestPermissions;
 
-/**
- * Created by Vanessa on 01.09.2016.
- */
 public class CalculatorService extends Service implements CalculatorListener {
 
     private static double currentDistance;

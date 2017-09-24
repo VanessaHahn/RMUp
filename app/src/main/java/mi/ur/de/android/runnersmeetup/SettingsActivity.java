@@ -24,8 +24,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private Button profilbildÄndern, einstellungenSpeichern;
-    private EditText nameÄndern, telefonÄndern, emailÄndern, altesPasswort, passwortÄndern1, passwortÄndern2, groesseÄndern, gewichtÄndern;
+    private Button store;
+    private EditText changeName, changePhone, changeMail, oldPassword, newPassword1, newPassword2, changeSize, changeWeight;
+    private String username, phone, email, oldPw, password1, password2, cm, kg;
+
 
     String picture;
 
@@ -35,157 +37,152 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        nameÄndern = (EditText) findViewById(R.id.profil_name_ändern);
-        telefonÄndern = (EditText) findViewById(R.id.profil_phone_ändern);
-        emailÄndern = (EditText) findViewById(R.id.profil_email_ändern);
-        altesPasswort = (EditText) findViewById(R.id.profil_altes_pw);
-        passwortÄndern1 = (EditText) findViewById(R.id.profil_pw_ändern1);
-        passwortÄndern2 = (EditText) findViewById(R.id.profil_pw_ändern2);
-        groesseÄndern = (EditText) findViewById(R.id.Profil_größe);
-        gewichtÄndern = (EditText) findViewById(R.id.Profil_gewicht);
+        changeName = (EditText) findViewById(R.id.change_name);
+        changePhone = (EditText) findViewById(R.id.change_phone);
+        changeMail = (EditText) findViewById(R.id.change_mail);
+        oldPassword = (EditText) findViewById(R.id.old_password);
+        newPassword1 = (EditText) findViewById(R.id.new_password1);
+        newPassword2 = (EditText) findViewById(R.id.new_password2);
+        changeSize = (EditText) findViewById(R.id.change_size);
+        changeWeight = (EditText) findViewById(R.id.change_weight);
 
-        nameÄndern.setText(Constants.getName());
-        telefonÄndern.setText(Constants.getPhone());
-        emailÄndern.setText(Constants.getEmail());
-        groesseÄndern.setText("" + Constants.getGroesse());
-        gewichtÄndern.setText("" + Constants.getGewicht());
+        changeName.setText(Constants.getName());
+        changePhone.setText(Constants.getPhone());
+        changeMail.setText(Constants.getEmail());
+        changeSize.setText("" + Constants.getGroesse());
+        changeWeight.setText("" + Constants.getGewicht());
 
-        einstellungenSpeichern = (Button) findViewById(R.id.einstellungen_button_speichern);
-        einstellungenSpeichern.setOnClickListener(new View.OnClickListener() {
+        store = (Button) findViewById(R.id.storeSettings);
+        store.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateData();
-
-                SharedPreferences prefs = getSharedPreferences("LoginData",MODE_PRIVATE);
-                SharedPreferences.Editor prefsEditor = prefs.edit();
-                prefsEditor.putInt(Constants.KEY_ID, Constants.getId());
-                prefsEditor.putString(Constants.KEY_NAME, Constants.getName());
-                prefsEditor.putFloat(Constants.KEY_WEIGHT, Constants.getGewicht());
-                prefsEditor.putInt(Constants.KEY_SIZE, Constants.getGroesse());
-                prefsEditor.putString(Constants.KEY_EMAIL, Constants.getEmail());
-                prefsEditor.putString(Constants.KEY_PHONE, Constants.getPhone());
-                prefsEditor.putString(Constants.KEY_PW, Constants.getPasswort());
-                prefsEditor.commit();
+                putSharedPreferences();
             }
         });
+    }
 
+    private void putSharedPreferences() {
+        SharedPreferences prefs = getSharedPreferences("LoginData",MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putInt(Constants.KEY_ID, Constants.getId());
+        prefsEditor.putString(Constants.KEY_NAME, Constants.getName());
+        prefsEditor.putFloat(Constants.KEY_WEIGHT, Constants.getGewicht());
+        prefsEditor.putInt(Constants.KEY_SIZE, Constants.getGroesse());
+        prefsEditor.putString(Constants.KEY_EMAIL, Constants.getEmail());
+        prefsEditor.putString(Constants.KEY_PHONE, Constants.getPhone());
+        prefsEditor.putString(Constants.KEY_PW, Constants.getPasswort());
+        prefsEditor.commit();
     }
 
     private void updateData() {
-        String username = nameÄndern.getText().toString();
+        username = changeName.getText().toString();
         String username_regex = "[a-zA-Z0-9]{1,20}";
-        String phone = telefonÄndern.getText().toString();
+        phone = changePhone.getText().toString();
         String phone_regex = "[0-9]*";
-        String cm = groesseÄndern.getText().toString();
+        cm = changeSize.getText().toString();
         String cm_regex = "[1-2][0-9]{1,2}";
-        String kg_string = gewichtÄndern.getText().toString();
+        kg = changeWeight.getText().toString();
         String kg_regex = "[0-9]{2,3}[.][0-9]";
-        String altespw = altesPasswort.getText().toString();
-        String pw1 = passwortÄndern1.getText().toString();
-        String pw2 = passwortÄndern2.getText().toString();
+        oldPw = oldPassword.getText().toString();
+        password1 = newPassword1.getText().toString();
+        password2 = newPassword2.getText().toString();
+        if(oldPw.length() == 0 || password1.length() == 0) {
+            oldPw = Constants.getPasswort();
+            password1 = Constants.getPasswort();
+            password2 = Constants.getPasswort();
+        }
         String passwort_regex = "[a-zA-Z0-9]*";
-        String email = emailÄndern.getText().toString();
-        String regex = "^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_-]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$";
+        email = changeMail.getText().toString();
+        String mail_regex = "^[^0-9][a-zA-Z0-9_]+([.-][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_-]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$";
         if (username.length() != 0
                 && (username.matches(username_regex))
                 && (phone.matches(phone_regex))
                 && (cm.matches(cm_regex))
                 && (email.length() != 0)
-                && (altespw.length() != 0)
-                && pw1.length() != 0
-                && pw2.length() != 0
-                && altespw.length() != 0
-                && (email.matches(regex))
-                && (altespw.equals(Constants.getPasswort()))
-                && pw1.matches(passwort_regex)
-                && pw1.equals(pw2)
-                && (kg_string.matches(kg_regex))) {
+                && (oldPassword.length() != 0)
+                && password1.length() != 0
+                && password2.length() != 0
+                && oldPw.length() != 0
+                && (email.matches(mail_regex))
+                && (oldPw.equals(Constants.getPasswort()))
+                && password1.matches(passwort_regex)
+                && password1.equals(password2)
+                && (kg.matches(kg_regex))) {
             onUpdate();
         } else {
             if (!(cm.matches(cm_regex))) {
-                groesseÄndern.setError("Ungültige Eingabe!");
+                changeSize.setError(getString(R.string.forbiddenInput));
             }
-            if(!(kg_string.matches(kg_regex))){
-                gewichtÄndern.setError("Ungültige Eingabe!");
+            if(!(kg.matches(kg_regex))){
+                changeWeight.setError(getString(R.string.forbiddenInput));
             }
-            if (!(email.matches(regex))) {
-                emailÄndern.setError("Keine korrekte Email!");
+            if (!(email.matches(mail_regex))) {
+                changeMail.setError(getString(R.string.forbiddenMail));
             }
             if (username.length() == 0) {
-                nameÄndern.setError("fehlende Eingabe!");
+                changeName.setError(getString(R.string.missedInput));
             }
             if(!(username.matches(username_regex))){
-                nameÄndern.setError("Ungültige Eingabe! Keine Sonderzeichen!");
+                changeName.setError(getString(R.string.withoutSpecialChars));
             }
             if(!(phone.matches(phone_regex))){
-                telefonÄndern.setError("Ungültige Eingabe! Ohne Sonderzeichen!");
+                changePhone.setError(getString(R.string.withoutSpecialChars));
             }
-            if (TextUtils.isEmpty(emailÄndern.getText())) {
-                emailÄndern.setError("fehlende Eingabe!");
+            if (TextUtils.isEmpty(changeMail.getText())) {
+                changeMail.setError(getString(R.string.missedInput));
             }
-            if (altespw.length() == 0) {
-                altesPasswort.setError("fehlende Eingabe!");
+            if (oldPw.length() == 0) {
+                oldPassword.setError(getString(R.string.missedInput));
             }
-            if (!(altespw.equals(Constants.getPasswort()))){
-                altesPasswort.setError("falsches Passwort!");
+            if (!(oldPw.equals(Constants.getPasswort()))){
+                oldPassword.setError(getString(R.string.wrongPassword));
             }
-            if(!(pw1.matches(passwort_regex))){
-                passwortÄndern1.setError("Ungültige Eingabe! Ohne Sonderzeichen!");
+            if(!(password1.matches(passwort_regex))){
+                newPassword1.setError(getString(R.string.withoutSpecialChars));
             }
-            if (passwortÄndern1.getText().length() == 0) {
-                passwortÄndern1.setError("fehlende Eingabe!");
+            if (newPassword1.getText().length() == 0) {
+                newPassword1.setError(getString(R.string.missedInput));
             }
-            if (passwortÄndern2.getText().length() == 0) {
-                passwortÄndern2.setError("fehlende Eingabe!");
+            if (newPassword2.getText().length() == 0) {
+                newPassword2.setError(getString(R.string.missedInput));
             }
-            if(!(pw1.equals(pw2))){
-                passwortÄndern2.setError("Passwörter nicht identisch!");
+            if(!(password1.equals(password2))){
+                newPassword2.setError(getString(R.string.notIdenticalPasswords));
             }
         }}
 
 
     private void onUpdate() {
         String id = "" + Constants.getId();
-        String name = nameÄndern.getText().toString();
-        String groesse = groesseÄndern.getText().toString();
-        String gewicht = gewichtÄndern.getText().toString();
-        String email = emailÄndern.getText().toString();
-        String phone = telefonÄndern.getText().toString();
-        String password = passwortÄndern1.getText().toString();
         String type = "updateData";
 
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundWorker.execute(type, id, name, groesse, gewicht, email, phone, password);
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundWorker.execute(type, id, username, cm, kg, email, phone, password1);
 
         try {
             String bool = String.valueOf(returnAsyncTask.get()[1]);
             Log.d("returnAsyncTaskResult",""+bool);
-
             if(bool.equals("Benutzername vergeben")){
-                nameÄndern.setError("Benutzername vergeben!");
+                changeName.setError("Benutzername vergeben!");
             }
-
             if(bool.equals("true")){
-                Constants.setName(name);
-                Constants.setPasswort(password);
+                Constants.setName(username);
+                Constants.setPasswort(password1);
                 Constants.setEmail(email);
-                Constants.setGewicht(Float.parseFloat(gewicht));
-                Constants.setGroesse(Integer.parseInt(groesse));
+                Constants.setGewicht(Float.parseFloat(kg));
+                Constants.setGroesse(Integer.parseInt(cm));
                 Constants.setPhone(phone);
                 Toast.makeText(this,"Update Data!",Toast.LENGTH_SHORT).show();
             }else{
                 // Not successful
-                Log.d("RegisterActivity", "Registration failed!");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
             // Not successful
-            Log.d("RegisterActivity", "Registration  failed!");
         } catch (ExecutionException e) {
             e.printStackTrace();
             // Not successful
-            Log.d("RegisterActivity", "Registration  failed!");
         }
-
     }
 }
