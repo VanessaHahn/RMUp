@@ -78,6 +78,22 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Adapt
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.gps_icon:
+                Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+                return true;
+
+            case R.id.music_icon:
+                Intent ii = new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER);
+                startActivityForResult(ii,1);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

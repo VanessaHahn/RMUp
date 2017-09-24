@@ -46,7 +46,7 @@
             android:name=".RegisterActivity"
             android:label="Register" />
         <activity
-            android:name=".Settings"
+            android:name=".SettingsActivity"
             android:label="Einstellungen"
             android:parentActivityName=".NavigationDrawer" />
         <activity
@@ -62,7 +62,7 @@
             android:label="Vorschläge"
             android:parentActivityName=".NavigationDrawer" />
         <activity
-            android:name=".FriendsProfil"
+            android:name=".FriendsProfileActivity"
             android:label="Profil"
             android:parentActivityName=".NavigationDrawer" />
         <activity

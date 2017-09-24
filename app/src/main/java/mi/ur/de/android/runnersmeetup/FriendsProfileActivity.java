@@ -30,7 +30,30 @@ public class FriendsProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_profile);
         listView = (ListView) findViewById(R.id.listFriendsEvents);
-
+        FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder deleteFriend = new AlertDialog.Builder(FriendsProfileActivity.this);
+                ActivityCompat.requestPermissions(FriendsProfileActivity.this,new String[]{Manifest.permission.SEND_SMS},1);
+                deleteFriend.setMessage("Freundschaft zu " + username +" löschen?")
+                        .setCancelable(false)
+                        .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                    deleteFriendship();
+                            }
+                        })
+                        .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = deleteFriend.create();
+                alert.show();
+            }
+        });
         Intent i = getIntent();
         Bundle extras = i.getExtras();
         username = extras.getString("Username");
@@ -144,6 +167,29 @@ public class FriendsProfileActivity extends AppCompatActivity {
 
             } else{
                 Toast.makeText(this, "Keine Veranstaltungen erstellt!", Toast.LENGTH_LONG).show();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
+        }
+    }
+
+    private void deleteFriendship(){
+        BackgroundWorker backgroundworker = new BackgroundWorker(this);
+        String userID = ""+Constants.getId();
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("deleteFriendship",userID, id);
+        try {
+            String dbString = returnAsyncTask.get()[1];
+            if(dbString.equals("true")){
+                Toast.makeText(this, "Freundschaft zu " + username + " gelöscht!", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, FriendsActivity.class));
+            } else{
+                Toast.makeText(this, "Freundschaft konnte nicht gelöscht werden!", Toast.LENGTH_LONG).show();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

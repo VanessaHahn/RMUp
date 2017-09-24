@@ -105,7 +105,7 @@ public class NavigationDrawer extends AppCompatActivity
         } else if (id == R.id.nav_veranstaltungen) {
             startActivity(new Intent(this, EventsActivity.class));
         } else if (id == R.id.nav_settings) {
-            startActivity(new Intent(this, Settings.class));
+            startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_logout){
             AlertDialog.Builder logout = new AlertDialog.Builder(NavigationDrawer.this);
             logout.setMessage("Ausloggen?")
@@ -124,6 +124,7 @@ public class NavigationDrawer extends AppCompatActivity
                             prefsEditor.putFloat(Constants.KEY_WEIGHT, Constants.getWeight());
                             prefsEditor.putInt(Constants.KEY_SIZE, Constants.getSize());
                             prefsEditor.commit();
+                            finish();
                             startActivity(new Intent(NavigationDrawer.this, LoginActivity.class));
                         }
                     })

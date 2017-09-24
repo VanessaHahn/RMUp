@@ -43,49 +43,8 @@ public class FriendsActivity extends AppCompatActivity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        switch (listView.getPositionForView(view)){
-                            case 0:{
-                                startProfil(string[0]);
-                                break;
-                            }
-                            case 1:{
-                                startProfil(string[1]);
-                                break;
-                            }
-                            case 2:{
-                                startProfil(string[2]);
-                                break;
-                            }
-                            case 3:{
-                                startProfil(string[3]);
-                                break;
-                            }
-                            case 4:{
-                                startProfil(string[4]);
-                                break;
-                            }
-                            case 5:{
-                                startProfil(string[5]);
-                                break;
-                            }
-                            case 6:{
-                                startProfil(string[6]);
-                                break;
-                            }
-                            case 7:{
-                                startProfil(string[7]);
-                                break;
-                            }
-                            case 8:{
-                                startProfil(string[8]);
-                                break;
-                            }
-                            case 9:{
-                                startProfil(string[9]);
-                                break;
-                            }
-
-                        }
+                        String user = ""+listView.getItemAtPosition(position);
+                        startProfil(user);
                     }
                 });
 
@@ -103,7 +62,7 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     public void startProfil(String name){
-        Intent friendsProfilIntent = new Intent(FriendsActivity.this, FriendsProfil.class);
+        Intent friendsProfilIntent = new Intent(FriendsActivity.this, FriendsProfileActivity.class);
         friendsProfilIntent.putExtra("Username",name);
         startActivity(friendsProfilIntent);
     }

@@ -102,11 +102,17 @@ public class EventsActivity extends AppCompatActivity {
         eventErstellen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int day = Integer.parseInt(eventDay.getText().toString());
-                int month = Integer.parseInt(eventMonth.getText().toString());
-                int year = Integer.parseInt(eventYear.getText().toString());
-                int hour = Integer.parseInt(eventHour.getText().toString());
-                int min = Integer.parseInt(eventMin.getText().toString());
+                String titel = eventTitel.getText().toString();
+                String day = eventDay.getText().toString();
+                String day_regex = "[0-3]?[0-9]";
+                String month = eventMonth.getText().toString();
+                String month_regex = "[1,2,3,4,5,6,7,8,9,10,11,12]";
+                String year = eventYear.getText().toString();
+                String year_regex = "[1-2][0,9][0-9][0-9]";
+                String hour = eventHour.getText().toString();
+                String hour_regex = "[01]?\\d|2[0-3]";
+                String min = eventMin.getText().toString();
+                String min_regex = "[0-5]?\\d";
                 if(eventTitel.getText().length() != 0
                         && eventDay.getText().length() != 0
                         && eventMonth.getText().length() != 0
@@ -115,44 +121,44 @@ public class EventsActivity extends AppCompatActivity {
                         && eventMin.getText().length() != 0
                         && eventOrt.getText().length() != 0
                         && eventDetails.getText().length() != 0
-                        && (day>0 && day<=31)
-                        && (month>0 && month<=12)
-                        && (year>1917 && year<2018)
-                        && (hour>=0 && hour<24)
-                        && (min>=0 && hour<59)){
+                        && (day.matches(day_regex))
+                        && (month.matches(month_regex))
+                        && (year.matches(year_regex))
+                        && (hour.matches(hour_regex))
+                        && (min.matches(min_regex))){
                     onReg();
                 } else {
-                    if(!(min>=0 && hour<59)){
+                    if(!(min.matches(min_regex))){
                         eventMin.setError("Ungültige Eingabe!");
                     }
-                    if(!(hour>=0 && hour<24)){
+                    if(!(hour.matches(hour_regex))){
                         eventHour.setError("Ungültige Eingabe!");
                     }
-                    if(!(day>0 && day<=31)){
+                    if(!(day.matches(day_regex))){
                         eventDay.setError("Ungültige Eingabe!");
                     }
-                    if(!(month>0 && month<=12)){
+                    if(!(month.matches(month_regex))){
                         eventMonth.setError("Ungültige Eingabe!");
                     }
-                    if(!(year>1917 && year<2018)){
+                    if(!(year.matches(year_regex))){
                         eventYear.setError("Ungültige Eingabe!");
                     }
                     if(eventTitel.getText().length() == 0){
                         eventTitel.setError("fehlende Eingabe!");
                     }
-                    if(eventDay.getText().length() == 0){
+                    if(day.length() == 0){
                         eventDay.setError("fehlende Eingabe!");
                     }
-                    if(eventMonth.getText().length() == 0){
+                    if(month.length() == 0){
                         eventMonth.setError("fehlende Eingabe!");
                     }
-                    if(eventYear.getText().length() == 0){
+                    if(year.length() == 0){
                         eventYear.setError("fehlende Eingabe!");
                     }
-                    if(eventHour.getText().length() == 0){
+                    if(hour.length() == 0){
                         eventHour.setError("fehlende Eingabe!");
                     }
-                    if(eventMin.getText().length() == 0){
+                    if(min.length() == 0){
                         eventMin.setError("fehlende Eingabe!");
                     }
                     if(eventOrt.getText().length() == 0){
