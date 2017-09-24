@@ -31,7 +31,6 @@
         android:layout_height="wrap_content"
         android:text="Login"
         android:id="@+id/button_login"
-        android:onClick="OnLogin"
         android:layout_marginTop="15dp"
         android:layout_gravity="center_horizontal" />
 

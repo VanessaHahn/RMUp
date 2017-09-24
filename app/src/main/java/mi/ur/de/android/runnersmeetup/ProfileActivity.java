@@ -52,7 +52,11 @@ public class ProfileActivity extends AppCompatActivity {
                 showName.setText(username);
                 id = string[0];
                 showDate.setText(string[1]);
-                showGeschlecht.setText(string[2]);
+                String gender = string[2];
+                if(gender != "weiblich") {
+                    gender = "männlich";
+                }
+                showGeschlecht.setText(gender);
                 showEmail.setText(string[3]);
                 handynummer = string[4];
                 showGeschwindigkeit.setText(string[5] +" km/h");
@@ -114,7 +118,7 @@ public class ProfileActivity extends AppCompatActivity {
             Log.d("dbString",""+dbString);
             if(dbString.equals("true")){
                 Toast.makeText(this, username+" hinzugefügt!", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this, Vorschlaege.class));
+                startActivity(new Intent(this, SuggestionsActivity.class));
             } else{
                 Log.d("RegisterActivity", "Registration failed!");
             }

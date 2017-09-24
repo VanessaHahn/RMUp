@@ -97,15 +97,15 @@ public class NavigationDrawer extends AppCompatActivity
         if (id == R.id.nav_shoe) {
             startActivity(new Intent(this, RMU_Main.class));
         } else if (id == R.id.nav_statistic) {
-            startActivity(new Intent(this, Trainingsuebersicht.class));
+            startActivity(new Intent(this, TrainingOverviewActivity.class));
         } else if (id == R.id.nav_vorschlaege){
-            startActivity(new Intent(this, Vorschlaege.class));
+            startActivity(new Intent(this, SuggestionsActivity.class));
         } else if (id == R.id.nav_friends){
-            startActivity(new Intent(this, Friends.class));
+            startActivity(new Intent(this, FriendsActivity.class));
         } else if (id == R.id.nav_veranstaltungen) {
-            startActivity(new Intent(this, Veranstaltungen.class));
+            startActivity(new Intent(this, EventsActivity.class));
         } else if (id == R.id.nav_settings) {
-            startActivity(new Intent(this, Einstellungen.class));
+            startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_logout){
             AlertDialog.Builder logout = new AlertDialog.Builder(NavigationDrawer.this);
             logout.setMessage("Ausloggen?")
@@ -128,7 +128,7 @@ public class NavigationDrawer extends AppCompatActivity
                             startActivity(new Intent(NavigationDrawer.this, LoginActivity.class));
                         }
                     })
-                    .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();

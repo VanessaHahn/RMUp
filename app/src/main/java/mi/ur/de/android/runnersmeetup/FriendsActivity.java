@@ -12,17 +12,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class Vorschlaege extends AppCompatActivity {
+public class FriendsActivity extends AppCompatActivity {
+
     public ListView listView;
     private String[] string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vorschlaege);
+        setContentView(R.layout.activity_friends);
         listView = (ListView) findViewById(R.id.list);
         searchForUser();
 
@@ -32,14 +32,13 @@ public class Vorschlaege extends AppCompatActivity {
     private void searchForUser() {
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
         String id = ""+Constants.getId();
-        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("filter",id);
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("showFriends",id);
         try {
             String dbString = returnAsyncTask.get()[1];
-            Log.d("dbstring",""+dbString);
+            Log.d("dbStringFriends",""+dbString);
             if(dbString.indexOf("/")>0){
                 string = dbString.split("[/]");
-
-                final ArrayAdapter<String> listenadapter = new ArrayAdapter<String>(Vorschlaege.this,android.R.layout.simple_list_item_1, string);
+                final ArrayAdapter<String> listenadapter = new ArrayAdapter<String>(FriendsActivity.this,android.R.layout.simple_list_item_1, string);
                 listView.setAdapter(listenadapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -49,9 +48,8 @@ public class Vorschlaege extends AppCompatActivity {
                     }
                 });
 
-
             } else{
-                Toast.makeText(this, "Keine ähnlichen Läufer!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Keine Freunde hinzugefügt!", Toast.LENGTH_LONG).show();
                 Log.d("RegisterActivity", "Registration failed!");
             }
         } catch (InterruptedException e) {
@@ -64,10 +62,9 @@ public class Vorschlaege extends AppCompatActivity {
     }
 
     public void startProfil(String name){
-        Intent profilIntent = new Intent(Vorschlaege.this, ProfileActivity.class);
-        profilIntent.putExtra("Username",name);
-        startActivity(profilIntent);
-        Log.d("name",""+name);
+        Intent friendsProfilIntent = new Intent(FriendsActivity.this, FriendsProfileActivity.class);
+        friendsProfilIntent.putExtra("Username",name);
+        startActivity(friendsProfilIntent);
     }
 
     @Override

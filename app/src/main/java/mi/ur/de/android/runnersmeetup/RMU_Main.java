@@ -151,7 +151,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
 
     @Override
     protected void onPause() {
-        ActivityManager.setIsVisible(false);
         if(Constants.isRun()) {
             notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 // Sets an ID for the notification, so it can be updated
@@ -181,7 +180,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
 
     @Override
     protected void onResume() {
-        ActivityManager.setIsVisible(true);
         notificationManager = null;
         super.onResume();
     }
