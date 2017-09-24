@@ -42,9 +42,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     private CalculatorService calculatorService;
     private ServiceConnection serviceConnection;
     private ImageButton playbutton;
-    private Button button;
-    private Button update;
-    private DatabaseHelper myDb;
     private NotificationManager notificationManager;
     private Notification.Builder notificationBuilder;
     private Notification notification;
@@ -55,7 +52,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rmu__main);
-        myDb = new DatabaseHelper(this);
 
         distanceView = (TextView) findViewById(R.id.current_distance);
         timeView = (TextView) findViewById(R.id.current_time);
@@ -155,12 +151,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
             notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 // Sets an ID for the notification, so it can be updated
             notifyID = 1;
-                        /*mNotifyBuilder = new NotificationCompat.Builder(this)
-                    .setContentTitle("RunnersMeetUp")
-                    .setContentText(R.drawable.tacho + "  0.0 km/h\n"
-                            + R.drawable.distance + "  0 km\n"
-                            + R.drawable.stopuhr + "  0:00 min")
-                    .setSmallIcon(R.drawable.runnersmeetup);*/
             remoteViews = new RemoteViews(getPackageName(), R.layout.run_notification);
             remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.runnersmeetup);
             remoteViews.setImageViewResource(R.id.velocity_icon, R.drawable.tacho);
@@ -168,7 +158,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
             remoteViews.setImageViewResource(R.id.calories_icon, R.drawable.kalorienicon);
             remoteViews.setImageViewResource(R.id.time_icon, R.drawable.stopuhr);
             notificationBuilder= new Notification.Builder(getApplicationContext());
-            //notificationBuilder.setStyle(new Notification.BigPictureStyle())
             notificationBuilder.setSmallIcon(R.drawable.runnersmeetup);
             notificationBuilder.setContent(remoteViews);
             notification = notificationBuilder.build();
@@ -199,18 +188,9 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     }
 
     @Override
-    public void updateNotification(double velocity, double meanVelocity, double distance, int calories, String time, String timeKM) {
+    public void updateNotification(double velocity, double meanVelocity, double distance, int calories, String time) {
         if(notificationManager != null) {
             // Start of a loop that processes data and then notifies the user
-            /*mNotifyBuilder.setContentText(R.drawable.tacho + "  " + new DecimalFormat("0.0").format(velocity * 3.6) + " km/h" + "\n"
-                    + R.drawable.distance + "  " + ((int) distance / 1000.0) + " km" + "\n"
-                    + R.drawable.stopuhr + "  " + time + " min")
-            // Because the ID remains unchanged, the existing notification is
-            // updated.
-            notificationManager.notify(
-                    notifyID,
-                    mNotifyBuilder.build());*/
-
             remoteViews.setTextViewText(R.id.velocity, new DecimalFormat("0.0").format(velocity));
             remoteViews.setTextViewText(R.id.meanVelocity, new DecimalFormat("0.0").format(meanVelocity));
             remoteViews.setTextViewText(R.id.distance, new DecimalFormat("0.000").format(distance/1000));
@@ -222,7 +202,6 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
             remoteViews.setImageViewResource(R.id.distance_icon, R.drawable.distance);
             remoteViews.setImageViewResource(R.id.calories_icon, R.drawable.calories);
             remoteViews.setImageViewResource(R.id.time_icon, R.drawable.stopuhr);
-            //remoteViews.setImageViewResource(R.id.timeKM_icon, R.drawable.timeKM);
 
             notificationBuilder.setContent(remoteViews);
             notificationManager.notify(notifyID , notification);

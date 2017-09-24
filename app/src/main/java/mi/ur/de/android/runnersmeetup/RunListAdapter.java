@@ -29,9 +29,9 @@ public class RunListAdapter extends ArrayAdapter<RunItem>{
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String date = getItem(position).getDate();
-        float gesch = getItem(position).getGesch();
-        String dauer = getItem(position).getDauer();
-        float km = getItem(position).getKm();
+        float gesch = getItem(position).getVelocity();
+        String dauer = getItem(position).getTime();
+        float km = getItem(position).getDistance();
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);

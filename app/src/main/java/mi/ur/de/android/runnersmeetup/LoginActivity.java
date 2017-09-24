@@ -107,8 +107,8 @@ public class LoginActivity extends AppCompatActivity {
     private void putPreferences() {
         prefsEditor.putInt(Constants.KEY_ID, Constants.getId());
         prefsEditor.putString(Constants.KEY_NAME, Constants.getName());
-        prefsEditor.putFloat(Constants.KEY_WEIGHT, Constants.getGewicht());
-        prefsEditor.putInt(Constants.KEY_SIZE, Constants.getGroesse());
+        prefsEditor.putFloat(Constants.KEY_WEIGHT, Constants.getWeight());
+        prefsEditor.putInt(Constants.KEY_SIZE, Constants.getSize());
         prefsEditor.putString(Constants.KEY_EMAIL, Constants.getEmail());
         prefsEditor.putString(Constants.KEY_PHONE, Constants.getPhone());
         prefsEditor.putString(Constants.KEY_PW, Constants.getPasswort());

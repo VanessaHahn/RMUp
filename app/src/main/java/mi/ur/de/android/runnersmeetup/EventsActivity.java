@@ -1,19 +1,14 @@
 package mi.ur.de.android.runnersmeetup;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -52,7 +47,6 @@ public class EventsActivity extends AppCompatActivity {
             String dbString = returnAsyncTask.get()[1];
             Log.d("string1",""+dbString);
             if(dbString.indexOf("/")>0){
-                Log.d("hallo","hallo");
                 String[] dbString1 = dbString.split("[.]");
 
                 ArrayList<Event> eventlist = new ArrayList<>();
@@ -69,13 +63,6 @@ public class EventsActivity extends AppCompatActivity {
                     for (int x = 0; x < 4; x++) {
                         string1 = dbString1[i].split("[/]");
                     }
-
-                    Log.d("string1",""+string1[0]);
-                    Log.d("string1",""+string1[1]);
-                    Log.d("string1",""+string1[2]);
-                    Log.d("string1",""+string1[3]);
-                    Log.d("string1",""+string1[4]);
-
                     Event event = new Event(string1[0],string1[1],string1[2],string1[3],string1[4]);
                     eventlist.add(event);
                 }
@@ -129,43 +116,43 @@ public class EventsActivity extends AppCompatActivity {
                     onReg();
                 } else {
                     if(!(min.matches(min_regex))){
-                        eventMin.setError("Ungültige Eingabe!");
+                        eventMin.setError(getString(R.string.forbiddenInput));
                     }
                     if(!(hour.matches(hour_regex))){
-                        eventHour.setError("Ungültige Eingabe!");
+                        eventHour.setError(getString(R.string.forbiddenInput));
                     }
                     if(!(day.matches(day_regex))){
-                        eventDay.setError("Ungültige Eingabe!");
+                        eventDay.setError(getString(R.string.forbiddenInput));
                     }
                     if(!(month.matches(month_regex))){
-                        eventMonth.setError("Ungültige Eingabe!");
+                        eventMonth.setError(getString(R.string.forbiddenInput));
                     }
                     if(!(year.matches(year_regex))){
-                        eventYear.setError("Ungültige Eingabe!");
+                        eventYear.setError(getString(R.string.forbiddenInput));
                     }
                     if(eventTitel.getText().length() == 0){
-                        eventTitel.setError("fehlende Eingabe!");
+                        eventTitel.setError(getString(R.string.missedInput));
                     }
                     if(day.length() == 0){
-                        eventDay.setError("fehlende Eingabe!");
+                        eventDay.setError(getString(R.string.missedInput));
                     }
                     if(month.length() == 0){
-                        eventMonth.setError("fehlende Eingabe!");
+                        eventMonth.setError(getString(R.string.missedInput));
                     }
                     if(year.length() == 0){
-                        eventYear.setError("fehlende Eingabe!");
+                        eventYear.setError(getString(R.string.missedInput));
                     }
                     if(hour.length() == 0){
-                        eventHour.setError("fehlende Eingabe!");
+                        eventHour.setError(getString(R.string.missedInput));
                     }
                     if(min.length() == 0){
-                        eventMin.setError("fehlende Eingabe!");
+                        eventMin.setError(getString(R.string.missedInput));
                     }
                     if(eventOrt.getText().length() == 0){
-                        eventOrt.setError("fehlende Eingabe!");
+                        eventOrt.setError(getString(R.string.missedInput));
                     }
                     if(eventDetails.getText().length() == 0){
-                        eventDetails.setError("fehlende Eingabe!");
+                        eventDetails.setError(getString(R.string.missedInput));
                     }
                 }
             }
@@ -185,7 +172,7 @@ public class EventsActivity extends AppCompatActivity {
         String details = eventDetails.getText().toString();
         String userID = ""+Constants.getId();
 
-        String type = "event_erstellen";
+        String type = getString(R.string.create_event);
 
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         AsyncTask<String, Void, String[]> returnAsyncTask = backgroundWorker.execute(type, titel, date, uhrzeit, treffpunkt, details, userID);
@@ -195,29 +182,22 @@ public class EventsActivity extends AppCompatActivity {
             String bool = String.valueOf(returnAsyncTask.get()[1]);
             Log.d("returnAsyncTaskResult",""+bool);
 
-            if(bool.equals("Veranstaltung bereits erstellt!")){
-                Toast.makeText(this,"Veranstaltung bereits erstellt!",Toast.LENGTH_LONG).show();
+            if(bool.equals(getString(R.string.alreadyCreated))){
+                Toast.makeText(this,R.string.alreadyCreated,Toast.LENGTH_LONG).show();
             }
 
             if(bool.equals("true")){
-                Toast.makeText(this,"Veranstaltung erstellt!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.createdEvent,Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this,NavigationDrawer.class));
             }else{
                 // Not successful
-                Log.d("RegisterActivity", "Registration failed!");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
             // Not successful
-            Log.d("RegisterActivity", "Registration  failed!");
         } catch (ExecutionException e) {
             e.printStackTrace();
             // Not successful
-            Log.d("RegisterActivity", "Registration  failed!");
         }
     }
-
-
-
-
 }

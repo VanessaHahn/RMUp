@@ -1,30 +1,20 @@
 package mi.ur.de.android.runnersmeetup;
 
 import android.Manifest;
-import android.app.NotificationManager;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.IBinder;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
-
-import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static android.support.v4.app.ActivityCompat.requestPermissions;
 
 public class CalculatorService extends Service implements CalculatorListener {
 
@@ -128,24 +118,13 @@ public class CalculatorService extends Service implements CalculatorListener {
                         timeDifference = System.currentTimeMillis() - lastTimeStamp;
 
                         // Geschwindigkeit
-                        //      Formel Herleitung
-                        //      location.distanceTo(lastLocation) in Meter
-                        //      timeDifference in Millisekunden
-                        //      currentVelocity = (location.distanceTo(lastLocation) / 1000) / (timeDifference / (1000 * 60 * 60))
-                        //      currentVelocity = (location.distanceTo(lastLocation) * 1000 * 60 * 60) / (1000 * timeDifference)
-                        //      currentVelocity = (location.distanceTo(lastLocation) * 60 * 60) / (timeDifference)
                         currentVelocity = location.getSpeed() *3.6;
                     }
-
 
                     // Kalorien Verbrauch
                     kcal = (int) calculateKCal(currentDistance);
 
                     // Mittlere Geschwindigkeit
-                    // Basis eines Gewichteten Mitellwertes: https://de.wikipedia.org/wiki/Gewichtung
-                    // avgVelocity = (avgCounter * avgVelocity + currentVelocity) / (avgCounter + 1)
-                    // Der letzte Durchschnittswert mit allen bisherigen Berechnungen gewichtet,
-                    // der neue Wert immer mit 1
                     avgVelocity = (currentDistance/totalTime) * 3.6;
                   
                     // Update GUI View
@@ -155,10 +134,9 @@ public class CalculatorService extends Service implements CalculatorListener {
                     updateCaloriesView(kcal);
 
                 } else {
-
                     Constants.setLocationLongitude(location.getLongitude());
                     Constants.setLocationLatitude(location.getLatitude());
-                    //return; // Nothing to calculate if we have no lastLocalation
+                    // Nothing to calculate if we have no lastLocalation
                 }
                 lastLocation = location;
                 lastTimeStamp = System.currentTimeMillis();
@@ -209,15 +187,15 @@ public class CalculatorService extends Service implements CalculatorListener {
                 Log.d("Timer", "Timer status: " + totalTime);
                 totalTime++;
 
-                updateNotification(currentVelocity, avgVelocity, esitmatedDistance, esitmatedKcal, formattedTime, formattedKMTime);
+                updateNotification(currentVelocity, avgVelocity, esitmatedDistance, esitmatedKcal, formattedTime);
             }
         }, 0, 1000);
     }
 
     @Override
-    public void updateNotification(double velocity, double meanVelocity, double distance, int kcal, String time, String timeKM) {
+    public void updateNotification(double velocity, double meanVelocity, double distance, int kcal, String time) {
         if (calculatorListener != null) {
-            calculatorListener.updateNotification(velocity, meanVelocity, distance, kcal,  time, timeKM);
+            calculatorListener.updateNotification(velocity, meanVelocity, distance, kcal,  time);
         }
     }
 

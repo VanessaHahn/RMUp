@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.concurrent.ExecutionException;
 
 public class FriendsActivity extends AppCompatActivity {
@@ -25,8 +24,6 @@ public class FriendsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_friends);
         listView = (ListView) findViewById(R.id.list);
         searchForUser();
-
-
     }
 
     private void searchForUser() {
@@ -49,7 +46,7 @@ public class FriendsActivity extends AppCompatActivity {
                 });
 
             } else{
-                Toast.makeText(this, "Keine Freunde hinzugefügt!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.noFriendsAdded, Toast.LENGTH_LONG).show();
                 Log.d("RegisterActivity", "Registration failed!");
             }
         } catch (InterruptedException e) {
@@ -57,19 +54,17 @@ public class FriendsActivity extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void startProfil(String name){
         Intent friendsProfilIntent = new Intent(FriendsActivity.this, FriendsProfileActivity.class);
-        friendsProfilIntent.putExtra("Username",name);
+        friendsProfilIntent.putExtra(getString(R.string.username),name);
         startActivity(friendsProfilIntent);
     }
 
     @Override
     public void finish(){
-        SharedPreferences prefs = getSharedPreferences("DatabaseConnection",MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.databaseConnection),MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("id", Constants.getId());
         editor.putBoolean("logged", Constants.getLogged());
