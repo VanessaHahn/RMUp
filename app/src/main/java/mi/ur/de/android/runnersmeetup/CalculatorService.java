@@ -47,13 +47,13 @@ public class CalculatorService extends Service implements CalculatorListener {
             String text = "insert";
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(CalculatorService.this,text,duration);
-            toast.show();
+            //toast.show();
             Log.d("db","insert");
         } else {
             String text = "not insert";
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(CalculatorService.this,text,duration);
-            toast.show();
+            //toast.show();
             Log.d("db", "not insert");
         }
     }

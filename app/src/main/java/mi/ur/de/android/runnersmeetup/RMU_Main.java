@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -225,17 +226,14 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
             if(bool.equals("true")){
                 Toast.makeText(this,"Lauf gespeichert!",Toast.LENGTH_SHORT).show();
             }else{
-                // Not successful
-                Log.d("RegisterActivity", "Registration failed!");
+                Log.d("RMU_Main", "Lauf nicht gespeichert!");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-            // Not successful
-            Log.d("RegisterActivity", "Registration  failed!");
+            Log.d("RMU_Main", "Lauf nicht gespeichert!");
         } catch (ExecutionException e) {
             e.printStackTrace();
-            // Not successful
-            Log.d("RegisterActivity", "Registration  failed!");
+            Log.d("RMU_Main", "Lauf nicht gespeichert!");
         }
     }
 
@@ -328,6 +326,9 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
+            case android.R.id.home:
+                dialog();
+                return true;
             case R.id.gps_icon:
                 Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(intent);
@@ -339,6 +340,38 @@ public class RMU_Main extends AppCompatActivity implements CalculatorListener {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void dialog(){
+        if(Constants.isRun()){
+            AlertDialog.Builder dialog = new AlertDialog.Builder(RMU_Main.this);
+            dialog.setMessage("Der Lauf wird durch Verlassen der Activity gelöscht!")
+                    .setCancelable(false)
+                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(RMU_Main.this, CalculatorService.class);
+                            playbutton.setImageResource(R.drawable.playbutton);
+                            unbindService(serviceConnection);
+                            Constants.setRun(false);
+                            stopService(intent);
+                            finish();
+                            startActivity(new Intent(RMU_Main.this, NavigationDrawer.class));
+                        }
+                    })
+                    .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = dialog.create();
+            alert.setTitle("Achtung!");
+            alert.show();
+        } else {
+            Intent i = new Intent(this, NavigationDrawer.class);
+            startActivity(i);
+        }
     }
 
 }

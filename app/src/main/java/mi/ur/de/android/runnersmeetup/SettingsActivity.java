@@ -28,9 +28,6 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText changeName, changePhone, changeMail, oldPassword, newPassword1, newPassword2, changeSize, changeWeight;
     private String username, phone, email, oldPw, password1, password2, cm, kg;
 
-
-    String picture;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
