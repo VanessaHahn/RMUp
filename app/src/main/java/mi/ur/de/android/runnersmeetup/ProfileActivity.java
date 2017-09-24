@@ -23,12 +23,16 @@ import java.util.concurrent.ExecutionException;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextView showName, showDate, showGeschlecht, showEmail, showGeschwindigkeit;
-    private String id, username, handynummer;
+    private TextView showName, showDate, showGender, showEmail, showVelocity;
+    private String id, username, phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initLayout();
+    }
+
+    private void initLayout() {
         setContentView(R.layout.activity_profile);
 
         Intent i = getIntent();
@@ -38,37 +42,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         showName = (TextView) findViewById(R.id.showUsername);
         showDate = (TextView) findViewById(R.id.showGeburtsdatum);
-        showGeschlecht = (TextView) findViewById(R.id.showGeschlecht);
+        showGender = (TextView) findViewById(R.id.showGeschlecht);
         showEmail = (TextView) findViewById(R.id.showEmail);
-        showGeschwindigkeit = (TextView) findViewById(R.id.showGeschwindigkeit);
+        showVelocity = (TextView) findViewById(R.id.showGeschwindigkeit);
+        showProfile();
+        contactOrAdd();
+    }
 
-        BackgroundWorker backgroundworker = new BackgroundWorker(this);
-        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("showProfil",username);
-        try {
-            String dbString = returnAsyncTask.get()[1];
-            Log.d("dbString",""+dbString);
-            if(dbString.indexOf("/")>0){
-                String[] string = dbString.split("[/]");
-                showName.setText(username);
-                id = string[0];
-                showDate.setText(string[1]);
-                String gender = string[2];
-                if(gender != "weiblich") {
-                    gender = "männlich";
-                }
-                showGeschlecht.setText(gender);
-                showEmail.setText(string[3]);
-                handynummer = string[4];
-                showGeschwindigkeit.setText(string[5] +" km/h");
-            } else{
-                Log.d("RegisterActivity", "Registration failed!");
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
+    private void contactOrAdd() {
         FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,19 +65,19 @@ public class ProfileActivity extends AppCompatActivity {
 
                 AlertDialog.Builder logout = new AlertDialog.Builder(ProfileActivity.this);
                 ActivityCompat.requestPermissions(ProfileActivity.this,new String[]{Manifest.permission.SEND_SMS},1);
-                logout.setMessage("SMS senden an: " + username +"?")
+                logout.setMessage(getString(R.string.sendSms) + username +"?")
                         .setCancelable(false)
-                        .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if(handynummer.isEmpty()) {
+                                if(phone.isEmpty()) {
                                     toast();
                                 } else {
-                                    smsSenden();
+                                    smsSend();
                                 }
                             }
                         })
-                        .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
@@ -109,18 +90,27 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void addFriends(){
-        String ownID = "" + Constants.getId();
+    private void showProfile() {
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
-        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("addFriends",ownID,id,username);
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute(getString(R.string.showProfile),username);
         try {
             String dbString = returnAsyncTask.get()[1];
-            Log.d("dbString",""+dbString);
-            if(dbString.equals("true")){
-                Toast.makeText(this, username+" hinzugefügt!", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this, SuggestionsActivity.class));
+            Log.d(getString(R.string.dbString),""+dbString);
+            if(dbString.indexOf("/")>0){
+                String[] string = dbString.split("[/]");
+                showName.setText(username);
+                id = string[0];
+                showDate.setText(string[1]);
+                String gender = string[2];
+                if(!gender.equals(getString(R.string.female))) {
+                    gender = getString(R.string.male);
+                }
+                showGender.setText(gender);
+                showEmail.setText(string[3]);
+                phone = string[4];
+                showVelocity.setText(string[5] +getString(R.string.kmh));
             } else{
-                Log.d("RegisterActivity", "Registration failed!");
+                //Failed
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -129,15 +119,32 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void smsSenden(){
+    private void addFriends(){
+        String ownID = "" + Constants.getId();
+        BackgroundWorker backgroundworker = new BackgroundWorker(this);
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("addFriends",ownID,id,username);
+        try {
+            String dbString = returnAsyncTask.get()[1];
+            if(dbString.equals("true")){
+                Toast.makeText(this, username+getString(R.string.userAdded), Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, SuggestionsActivity.class));
+            } else{
+                //failed
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void smsSend(){
         SmsManager manager = SmsManager.getDefault();
-        String sms = "Hallo, ich bin " + Constants.getName() + " von RunnersMeetUp und möchte mit dir Kontakt aufnehmen!";
-        manager.sendTextMessage(handynummer,null,sms,null,null);
+        String sms = getString(R.string.salutation) + Constants.getName() + getString(R.string.contacting);
+        manager.sendTextMessage(phone,null,sms,null,null);
     }
 
     private void toast(){
-        Toast.makeText(this, "SMS senden nicht möglich!", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.smsNotPossible, Toast.LENGTH_LONG).show();
     }
-
-
 }

@@ -22,7 +22,6 @@ public class EventListAdapter extends ArrayAdapter<Event> {
         mResource = resource;
     }
 
-
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -50,4 +49,3 @@ public class EventListAdapter extends ArrayAdapter<Event> {
         return convertView;
     }
 }
-

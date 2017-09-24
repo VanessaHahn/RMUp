@@ -31,53 +31,29 @@ public class Constants {
     public static final String KEY_NAME = "NAME";
     public static final String KEY_WEIGHT = "WEIGHT";
     public static final String KEY_SIZE = "SIZE";
-
-    public static final String KEYCM = "cm";
-    public static final String KEYKG = "kg";
     public static final String KEY_PHONE = "phone";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PW = "passwort";
-    public static final String KEYBMI = "BMI";
-    public static final String KEYBMITEXT = "BMIText";
 
-    public static final String KEY_TIME = "time";
-    public static final String KEY_DISTANCE = "distance";
-    public static final String KEY_CALORIES = "calories";
-
-    public static void setValues(String genderNew, int sizeNew, float weightNew, String phoneNew){
-        if(genderNew.equals("weiblich")){
-            gender = "weiblich";
-        } else {
-            gender = "männlich";
-        }
-        if(sizeNew != 0) {
-            size = sizeNew;
-        }
-        if(weightNew != 0) {
-            weight = weightNew;
-        }
-        phone = phoneNew;
-    }
 
     public static void setEmail(String userEmail){
         email = userEmail;
     }
+
     public static void setPasswort(String passwort){
         pw = passwort;
     }
+
     public static String getPasswort(){
         return pw;
     }
+
     public static String getEmail(){
         return email;
     }
 
     public static void setRun(boolean runCondition){
         run = runCondition;
-    }
-
-    public static void setLogged(boolean loggedCondition){
-        logged = loggedCondition;
     }
 
     public static void setName(String userName){
@@ -103,14 +79,6 @@ public class Constants {
     public static int getId() {
         return id;
     }
-
-    public static int getGroesse(){
-        return size;
-    }                       //doppelt
-
-    public static float getGewicht(){
-        return weight;
-    }                   //auch
 
     public static boolean isLogged(){
         return logged;
@@ -202,7 +170,6 @@ public class Constants {
 
     public static void setPhone(String phoneNew) {
         phone = phoneNew;
-        Log.d("PhoneNew", phoneNew);
     }
 
     public static boolean parseLaeufeString(String dbString){
@@ -210,7 +177,6 @@ public class Constants {
             String[] splitdbString = dbString.split("[.]");
             for (int i = 0; i<4; i++){
                 String[] splitString = splitdbString[i].split("[/]");
-                Log.d("printArray", ""+splitString);
             }
         }
         return false;
@@ -235,10 +201,9 @@ public class Constants {
                 Log.d("PhoneNew", telefon);
                 Constants.setEmail(email);
                 Constants.setPasswort(passwort);
-                //Hier Eigene Poistion auslesen und einen Läufer erzeugen und hinterlegen
                 return true;
-            } //else return
-        } //else return
+            }
+        }
         return false;
     }
 }

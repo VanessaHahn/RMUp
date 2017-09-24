@@ -209,6 +209,28 @@
     <string name="usernameKey">Username</string>
     <string name="withoutSpecialChars">Ungültige Eingabe! Ohne Sonderzeichen!</string>
     <string name="wrongPassword">falsches Passwort!</string>
+    <string name="female">weiblich</string>
+    <string name="male">männlich</string>
+    <string name="smsNotPossible">SMS senden nicht möglich!</string>
+    <string name="salutation">Hallo, ich bin</string>
+    <string name="contacting">von RunnersMeetUp und möchte mit dir Kontakt aufnehmen!</string>
+    <string name="userAdded">hinzugefügt!</string>
+    <string name="sendSms">SMS senden an:</string>
+    <string name="showProfile">showProfil</string>
+    <string name="dbString">dbString</string>
+    <string name="sendedSms">SMS gesendet!</string>
+    <string name="couldNotDeleteFriendship">Freundschaft konnte nicht gelöscht werden!</string>
+    <string name="friendshipWith">Freundschaft zu</string>
+    <string name="deleted">gelöscht!</string>
+    <string name="noEventCreated">Keine Veranstaltungen erstellt!</string>
+    <string name="yes">Ja</string>
+    <string name="delete">löschen?</string>
+    <string name="noFriendsAdded">Keine Freunde hinzugefügt!</string>
+    <string name="databaseConnection">DatabaseConnection</string>
+    <string name="alreadyCreated">Veranstaltung bereits erstellt!</string>
+    <string name="createdEvent">Veranstaltung erstellt!</string>
+    <string name="create_event">event_erstellen</string>
+    <string name="kmh">km/h</string>
 
     <string-array name="list_preference_entries">
         <item>Entry 1</item>

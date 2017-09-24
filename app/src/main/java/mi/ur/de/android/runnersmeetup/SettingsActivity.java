@@ -49,8 +49,8 @@ public class SettingsActivity extends AppCompatActivity {
         changeName.setText(Constants.getName());
         changePhone.setText(Constants.getPhone());
         changeMail.setText(Constants.getEmail());
-        changeSize.setText("" + Constants.getGroesse());
-        changeWeight.setText("" + Constants.getGewicht());
+        changeSize.setText("" + Constants.getSize());
+        changeWeight.setText("" + Constants.getWeight());
 
         store = (Button) findViewById(R.id.storeSettings);
         store.setOnClickListener(new View.OnClickListener() {
@@ -67,8 +67,8 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences.Editor prefsEditor = prefs.edit();
         prefsEditor.putInt(Constants.KEY_ID, Constants.getId());
         prefsEditor.putString(Constants.KEY_NAME, Constants.getName());
-        prefsEditor.putFloat(Constants.KEY_WEIGHT, Constants.getGewicht());
-        prefsEditor.putInt(Constants.KEY_SIZE, Constants.getGroesse());
+        prefsEditor.putFloat(Constants.KEY_WEIGHT, Constants.getWeight());
+        prefsEditor.putInt(Constants.KEY_SIZE, Constants.getSize());
         prefsEditor.putString(Constants.KEY_EMAIL, Constants.getEmail());
         prefsEditor.putString(Constants.KEY_PHONE, Constants.getPhone());
         prefsEditor.putString(Constants.KEY_PW, Constants.getPasswort());
