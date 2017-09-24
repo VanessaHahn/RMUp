@@ -205,6 +205,7 @@ public class Constants {
 
     public static void setPhone(String phoneNew) {
         phone = phoneNew;
+        Log.d("PhoneNew", phoneNew);
     }
 
     public static boolean parseLaeufeString(String dbString){
@@ -235,6 +236,7 @@ public class Constants {
                 Constants.setGroesse(groesse);
                 Constants.setGewicht(gewicht);
                 Constants.setPhone(telefon);
+                Log.d("PhoneNew", telefon);
                 Constants.setEmail(email);
                 Constants.setPasswort(passwort);
                 //Hier Eigene Poistion auslesen und einen Läufer erzeugen und hinterlegen

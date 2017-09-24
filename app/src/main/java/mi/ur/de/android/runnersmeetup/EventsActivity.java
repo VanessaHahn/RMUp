@@ -19,7 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class Veranstaltungen extends AppCompatActivity {
+public class EventsActivity extends AppCompatActivity {
 
     EditText eventTitel, eventDay, eventMonth, eventYear, eventHour, eventMin, eventOrt, eventDetails;
     Button eventErstellen;
@@ -28,7 +28,7 @@ public class Veranstaltungen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_veranstaltungen);
+        setContentView(R.layout.activity_events);
 
         eventTitel = (EditText) findViewById(R.id.event_titel);
         eventDay = (EditText) findViewById(R.id.input_event_day);
@@ -80,7 +80,7 @@ public class Veranstaltungen extends AppCompatActivity {
                     eventlist.add(event);
                 }
 
-                EventListAdapter adapter = new EventListAdapter(this, R.layout.event_adapter_view_layout, eventlist);
+                EventListAdapter adapter = new EventListAdapter(this, R.layout.event_item, eventlist);
                 listView.setAdapter(adapter);
 
             } else{

@@ -22,13 +22,13 @@
         android:layout_marginTop="10dp"/>
 
     <RelativeLayout
-        android:layout_width="276dp"
+        android:layout_width="260dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal">
 
 
         <TextView
-            android:id="@+id/register_geschlecht"
+            android:id="@+id/register_gender"
             android:layout_width="92dp"
             android:layout_height="49dp"
             android:layout_alignParentBottom="true"
@@ -39,35 +39,46 @@
             android:textSize="18dp" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/register_gender_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/register_geschlecht" />
+            android:layout_toEndOf="@+id/register_gender" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="170dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/register_birth"
+            android:layout_width="90dp"
+            android:layout_height="41dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:text="Geburtstag"
+            android:textSize="18dp"
+            android:gravity="center_vertical"/>
 
         <EditText
             android:id="@+id/input_register_day"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="center_horizontal"
             android:ems="2"
             android:hint="TT"
             android:gravity="center"
             android:inputType="date"
-            android:maxLength="2" />
+            android:maxLength="2"
+            android:layout_toEndOf="@id/register_birth"/>
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/divider1"
             android:layout_width="10dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/input_register_day"
@@ -88,10 +99,10 @@
             android:maxLength="2"
             android:gravity="center"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/textView1" />
+            android:layout_toEndOf="@+id/divider1" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/divider2"
             android:layout_width="10dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/input_register_month"
@@ -106,8 +117,8 @@
             android:id="@+id/input_register_year"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/divider2"
             android:ems="4"
             android:gravity="center"
             android:hint="JJJJ"
@@ -132,15 +143,15 @@
             android:inputType="number"
             android:maxLength="3"
             android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/Profil_cm" />
+            android:layout_toStartOf="@+id/cm_key" />
 
         <TextView
-            android:id="@+id/Profil_cm"
+            android:id="@+id/cm_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/Profil_kg"
+            android:layout_alignTop="@+id/kg_key"
             android:gravity="center_vertical"
             android:text="cm"
             android:textSize="18sp" />
@@ -160,7 +171,7 @@
             android:maxLength="5" />
 
         <TextView
-            android:id="@+id/Profil_kg"
+            android:id="@+id/kg_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/input_register_kg"

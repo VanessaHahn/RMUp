@@ -31,7 +31,7 @@
             android:label="Run"
             android:parentActivityName=".NavigationDrawer" />
         <activity
-            android:name=".Trainingsuebersicht"
+            android:name=".TrainingOverviewActivity"
             android:label="Trainingsübersicht"
             android:parentActivityName=".NavigationDrawer" />
 
@@ -50,31 +50,23 @@
             android:label="Einstellungen"
             android:parentActivityName=".NavigationDrawer" />
         <activity
-            android:name=".Einstellungen"
-            android:label="Einstellungen"
-            android:parentActivityName=".NavigationDrawer" />
-        <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
             android:parentActivityName=".NavigationDrawer" />
         <activity
-            android:name=".Veranstaltungen"
+            android:name=".EventsActivity"
             android:label="Veranstaltungen"
             android:parentActivityName=".NavigationDrawer" />
         <activity
-            android:name=".Vorschlaege"
+            android:name=".SuggestionsActivity"
             android:label="Vorschläge"
-            android:parentActivityName=".NavigationDrawer" />
-        <activity
-            android:name=".FriendsProfilActivity"
-            android:label="Profil"
             android:parentActivityName=".NavigationDrawer" />
         <activity
             android:name=".FriendsProfil"
             android:label="Profil"
             android:parentActivityName=".NavigationDrawer" />
         <activity
-            android:name=".Friends"
+            android:name=".FriendsActivity"
             android:label="Freunde"
             android:parentActivityName=".NavigationDrawer" />
     </application>

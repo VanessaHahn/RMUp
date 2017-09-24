@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Einstellungen extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
 
     private Button profilbildÄndern, einstellungenSpeichern;
     private EditText nameÄndern, telefonÄndern, emailÄndern, passwortÄndern1, passwortÄndern2, groesseÄndern, gewichtÄndern;
@@ -32,7 +32,7 @@ public class Einstellungen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_einstellungen);
+        setContentView(R.layout.activity_settings);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         nameÄndern = (EditText) findViewById(R.id.profil_name_ändern);

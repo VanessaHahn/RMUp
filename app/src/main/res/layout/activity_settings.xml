@@ -1,83 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding = "16dp"
-    tools:context="mi.ur.de.android.runnersmeetup.Settings">
+    tools:context="mi.ur.de.android.runnersmeetup.SettingsActivity"
+    android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="310dp"
+        android:layout_height="47dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.12"
+            app:srcCompat="@drawable/ic_menu_settings"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/profil_ändern"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+
+            android:layout_weight="0.12"
+            android:gravity="center_horizontal"
+            android:text="Profil bearbeiten:"
+            android:textSize="20dp" />
+
+    </RelativeLayout>
 
     <EditText
-        android:layout_width="wrap_content"
+        android:id="@+id/profil_name_ändern"
+        android:layout_width="235dp"
         android:layout_height="wrap_content"
-        android:hint="Größe in cm"
         android:ems="10"
-        android:gravity="center"
-        android:inputType="number"
-        android:id="@+id/input_cm"
-        android:layout_gravity="center_horizontal" />
+        android:inputType="textPersonName"
+        android:layout_marginTop="10dp"
+        android:hint="Benutzername"
+        android:layout_gravity="center_horizontal"
+        android:maxLength="30"/>
 
     <EditText
-        android:layout_width="wrap_content"
+        android:id="@+id/profil_phone_ändern"
+        android:layout_width="235dp"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:hint="Gewicht in kg"
         android:ems="10"
-        android:gravity="center"
-        android:id="@+id/input_kg"
-        android:layout_gravity="center_horizontal" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:inputType="phone"
         android:hint="Telefon (mobil)"
-        android:gravity="center"
-        android:ems="10"
-        android:id="@+id/input_phone"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SPEICHERN"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="löschen"
-        android:id="@+id/buttonlöschen"
+        android:maxLength="30"
         android:layout_gravity="center_horizontal"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/profil_email_ändern"
+        android:layout_width="235dp"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="Eingaben gespeichert:"
-        android:paddingTop="20dp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/eingabetext"/>
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        android:layout_gravity="center_horizontal"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/profil_pw_ändern1"
+        android:layout_width="235dp"
         android:layout_height="wrap_content"
-        android:id="@+id/cmSettings"
-        android:hint="---"
-        android:layout_gravity="center_horizontal" />
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Passwort"
+        android:layout_gravity="center_horizontal"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/profil_pw_ändern2"
+        android:layout_width="235dp"
         android:layout_height="wrap_content"
-        android:id="@+id/kgSettings"
-        android:hint="---"
-        android:layout_gravity="center_horizontal" />
-    <TextView
-        android:layout_width="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Passwort"
+        android:layout_gravity="center_horizontal"/>
+
+    <RelativeLayout
+        android:layout_width="120dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal">
+
+        <EditText
+            android:id="@+id/Profil_größe"
+            android:layout_width="235dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="Größe"
+            android:maxLength="3"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_toStartOf="@+id/Profil_cm" />
+
+        <TextView
+            android:id="@+id/Profil_cm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="cm"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="120dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal">
+
+        <EditText
+            android:id="@+id/Profil_gewicht"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ems="10"
+            android:hint="Gewicht"
+            android:gravity="center_horizontal"
+            android:inputType="numberDecimal"
+            android:maxLength="5"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/Profil_kg" />
+
+        <TextView
+            android:id="@+id/Profil_kg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="kg "
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true" />
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/einstellungen_button_speichern"
+        android:layout_width="235dp"
         android:layout_height="wrap_content"
-        android:id="@+id/phoneSettings"
-        android:hint="---"
-        android:layout_gravity="center_horizontal" />
+        android:layout_marginTop="20dp"
+        android:text="speichern"
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

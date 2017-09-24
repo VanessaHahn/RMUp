@@ -19,7 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class FriendsProfil extends AppCompatActivity {
+public class FriendsProfileActivity extends AppCompatActivity {
 
     private TextView showName, showDate, showGeschlecht, showEmail, showGeschwindigkeit, showVeranstaltungen;
     private String id, username, handynummer;
@@ -28,7 +28,7 @@ public class FriendsProfil extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friendsprofil);
+        setContentView(R.layout.activity_friends_profile);
         listView = (ListView) findViewById(R.id.listFriendsEvents);
 
         Intent i = getIntent();
@@ -74,8 +74,8 @@ public class FriendsProfil extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder logout = new AlertDialog.Builder(FriendsProfil.this);
-                ActivityCompat.requestPermissions(FriendsProfil.this,new String[]{Manifest.permission.SEND_SMS},1);
+                AlertDialog.Builder logout = new AlertDialog.Builder(FriendsProfileActivity.this);
+                ActivityCompat.requestPermissions(FriendsProfileActivity.this,new String[]{Manifest.permission.SEND_SMS},1);
                 logout.setMessage("SMS senden an: " + username +"?")
                         .setCancelable(false)
                         .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
@@ -139,7 +139,7 @@ public class FriendsProfil extends AppCompatActivity {
                     eventlist.add(event);
                 }
 
-                EventListAdapter adapter = new EventListAdapter(this, R.layout.event_adapter_view_layout, eventlist);
+                EventListAdapter adapter = new EventListAdapter(this, R.layout.event_item, eventlist);
                 listView.setAdapter(adapter);
 
             } else{

@@ -33,11 +33,29 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText inputName, inputDay, inputMonth, inputYear, inputCm, inputKg, inputEmail, inputPhone, inputPassword1, inputPassword2;
     private Spinner spinner;
+    private String name;
+    private String password1;
+    private String password2;
+    private int day;
+    private int month;
+    private int year;
+    private int cm;
+    private String gender;
+    private String kg;
+    private String email;
+    private String phone;
+
+    private static final String KG_REGEX = "[0-9]{2,3}[.][0-9]";
+    private static final String MAIL_REGEX = "^[^0-9][a-zA-Z0-9_]+([.-][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_-]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initLayout();
+    }
+
+    private void initLayout() {
         setContentView(R.layout.activity_register);
         inputName = (EditText) findViewById(R.id.input_register_name);
         inputDay = (EditText) findViewById(R.id.input_register_day);
@@ -49,12 +67,29 @@ public class RegisterActivity extends AppCompatActivity {
         inputPhone = (EditText) findViewById(R.id.input_register_phone);
         inputPassword1 = (EditText) findViewById(R.id.input_register_pw1);
         inputPassword2 = (EditText) findViewById(R.id.input_register_pw2);
-        spinner = (Spinner) findViewById(R.id.spinner);
+        initSpinner();
+        initButton();
+    }
+
+    private void getInput() {
+        name = inputName.getText().toString();
+        password1 = inputPassword1.getText().toString();
+        password2 = inputPassword2.getText().toString();
+        day = Integer.parseInt(inputDay.getText().toString());
+        month = Integer.parseInt(inputMonth.getText().toString());
+        year = Integer.parseInt(inputYear.getText().toString());
+        cm = Integer.parseInt(inputCm.getText().toString());
+        gender = spinner.getSelectedItem().toString();
+        kg = inputKg.getText().toString();
+        email = inputEmail.getText().toString();
+        phone = inputPhone.getText().toString();
+    }
+
+    private void initSpinner() {
+        spinner = (Spinner) findViewById(R.id.register_gender_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.gender_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
-        initButton();
     }
 
     private void initButton() {
@@ -62,107 +97,82 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String password1 = inputPassword1.getText().toString();
-                String password2 = inputPassword2.getText().toString();
-                int day = Integer.parseInt(inputDay.getText().toString());
-                int month = Integer.parseInt(inputMonth.getText().toString());
-                int year = Integer.parseInt(inputYear.getText().toString());
-                int cm = Integer.parseInt(inputCm.getText().toString());
-                String geschlecht = spinner.getSelectedItem().toString();
-                String kg = inputKg.getText().toString();
-                String kg_regex = "[0-9]{2,3}[.][0-9]";
-                String email = inputEmail.getText().toString();
-                String email_regex = "^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_-]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$";
-                if(inputName.getText().length() != 0
-                        && inputDay.getText().length() != 0
-                        && inputMonth.getText().length() != 0
-                        && inputYear.getText().length() != 0
-                        && inputEmail.getText().length() != 0
-                        && inputPassword1.getText().length() != 0
-                        && inputPassword2.getText().length() != 0
-                        && (email.matches(email_regex))
-                        && password1.equals(password2)
-                        && (day>0 && day<=31)
-                        && (month>0 && month<=12)
-                        && (year>1917 && year<2017)
-                        && (cm>0 && cm<=220)
-                        && (!(geschlecht.equals("---")))
-                        && (kg.matches(kg_regex))){
-                    onReg();
-                } else {
-                    if(!(cm>0 && cm<=220)){
-                        inputCm.setError("Ungültige Eingabe!");
-                    }
-                    if(!(kg.matches(kg_regex))){
-                        inputKg.setError("Ungültige Eingabe!");
-                    }
-                    if(geschlecht.equals("---")){
-                        TextView errorText = (TextView)spinner.getSelectedView();
-                        errorText.setError("Ungültige Eingabe");
-                        errorText.setTextColor(Color.RED);//just to highlight that this is an error
-                    }
-                    if(!(day>0 && day<=31)){
-                        inputDay.setError("Ungültige Eingabe!");
-                    }
-                    if(!(month>0 && month<=12)){
-                        inputMonth.setError("Ungültige Eingabe!");
-                    }
-                    if(!(year>1917 && year<2017)){
-                        inputYear.setError("Ungültige Eingabe!");
-                    }
-                    if(!(email.matches(email_regex))){
-                        inputEmail.setError("Keine korrekte Email!");
-                    }
-                    if(!(password1.equals(password2))){
-                        inputPassword2.setError("Passwörter nicht identisch!");
-                    }
-                    if(inputName.getText().length() == 0){
-                        inputName.setError("fehlende Eingabe!");
-                    }
-                    if(inputDay.getText().length() == 0){
-                        inputDay.setError("fehlende Eingabe!");
-                    }
-                    if(inputMonth.getText().length() == 0){
-                        inputMonth.setError("fehlende Eingabe!");
-                    }
-                    if(inputYear.getText().length() == 0){
-                        inputYear.setError("fehlende Eingabe!");
-                    }
-                    if(TextUtils.isEmpty(inputEmail.getText())){
-                        inputEmail.setError("fehlende Eingabe!");
-                    }
-                    if(inputPassword1.getText().length() == 0){
-                        inputPassword1.setError("fehlende Eingabe!");
-                    }
-                    if(inputPassword2.getText().length() == 0){
-                        inputPassword2.setError("fehlende Eingabe!");
-                    }
-                }
+                getInput();
+                checkInput();
             }
         });
     }
 
+    private void checkInput() {
+        if(inputName.getText().length() != 0
+                && inputDay.getText().length() != 0
+                && inputMonth.getText().length() != 0
+                && inputYear.getText().length() != 0
+                && inputEmail.getText().length() != 0
+                && inputPassword1.getText().length() != 0
+                && inputPassword2.getText().length() != 0
+                && (email.matches(MAIL_REGEX))
+                && password1.equals(password2)
+                && (day>0 && day<=31)
+                && (month>0 && month<=12)
+                && (year>1917 && year<2017)
+                && (cm>0 && cm<=220)
+                && (!(gender.equals(getString(R.string.noGender))))
+                && (kg.matches(KG_REGEX))){
+            onReg();
+        } else {
+            if(!(cm>0 && cm<=220)){
+                inputCm.setError(getString(R.string.forbiddenInput));
+            }
+            if(!(kg.matches(KG_REGEX))){
+                inputKg.setError(getString(R.string.forbiddenInput));
+            }
+            if(gender.equals(getString(R.string.noGender))){
+                TextView errorText = (TextView)spinner.getSelectedView();
+                errorText.setError(getString(R.string.forbiddenInput));
+                errorText.setTextColor(Color.RED);//just to highlight that this is an error
+            }
+            if(!(day>0 && day<=31)){
+                inputDay.setError(getString(R.string.forbiddenInput));
+            }
+            if(!(month>0 && month<=12)){
+                inputMonth.setError(getString(R.string.forbiddenInput));
+            }
+            if(!(year>1917 && year<2017)){
+                inputYear.setError(getString(R.string.forbiddenInput));
+            }
+            if(!(email.matches(KG_REGEX))){
+                inputEmail.setError(getString(R.string.forbiddenMail));
+            }
+            if(!password1.equals(password2)){
+                inputPassword2.setError(getString(R.string.notIdenticalPasswords));
+            }
+            checkInputMissed(inputName);
+            checkInputMissed(inputDay);
+            checkInputMissed(inputMonth);
+            checkInputMissed(inputYear);
+            checkInputMissed(inputPassword1);
+            checkInputMissed(inputPassword2);
+            if(TextUtils.isEmpty(inputEmail.getText())){
+                inputEmail.setError(getString(R.string.missedInput));
+            }
+        }
+    }
+
+    public void checkInputMissed(EditText input) {
+        if(input.getText().length() == 0){
+            input.setError(getString(R.string.missedInput));
+        }
+    }
+
     public void onReg(){
-        String name = inputName.getText().toString();
-        String geschlecht = spinner.getSelectedItem().toString();
-        String day = inputDay.getText().toString();
-        String month = inputMonth.getText().toString();
-        String year = inputYear.getText().toString();
         String date = ""+year+"."+month+"."+day;
-        String cm = inputCm.getText().toString();
-        String kg = inputKg.getText().toString();
         kg = kg.replace(".",",");
-        String email = inputEmail.getText().toString();
-        String phone = inputPhone.getText().toString();
-        String password1 = inputPassword1.getText().toString();
         String picture = "";
-        String type = "register";
-        Log.d("picture in string", ""+picture);
+        String type = getString(R.string.register);
 
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundWorker.execute(type, picture, name, geschlecht, date, cm, kg, email, phone, password1);
-        //Constants.setValues(gender,size,weight,phone);
-
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundWorker.execute(type, picture, name, gender, date, String.valueOf(cm), kg, email, phone, password1);
         try {
             String bool = String.valueOf(returnAsyncTask.get()[1]);
             Log.d("returnAsyncTaskResult",""+bool);
@@ -189,20 +199,3 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

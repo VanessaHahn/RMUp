@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class Trainingsuebersicht extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class TrainingOverviewActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private TextView geschwindigkeitView;
     private Spinner spinner;
@@ -40,7 +40,7 @@ public class Trainingsuebersicht extends AppCompatActivity implements AdapterVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trainingsuebersicht);
+        setContentView(R.layout.activity_training_overview);
         geschwindigkeitView = (TextView) findViewById(R.id.textView16);
         lv1 = (ListView) findViewById(R.id.listView);
 
@@ -115,7 +115,7 @@ public class Trainingsuebersicht extends AppCompatActivity implements AdapterVie
                     lauflist.add(lauf);
                 }
 
-                LaufListAdapter adapter = new LaufListAdapter(this, R.layout.adapter_view_layout, lauflist);
+                LaufListAdapter adapter = new LaufListAdapter(this, R.layout.run_item, lauflist);
                 lv1.setAdapter(adapter);
 
             } else{

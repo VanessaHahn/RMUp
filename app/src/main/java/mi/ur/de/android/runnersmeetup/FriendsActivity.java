@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
-public class Friends extends AppCompatActivity {
+public class FriendsActivity extends AppCompatActivity {
 
     public ListView listView;
     private String[] string;
@@ -22,7 +22,7 @@ public class Friends extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friends2);
+        setContentView(R.layout.activity_friends);
         listView = (ListView) findViewById(R.id.list);
         searchForUser();
 
@@ -38,7 +38,7 @@ public class Friends extends AppCompatActivity {
             Log.d("dbStringFriends",""+dbString);
             if(dbString.indexOf("/")>0){
                 string = dbString.split("[/]");
-                final ArrayAdapter<String> listenadapter = new ArrayAdapter<String>(Friends.this,android.R.layout.simple_list_item_1, string);
+                final ArrayAdapter<String> listenadapter = new ArrayAdapter<String>(FriendsActivity.this,android.R.layout.simple_list_item_1, string);
                 listView.setAdapter(listenadapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -103,7 +103,7 @@ public class Friends extends AppCompatActivity {
     }
 
     public void startProfil(String name){
-        Intent friendsProfilIntent = new Intent(Friends.this, FriendsProfil.class);
+        Intent friendsProfilIntent = new Intent(FriendsActivity.this, FriendsProfil.class);
         friendsProfilIntent.putExtra("Username",name);
         startActivity(friendsProfilIntent);
     }
