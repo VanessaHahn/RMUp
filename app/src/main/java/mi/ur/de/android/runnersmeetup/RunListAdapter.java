@@ -17,12 +17,12 @@ import java.util.List;
  * Created by Theresa on 04.09.2017.
  */
 
-public class LaufListAdapter extends ArrayAdapter<Lauf>{
+public class RunListAdapter extends ArrayAdapter<RunItem>{
 
     private Context mContext;
     int mResource;
 
-    public LaufListAdapter(Context context, int resource, ArrayList<Lauf> objects) {
+    public RunListAdapter(Context context, int resource, ArrayList<RunItem> objects) {
         super(context, resource, objects);
         mContext = context;
         mResource = resource;

@@ -112,14 +112,14 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Adapt
                 Log.d("string2",""+dbString1[1]);
                 String[] string = dbString1[1].split("[.]");
 
-                ArrayList<Lauf> lauflist = new ArrayList<>();
+                ArrayList<RunItem> runList = new ArrayList<>();
 
-                int laufeintraege = string.length;
-                if(laufeintraege>10){
-                    laufeintraege = 10;
+                int runItems = string.length;
+                if(runItems>10){
+                    runItems = 10;
                 }
 
-                for (int i = 0; i<laufeintraege; i++) {
+                for (int i = 0; i<runItems; i++) {
                     String[] string1 = new String[string[i].length()];
                     for (int x = 0; x < 4; x++) {
                         string1 = string[i].split("[/]");
@@ -127,11 +127,11 @@ public class TrainingOverviewActivity extends AppCompatActivity implements Adapt
                     String[] date = string[i].split(" ");
                     Log.d("date",""+date[0]);
                     Log.d("date",""+date[1]);
-                    Lauf lauf = new Lauf(date[0],string1[1],string1[2],string1[3]);
-                    lauflist.add(lauf);
+                    RunItem run = new RunItem(date[0],string1[1],string1[2],string1[3]);
+                    runList.add(run);
                 }
 
-                LaufListAdapter adapter = new LaufListAdapter(this, R.layout.run_item, lauflist);
+                RunListAdapter adapter = new RunListAdapter(this, R.layout.run_item, runList);
                 lv1.setAdapter(adapter);
 
             } else{

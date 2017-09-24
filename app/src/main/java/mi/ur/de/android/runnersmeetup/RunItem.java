@@ -4,14 +4,14 @@ package mi.ur.de.android.runnersmeetup;
  * Created by Theresa on 04.09.2017.
  */
 
-public class Lauf {
+public class RunItem {
     private String date;
     private float gesch;
     private String dauer;
     private float km;
 
 
-    public Lauf(String date, String gesch, String km, String dauer) {
+    public RunItem(String date, String gesch, String km, String dauer) {
         this.date = date;
         this.gesch = Float.parseFloat(gesch);
         this.dauer = Constants.getFormatedTime(Integer.parseInt(dauer));
