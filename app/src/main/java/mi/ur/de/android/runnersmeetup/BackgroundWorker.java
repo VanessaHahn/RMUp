@@ -43,6 +43,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
         String show_events = "http://runnersmeetup.hol.es/showEvents.php";
         String friends_url = "http://runnersmeetup.hol.es/addFriends.php";
         String show_friends = "http://runnersmeetup.hol.es/showFriends.php";
+        String delete_friendship = "http://runnersmeetup.hol.es/deleteFriendship.php";
         if(type.equals("login")){
             try {
                 String user_name = params[1];
@@ -172,7 +173,48 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
             }catch (IOException e) {
                 e.printStackTrace();
             }
-        }else if(type.equals("addFriends")){
+        }
+
+        else if(type.equals("deleteFriendship")){
+            try {
+                String userID = params[1];
+                String friendID = params[2];
+                Log.d("Backroundworker", "userID: " + userID);
+                Log.d("Backroundworker", "friendID: " + friendID);
+                URL url = new URL(delete_friendship);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("userID", "UTF-8") + "=" + URLEncoder.encode(userID, "UTF-8") + "&" + URLEncoder.encode("friendID", "UTF-8") + "=" + URLEncoder.encode(friendID, "UTF-8");
+                Log.d("Backroundwo_deleteF", "post_data: <" + post_data + ">");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                Log.d("Backroundwo_deleteF", "result: <" + result + ">");
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return new String[]{"setPos",result};
+            }catch (MalformedURLException e) {
+                e.printStackTrace();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        else if(type.equals("addFriends")){
             try {
                 String ownid = params[1];
                 String id = params[2];

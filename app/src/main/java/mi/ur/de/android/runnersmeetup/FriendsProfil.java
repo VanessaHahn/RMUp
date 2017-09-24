@@ -41,7 +41,7 @@ public class FriendsProfil extends AppCompatActivity {
                         .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                    toast();
+                                    deleteFriendship();
                             }
                         })
                         .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
@@ -167,6 +167,29 @@ public class FriendsProfil extends AppCompatActivity {
 
             } else{
                 Toast.makeText(this, "Keine Veranstaltungen erstellt!", Toast.LENGTH_LONG).show();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            // Not successful
+            Log.d("RegisterActivity", "Registration  failed!");
+        }
+    }
+
+    private void deleteFriendship(){
+        BackgroundWorker backgroundworker = new BackgroundWorker(this);
+        String userID = ""+Constants.getId();
+        AsyncTask<String, Void, String[]> returnAsyncTask = backgroundworker.execute("deleteFriendship",userID, id);
+        try {
+            String dbString = returnAsyncTask.get()[1];
+            if(dbString.equals("true")){
+                Toast.makeText(this, "Freundschaft zu " + username + " gelöscht!", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, Friends.class));
+            } else{
+                Toast.makeText(this, "Freundschaft konnte nicht gelöscht werden!", Toast.LENGTH_LONG).show();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
