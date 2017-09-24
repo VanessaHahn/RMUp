@@ -478,17 +478,15 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
 
     private String[] register(String[] params) {
         try {
-            String profilbild = params[1];
-            String name = params[2];
-            String geschlecht = params[3];
-            String geburtsdatum = params[4];
-            String cm = params[5];
-            String kg = params[6];
-            String email = params[7];
-            String phone = params[8];
-            String password = params[9];
+            String name = params[1];
+            String geschlecht = params[2];
+            String geburtsdatum = params[3];
+            String cm = params[4];
+            String kg = params[5];
+            String email = params[6];
+            String phone = params[7];
+            String password = params[8];
 
-            Log.d("Backroundworker", "profilbild: " + profilbild);
             Log.d("Backroundworker", "UserName: " + name);
             Log.d("Backgroundworker", "Geschlecht: " + geschlecht);
             Log.d("Backroundworker", "Geburtsdatum: " + geburtsdatum);
@@ -504,8 +502,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
             httpURLConnection.setDoInput(true);
             OutputStream outputStream = httpURLConnection.getOutputStream();
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-            String post_data = URLEncoder.encode("profilbild", "UTF-8") + "=" + URLEncoder.encode(profilbild, "UTF-8") + "&"
-                    + URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8")+"&"
+            String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8")+"&"
                     + URLEncoder.encode("geschlecht", "UTF-8") + "=" + URLEncoder.encode(geschlecht, "UTF-8")+"&"
                     + URLEncoder.encode("geburtsdatum", "UTF-8") + "=" + URLEncoder.encode(geburtsdatum, "UTF-8")+"&"
                     + URLEncoder.encode("cm", "UTF-8") + "=" + URLEncoder.encode(cm, "UTF-8")+"&"
@@ -584,13 +581,6 @@ public class BackgroundWorker extends AsyncTask<String,Void,String[]> {
 
     @Override
     protected void onPostExecute(String[] result){
-        if(result[0].equals("login")) {
-            alertDialog.setMessage(result[1]);
-            alertDialog.show();
-        } else if(result[0].equals("updated Data")) {
-            Toast toast = Toast.makeText(context, result[1], Toast.LENGTH_SHORT);
-            toast.show();
-        }
     }
 
     @Override

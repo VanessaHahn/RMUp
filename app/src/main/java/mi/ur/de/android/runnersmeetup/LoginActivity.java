@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.welcomeToast, Toast.LENGTH_LONG).show();
                 startActivity(new Intent(this, NavigationDrawer.class));
                 putPreferences();
+                finish();
             } else {
                 // Not Succsefull
                 Log.d("LoginActivity", "Login Fail!");
